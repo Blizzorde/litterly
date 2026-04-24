@@ -1,0 +1,10 @@
+:root {
+    --main-color: #000 /* You define a variable up here and reuse it in the CSS later e.g. with var(--main-color) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+

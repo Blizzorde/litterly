@@ -1,0 +1,61 @@
+# =========================
+# LITTERLY PROJECT (ROOT)
+# =========================
+
+# =========================
+# BACKEND (Node / Express)
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+
+# =========================
+# FRONTEND (Static)
+# =========================
+
+# (No node_modules needed here, but kept global just in case)
+# Static frontend typically has no build output
+
+# =========================
+# BUILD / TEMP FILES
+# =========================
+
+dist/
+build/
+.tmp/
+.temp/
+
+# =========================
+# DATABASE (OPTIONAL)
+# =========================
+
+*.sql
+*.sqlite
+*.db
+
+# =========================
+# OS FILES
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# EDITOR / IDE
+# =========================
+
+.vscode/
+.idea/
+*.swp
