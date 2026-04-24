@@ -9,15 +9,6 @@ The frontend is built using **vanilla HTML, CSS, and JavaScript**, without frame
 
 ---
 
-## Getting Started
-
-```bash
-git clone https://github.com/Blizzorde/litterly-frontend.git
-cd litterly-frontend
-```
-
----
-
 ## Planned Features
 
 - User login & registration
