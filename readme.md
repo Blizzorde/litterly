@@ -72,7 +72,7 @@ npm install
 Create your environment file from the example:
 
 ```bash
-cp .env.example .env
+cp .env.sample .env
 ```
 
 Then configure the values inside `.env`:
