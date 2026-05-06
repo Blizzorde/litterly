@@ -1,10 +1,13 @@
 import express from "express";
 import session from "express-session";
 import dotenv from "dotenv";
+import pool from "./litterly-backend/config/db.js";
 
 import authRoutes from "./litterly-backend/routes/authRoutes.js";
 import userRoutes from "./litterly-backend/routes/userRoutes.js";
 import missionRoutes from "./litterly-backend/routes/missionRoutes.js";
+
+
 
 dotenv.config();
 
@@ -12,6 +15,24 @@ const app = express();
 
 // JSON parsing
 app.use(express.json());
+
+
+// ==============temp server startup logging
+try {
+
+ const [rows] = await pool.query("SELECT 1");
+
+ console.log("Database connected");
+ console.log(rows);
+
+}
+catch(err){
+
+ console.error(err);
+
+}
+// ================
+
 
 // Sessions
 app.use(session({
