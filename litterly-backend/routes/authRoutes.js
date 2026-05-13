@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
   try {
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed_real = await bcrypt.hash(password, 10);
 
     await pool.query(
       "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
@@ -23,34 +23,67 @@ router.post("/register", async (req, res) => {
 
 // LOGIN
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
+
+  // Need at least one identifier and a password
+  if ((!email && !username) || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Provide email or username, and password",
+    });
+  }
 
   try {
-    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
-      email,
+    // Use email if provided, otherwise username
+    const field = email ? "email" : "username";
+    const value = email ?? username;
+
+    const [rows] = await pool.query(`SELECT * FROM users WHERE ${field} = ?`, [
+      value,
     ]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
 
     const user = rows[0];
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, user.password_hash);
 
     if (!match) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
 
+    // Set session
     req.session.user = {
       id: user.id,
       email: user.email,
+      username: user.username,
       role: user.role,
     };
 
-    res.json({ message: "Logged in" });
+    res.status(200).json({
+      success: true,
+      message: "Logged in successfully",
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      },
+    });
   } catch (err) {
-    res.status(500).json({ message: "Login error", real: err });
+    res.status(500).json({
+      success: false,
+      message: "Login error",
+      error: err.message,
+    });
   }
 });
 
