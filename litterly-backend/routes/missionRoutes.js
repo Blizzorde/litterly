@@ -38,26 +38,23 @@ router.post("/join", authMiddleware, async (req, res) => {
 //need to have company acc - need to add middleware
 //creating mission - 
 router.post("/create", async (req, res) => {
-    const { 
-        title,
-        description,
-        location,
-        mission_date,
-        status,
-        max_volunteers
-     } = req.body;
-
+    const { title, description, location, start_datetime, end_datetime, status, max_participants, photo_url } = req.body;
+    // const userId = req.session.user.id;
+    //TODO: ^^^ uncomment this guy, was testing creation
      try {
-
         await pool.query(
-            'INSERT INTO missions (title, description, location, mission_date, status, max_volunteers) VALUES (?, ?, ?, ?, ?, ?)',
+            'INSERT INTO missions (title, description, location, start_datetime, end_datetime, status, max_participants, created_by, photo_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 title,
                 description,
                 location,
-                mission_date,
+                start_datetime,
+                end_datetime,
                 status,
-                max_volunteers
+                max_participants,
+                1,
+                //TODO: readd userId along with uncomment guy
+                photo_url
             ]
         );
 
@@ -67,7 +64,8 @@ router.post("/create", async (req, res) => {
      } catch (err) {
 
         res.status(500).json({
-            message: "Error creating mission"
+            message: "Error creating mission",
+            err: err.message
         });
      }
 });
@@ -82,9 +80,11 @@ router.put("/:id", authMiddleware, async (req,res)=>{
         title,
         description,
         location,
-        mission_date,
+        start_datetime,
+        end_datetime,
         status,
-        max_volunteers
+        max_participants,
+        photo_url
     } = req.body;
 
     try{
@@ -94,17 +94,21 @@ router.put("/:id", authMiddleware, async (req,res)=>{
          SET title=?,
              description=?,
              location=?,
-             mission_date=?,
+             start_datetime=?,
+             end_datetime=?,
              status=?,
-             max_volunteers=?
+             max_participants=?,
+             photo_url=?
          WHERE id=?`,
          [
             title,
             description,
             location,
-            mission_date,
+            start_datetime,
+            end_datetime,
             status,
-            max_volunteers,
+            max_participants,
+            photo_url,
             missionId
          ]
         );
