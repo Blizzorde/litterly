@@ -6,62 +6,59 @@ const router = express.Router();
 
 // REGISTER
 router.post("/register", async (req, res) => {
-    const { email, password } = req.body;
+  const { email, username, password } = req.body;
+  try {
+    const hashed = await bcrypt.hash(password, 10);
 
-    try {
-        const hashed = await bcrypt.hash(password, 10);
+    await pool.query(
+      "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
+      [username, email, hashed],
+    );
 
-        await pool.query(
-            "INSERT INTO users (email, password) VALUES (?, ?)",
-            [email, hashed]
-        );
-
-        res.json({ message: "User created" });
-    } catch (err) {
-        res.status(500).json({ message: "Error creating user", err: err });
-    }
+    res.json({ message: "User created" });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating user" });
+  }
 });
 
 // LOGIN
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-        const [rows] = await pool.query(
-            "SELECT * FROM users WHERE email = ?",
-            [email]
-        );
+  try {
+    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
 
-        if (rows.length === 0) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        const user = rows[0];
-
-        const match = await bcrypt.compare(password, user.password);
-
-        if (!match) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        req.session.user = {
-            id: user.id,
-            email: user.email,
-            role: user.role
-        };
-
-        res.json({ message: "Logged in" });
-
-    } catch (err) {
-        res.status(500).json({ message: "Login error", real: err });
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
+
+    const user = rows[0];
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    res.json({ message: "Logged in" });
+  } catch (err) {
+    res.status(500).json({ message: "Login error", real: err });
+  }
 });
 
 // LOGOUT
 router.post("/logout", (req, res) => {
-    req.session.destroy(() => {
-        res.json({ message: "Logged out" });
-    });
+  req.session.destroy(() => {
+    res.json({ message: "Logged out" });
+  });
 });
 
 export default router;

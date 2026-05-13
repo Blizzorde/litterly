@@ -3,8 +3,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// all routes here require login
-router.use(authMiddleware);
+
 
 // GET PROFILE
 router.get("/profile", (req, res) => {
