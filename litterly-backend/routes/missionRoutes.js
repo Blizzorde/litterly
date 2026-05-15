@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
         const [rows] = await pool.query("SELECT * FROM missions");
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ message: "Error fetching missions" });
+        res.status(500).json({ message: "Error fetching missions", err: err.message });
     }
 });
 
@@ -30,7 +30,7 @@ router.post("/join", authMiddleware, async (req, res) => {
 
         res.json({ message: "Joined mission" });
     } catch (err) {
-        res.status(500).json({ message: "Error joining mission" });
+        res.status(500).json({ message: "Error joining mission", err: err.message });
     }
 });
 

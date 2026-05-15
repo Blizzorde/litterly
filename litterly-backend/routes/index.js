@@ -18,7 +18,10 @@ apiRouter.get("/", (req, res) => {
 // Routes
 apiRouter.use("/auth", authRoutes);
 apiRouter.use("/users", authMiddleware, userRoutes);
-apiRouter.use("/missions", authMiddleware, missionRoutes);
+apiRouter.use("/missions", missionRoutes);
+//TODO: authMiddleware removed for testing, re add when done
+
+
 
 // API 404
 apiRouter.use((req, res) => {
