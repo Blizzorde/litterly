@@ -2,18 +2,15 @@ import express from "express";
 import session from "express-session";
 import dotenv from "dotenv";
 import pool from "./litterly-backend/config/db.js";
+import path from "path";
 
-import authRoutes from "./litterly-backend/routes/authRoutes.js";
-import userRoutes from "./litterly-backend/routes/userRoutes.js";
-import missionRoutes from "./litterly-backend/routes/missionRoutes.js";
-
-
+import apiRouter from "./litterly-backend/routes/index.js";
 
 dotenv.config();
 
 const app = express();
 
-// JSON parsing
+// Parsing
 app.use(express.json());
 
 
@@ -51,18 +48,15 @@ app.use(session({
 // Static frontend
 app.use(express.static("litterly-frontend"));
 
-// API routes
-app.get("/api", (req, res) => {
-    res.status(200).send({
-        success: true,
-        message: "This is the root of the API!"
-    })
+// API
+app.use("/api", apiRouter);
+
+// Frontend catch-all
+app.use((req, res) => {
+    res.sendFile(path.join(process.cwd(), "litterly-frontend", "pages","notFound.html"));
 });
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/missions", missionRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Litterly running on http://localhost:${process.env.PORT}`);
-    console.log(`Litterly Backend API running on http://localhost:${process.env.PORT}/api`);
+    console.log(`Litterly API running on http://localhost:${process.env.PORT}/api`);
 });
