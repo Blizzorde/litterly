@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
   try {
-    const hashed_real = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash(password, 10);
 
     await pool.query(
       "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
 
     res.json({ message: "User created" });
   } catch (err) {
-    res.status(500).json({ message: "Error creating user" });
+    res.status(500).json({ message: "Error creating user", err:err.message });
   }
 });
 

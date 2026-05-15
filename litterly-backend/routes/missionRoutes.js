@@ -53,9 +53,9 @@ router.post("/create", async (req, res) => {
                 status,
                 max_participants,
                 1,
-                //TODO: readd userId along with uncomment guy
                 photo_url
             ]
+        //TODO: readd userId along with uncomment guy
         );
 
         res.json({
