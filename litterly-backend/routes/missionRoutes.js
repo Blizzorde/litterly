@@ -72,8 +72,7 @@ router.post("/create", async (req, res) => {
 
 
 //Updating mission
-router.put("/:id", authMiddleware, async (req,res)=>{
-    //TODO: removed middleware for testing, readd when done
+router.put("/:id", async (req,res)=>{
 
     const missionId = req.params.id;
 
