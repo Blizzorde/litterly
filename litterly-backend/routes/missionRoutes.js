@@ -73,6 +73,7 @@ router.post("/create", async (req, res) => {
 
 //Updating mission
 router.put("/:id", authMiddleware, async (req,res)=>{
+    //TODO: removed middleware for testing, readd when done
 
     const missionId = req.params.id;
 
@@ -130,15 +131,14 @@ router.put("/:id", authMiddleware, async (req,res)=>{
 
 
 //Deleting mission, need to change to flag system 
-router.delete("/:id", authMiddleware, async(req,res)=>{
+router.delete("/:id", async(req,res)=>{
 
     const missionId = req.params.id;
 
     try{
 
         await pool.query(
-        "DELETE FROM missions WHERE id=?",
-        [missionId]
+        "DELETE FROM missions WHERE id=?", [missionId]
         );
 
         res.json({
@@ -149,7 +149,7 @@ router.delete("/:id", authMiddleware, async(req,res)=>{
     catch(err){
 
         res.status(500).json({
-            message:"Error deleting mission"
+            message:"Error deleting mission", err:err.message
         });
 
     }
