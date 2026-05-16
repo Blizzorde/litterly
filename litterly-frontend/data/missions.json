@@ -1,0 +1,38 @@
+[
+  {
+    "id": "M-101",
+    "title": "Domburg waterkant",
+    "status": "Active",
+    "date": "12 April 2025",
+    "image": "assets/Domburg.jpg",
+    "details": "Domburg waterkant(Speeltuin).",
+    "areas": [
+      { "name": "Glijbaan", "points": 500 },
+      { "name": "Draai cirkel", "points": 350 },
+      { "name": "Schommel", "points": 200 }
+    ]
+  },
+  {
+    "id": "M-102",
+    "title": "Onafhankelijkheidsplein",
+    "status": "Pending",
+    "date": "15 May 2025",
+    "image": "assets/onafhankelijkheidsplein.webp",
+    "details": "Algemene schoonmaak van het onafhankelijkheidsplein.",
+    "areas": [
+      { "name": "Standbeeld A", "points": 150 },
+      { "name": "Standbeeld B&C", "points": 300 }
+    ]
+  },
+  {
+    "id": "M-103",
+    "title": "Galibi",
+    "status": "Completed",
+    "date": "01 Jan 2025",
+    "image": "assets/galibi.jpg",
+    "details": "Schoonmaak project te Galibi.",
+    "areas": [
+      { "name": "50x50m schoonmaak", "points": 800 }
+    ]
+  }
+]

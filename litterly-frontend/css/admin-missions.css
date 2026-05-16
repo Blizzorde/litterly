@@ -1,0 +1,201 @@
+
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.filters button {
+  background-color: var(--text-white);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filters button.active {
+  background-color: var(--primary);
+  color: var(--text-white);
+  border-color: var(--primary);
+}
+
+.filters button:hover:not(.active) {
+  background-color: #f3f4f6;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+/* Card */
+.card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.card-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.mission-info-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.mission-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: var(--border-color);
+  flex-shrink: 0;
+}
+
+.mission-id {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.active {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.completed {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.card-details {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+/* Areas Section */
+.areas-section {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.areas-section h4 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.area-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.area-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.points {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Actions */
+.card-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Specific Buttons */
+.btn-add-area {
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  color: var(--primary);
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.btn-add-area:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+/* RESPONSIVE DESIGN (MISSIONS) */
+@media (max-width: 768px) {
+  .filters {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .card-actions {
+    flex-direction: column;
+  }
+}

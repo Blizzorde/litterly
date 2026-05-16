@@ -1,12 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Litterly | Home</title>
-  </head>
-  <body>
-    <!-- Hier komt een landing page voor Litterly -->
-    <h1>Home Page</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Litterly</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/admin-missions.css" />
+</head>
+
+<body>
+  <!-- Hier komt een landing page voor Litterly -->
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <h2 class="logo">Litterly <span class="badge admin-badge">Admin</span></h2>
+      </div>
+      <nav>
+        <ul>
+          <li>Dashboard</li>
+          <li class="active">Manage Missions</li>
+          <li>Users & Roles</li>
+          <li>Reports</li>
+          <li>Settings</li>
+        </ul>
+      </nav>
+      <div class="user-profile">
+        <div class="avatar">A</div>
+        <div>
+          <p class="name">Admin User</p>
+          <p class="role">System Administrator</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <header class="top-header">
+        <h1>All Missions</h1>
+        <button id="create-mission-btn" class="btn-primary">+ Create Mission</button>
+      </header>
+
+      <div class="filters">
+        <button class="active">All</button>
+        <button>Active</button>
+        <button>Pending</button>
+        <button>Completed</button>
+      </div>
+
+      <!-- Missions Grid -->
+      <div id="admin-missions" class="grid">
+        <!-- Cards rendered via JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Create / Edit Mission Modal -->
+  <div id="mission-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Create Mission</h2>
+        <button id="modal-close-btn" class="modal-close">&times;</button>
+      </div>
+      <form id="mission-form" class="modal-body">
+        <div class="form-group">
+          <label for="input-title">Title</label>
+          <input type="text" id="input-title" placeholder="e.g. Paramaribo Waterkant" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="input-status">Status</label>
+            <select id="input-status">
+              <option value="Active">Active</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="input-date">Date</label>
+            <input type="text" id="input-date" placeholder="e.g. 15 May 2025" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="input-image">Image Path</label>
+          <input type="text" id="input-image" placeholder="e.g. assets/photo.jpg" />
+        </div>
+        <div class="form-group">
+          <label for="input-details">Details</label>
+          <textarea id="input-details" rows="3" placeholder="Describe the mission..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Areas &amp; Points</label>
+          <div id="areas-list">
+            <!-- Dynamic area rows go here -->
+          </div>
+          <button type="button" id="add-area-btn" class="btn-add-area">+ Add Area</button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel-btn" class="btn-outline">Cancel</button>
+          <button type="submit" class="btn-primary">Save Mission</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h2>Delete Mission</h2>
+        <button id="delete-close-btn" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="delete-message">Are you sure you want to delete <strong id="delete-mission-name"></strong>? This
+          action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="delete-cancel-btn" class="btn-outline">Cancel</button>
+        <button id="delete-confirm-btn" class="btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <script src="js/main.js"></script>
+</body>
+
 </html>
