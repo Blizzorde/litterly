@@ -15,6 +15,17 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/:id", async (req, res) => {
+    const missionId = req.params.id;
+
+    try {
+        const [rows] = await pool.query("SELECT * FROM missions WHERE id=?", [missionId]);
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching missions", err: err.message });
+    }
+});
+
 
 // ====PRIVATE:
 // join mission
@@ -35,9 +46,9 @@ router.post("/join", authMiddleware, async (req, res) => {
 });
 
 
-//need to have company acc - need to add middleware
-//creating mission - 
+//creating mission
 router.post("/create", async (req, res) => {
+    //TODO: validate input for correct formats/ other stuff
     const { title, description, location, start_datetime, end_datetime, status, max_participants, photo_url } = req.body;
     // const userId = req.session.user.id;
     //TODO: ^^^ uncomment this guy, was testing creation
