@@ -55,11 +55,6 @@ router.post("/:id/distribute-points", async (req, res) => {
       return res.status(400).json({ error: "Mission not ready" });
     }
 
-    //TODO: READD THIS
-    // if (mission.rewards_distributed_at) {
-    //   return res.status(400).json({ error: "Already distributed" });
-    // }
-
     // 2. Get attended registrations
     const [attended_registrants] = await connection.query(
       `SELECT mr.*, ma.reward_points FROM mission_registrations AS mr
