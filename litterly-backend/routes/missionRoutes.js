@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // PUBLIC - get missions
-// "in other words the R in CRUD" -nathan
+// GET all
 router.get("/", async (req, res) => {
     try {
         const [rows] = await pool.query("SELECT * FROM missions");
@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+// GET by id
 router.get("/:id", async (req, res) => {
     const missionId = req.params.id;
 
@@ -25,7 +26,6 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ message: "Error fetching missions", err: err.message });
     }
 });
-
 
 // ====PRIVATE:
 // join mission
@@ -165,6 +165,8 @@ router.delete("/:id", async(req,res)=>{
     }
 
 });
+
+
 
 
 export default router;
