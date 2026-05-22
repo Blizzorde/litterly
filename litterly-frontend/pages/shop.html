@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LItterly Shop</title>
+  <title>Litterly Shop</title>
   <link rel="stylesheet" href="../css/shop.css" />
 </head>
+
 <body>
   <div class="container">
 
@@ -16,19 +17,14 @@
       <div class="brand">
         <div class="logo">
           Shop
-          <span class="admin-badge">Admin</span>
+          <span class="admin-badge">user</span>
         </div>
       </div>
 
       <nav>
         <ul>
           <li class="active">Dashboard</li>
-          <li>Products</li>
-          <li>Orders</li>
-          <li>Customers</li>
-          <li>Digicel Plans</li>
-          <li>Telsur Plans</li>
-          <li>Settings</li>
+          <li>⚙️Settings</li>
         </ul>
       </nav>
 
@@ -46,86 +42,55 @@
     <!-- MAIN -->
     <main class="main">
 
-      <!-- HEADER -->
+      <!-- POINTS HEADER -->
       <div class="top-header">
+
         <h1>Shop Dashboard</h1>
+
+        <div style="width: 300px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span>⭐ Points</span>
+            <span>150 / 200</span>
+          </div>
+
+          <div style="width:100%; height:10px; background:#e5e7eb; border-radius:10px; margin-top:6px;">
+            <div style="width:75%; height:10px; background:#257055; border-radius:10px;"></div>
+          </div>
+        </div>
 
         <button class="btn-primary">
           Add Product
         </button>
+
       </div>
 
       <!-- PRODUCTS -->
       <section class="products">
 
-        <!-- CARD 1 -->
+        <!-- DIGICEL CARD -->
         <div class="modal-card">
 
           <div class="modal-header">
-            <h2>iPhone 13</h2>
+            <h2>Digicel Plans</h2>
           </div>
 
           <div class="modal-body">
+            <p>Choose your beltegoed package:</p>
 
-            <img src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=800" alt="iPhone"
-              style="width:100%; border-radius:10px;">
+            <div>
+              <h3>💚 50GB Plan - 50 Points</h3>
+              <p>Unlimited WhatsApp + Calls</p>
+            </div>
 
-            <p>
-              Latest Apple iPhone with excellent camera and battery life.
-            </p>
+            <div>
+              <h3>💚 30GB Plan - 30 Points</h3>
+              <p>Standard Internet + WhatsApp</p>
+            </div>
 
-            <h3>$850 USD</h3>
-
-          </div>
-
-          <div class="modal-footer">
-            <button class="btn-outline">Details</button>
-            <button class="btn-primary">Buy Now</button>
-          </div>
-
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="modal-card">
-
-          <div class="modal-header">
-            <h2>Samsung Galaxy S24</h2>
-          </div>
-
-          <div class="modal-body">
-
-            <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800" alt="Samsung"
-              style="width:100%; border-radius:10px;">
-
-            <p>
-              Powerful Samsung smartphone with smooth performance.
-            </p>
-
-            <h3>$790 USD</h3>
-
-          </div>
-
-          <div class="modal-footer">
-            <button class="btn-outline">Details</button>
-            <button class="btn-primary">Buy Now</button>
-          </div>
-
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="modal-card">
-
-          <div class="modal-header">
-            <h2>Digicel 30GB Plan</h2>
-          </div>
-
-          <div class="modal-body">
-
-            <p>
-              30GB Internet + Unlimited WhatsApp + Calls
-            </p>
-
-            <h3>$25 USD</h3>
+            <div>
+              <h3>💚 20GB Plan - 20 Points</h3>
+              <p>Basic Internet Package</p>
+            </div>
 
           </div>
 
@@ -136,7 +101,7 @@
 
         </div>
 
-        <!-- CARD 4 -->
+        <!-- TELSUR CARD -->
         <div class="modal-card">
 
           <div class="modal-header">
@@ -144,13 +109,11 @@
           </div>
 
           <div class="modal-body">
-
             <p>
               Unlimited Calls + 50GB Internet Package
             </p>
 
-            <h3>$40 USD</h3>
-
+            <h3>40 Points</h3>
           </div>
 
           <div class="modal-footer">
@@ -165,7 +128,6 @@
     </main>
 
   </div>
-
 </body>
 
 </html>
