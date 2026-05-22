@@ -9,6 +9,12 @@ import missionRoutes from "./litterly-backend/routes/missionRoutes.js";
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+if (!process.env.SESSION_SECRET) {
+    console.error("FATAL ERROR: SESSION_SECRET is not defined in .env file.");
+    process.exit(1);
+}
 
 // JSON parsing
 app.use(express.json());
@@ -41,7 +47,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/missions", missionRoutes);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Litterly running on http://localhost:${process.env.PORT}`);
-    console.log(`Litterly Backend API running on http://localhost:${process.env.PORT}/api`);
+app.listen(PORT, () => {
+    console.log(`Litterly running on http://localhost:${PORT}`);
+    console.log(`Litterly Backend API running on http://localhost:${PORT}/api`);
 });

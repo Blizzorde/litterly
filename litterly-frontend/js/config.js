@@ -1,5 +1,5 @@
 const CONFIG = {
-    API_BASE_URL: "http://localhost:3000/api",
+    API_BASE_URL: "/api",
     APP_NAME: "Litterly"
 };
 
