@@ -14,11 +14,11 @@ router.get("/", async (req, res) => {
     }
 });
 
-// PRIVATE - join mission http://localhost:3000/api/missions/join
-router.post("/join", authMiddleware, async (req, res) => {
-    const { missionId } = req.body;
+// PRIVATE - join mission http://localhost:3000/api/missions/:id/join
+router.post("/:id/join", authMiddleware, async (req, res) => {
+    const missionId = req.params.id;
     const userId = req.session.user.id;
-    const status = req.body.status || "registered";
+    const status = req.body?.status || "registered";
 
     if (!missionId) {
         return res.status(400).json({ success: false, message: "missionId is required" });
@@ -87,5 +87,5 @@ router.post("/join", authMiddleware, async (req, res) => {
     }
 });
 
-export default router;
 
+export default router;
