@@ -88,4 +88,58 @@ router.post("/:id/join", authMiddleware, async (req, res) => {
 });
 
 
+// Status change on 
+router.patch("/:id", authMiddleware, async (req, res) => {
+    const missionId = req.params.id;
+    const userId = req.session.user.id;
+    const status = req.body?.status;
+
+    if (!status) {
+        return res.status(400).json({ success: false, message: "status is required" });
+    }
+
+    try {
+        // 1. Check if the registration exists for this user and mission
+        const [existing] = await pool.query(
+            "SELECT * FROM mission_registrations WHERE mission_id = ? AND user_id = ?",
+            [missionId, userId]
+        );
+
+        if (existing.length === 0) {
+            return res.status(404).json({ success: false, message: "Registration not found for this mission" });
+        }
+
+        const registration = existing[0];
+
+        // 2. If reactivating registration, check capacity limits
+        if (status !== "cancelled" && registration.status === "cancelled") {
+            const [missions] = await pool.query("SELECT * FROM missions WHERE id = ?", [missionId]);
+            if (missions.length === 0) {
+                return res.status(404).json({ success: false, message: "Mission not found" });
+            }
+            const mission = missions[0];
+
+            if (mission.max_participants !== null) {
+                const [countRows] = await pool.query(
+                    "SELECT COUNT(*) as count FROM mission_registrations WHERE mission_id = ? AND status != 'cancelled'",
+                    [missionId]
+                );
+                if (countRows[0].count >= mission.max_participants) {
+                    return res.status(400).json({ success: false, message: "Mission is full" });
+                }
+            }
+        }
+
+        // 3. Update the status
+        await pool.query(
+            "UPDATE mission_registrations SET status = ? WHERE id = ?",
+            [status, registration.id]
+        );
+
+        res.json({ success: true, message: "Registration status updated successfully", status });
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Error updating registration status", error: err.message });
+    }
+});
+
 export default router;
