@@ -88,7 +88,7 @@ router.post("/:id/join", authMiddleware, async (req, res) => {
 });
 
 
-// Status change on 
+// Status change on. per missionId using current user session id
 router.patch("/:id", authMiddleware, async (req, res) => {
     const missionId = req.params.id;
     const userId = req.session.user.id;
@@ -139,6 +139,39 @@ router.patch("/:id", authMiddleware, async (req, res) => {
         res.json({ success: true, message: "Registration status updated successfully", status });
     } catch (err) {
         res.status(500).json({ success: false, message: "Error updating registration status", error: err.message });
+    }
+});
+
+// PRIVATE - get all registrations for a specific mission
+router.get("/:id/registrations", authMiddleware, async (req, res) => {
+    const missionId = req.params.id;
+
+    try {
+        // 1. Verify if mission exists
+        const [missions] = await pool.query("SELECT * FROM missions WHERE id = ?", [missionId]);
+        if (missions.length === 0) {
+            return res.status(404).json({ success: false, message: "Mission not found" });
+        }
+
+        // 2. Fetch registrations with user details
+        const [registrations] = await pool.query(
+            `SELECT 
+                mr.id AS registration_id,
+                mr.mission_id,
+                mr.user_id,
+                mr.status,
+                mr.registered_at,
+                u.username,
+                u.email
+             FROM mission_registrations mr
+             JOIN users u ON mr.user_id = u.id
+             WHERE mr.mission_id = ?`,
+            [missionId]
+        );
+
+        res.json({ success: true, registrations });
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Error fetching registrations", error: err.message });
     }
 });
 
