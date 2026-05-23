@@ -177,6 +177,8 @@
   cursor: pointer;
 }
 
+/* rem vs em vs vh and vw */
+
 .no-account-section {
   display: flex;
   flex-direction: row;
