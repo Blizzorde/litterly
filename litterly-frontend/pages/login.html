@@ -1,41 +1,101 @@
-<html>
-<head>
-     <title>welcome to LitterlyS</title>
-        <link rel="stylesheet" href="../css/login.css"
-    </head>
-
-<body>
-    <div id="team">
-    
-
-        </div>
-    <div class="login-box">
-        <div id="border">
-        <img src="../assets/Foto Litterly.jpeg" alt="foto" class="foto" height="50">
-    </div>
-        <h2></h2>
-
-        <form>
-            <div class="input-box">
-                <input type="text" placeholder="Username" required>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Litterly | Login</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <script
+      src="https://kit.fontawesome.com/5f8a667392.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="main-login-container">
+        <div class="login-wrapper">
+          <div class="login-img-section">
+            <div class="small-logo-cont">
+              <div class="small-logo-img-wrapper">
+                <img
+                  class="logo-login-img"
+                  src="../assets/logo-litterly-dark-transparent.png"
+                  alt=""
+                />
+              </div>
             </div>
-
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
+            <div class="quote-img-cont">
+              <h1 class="quote">
+                "Small acts, when multiplied by millions of people, can
+                transform the world."
+              </h1>
+              <div class="subheadline">Join the movement</div>
             </div>
-
-            <button class="btn">Login</button>
-        </form>
-
-        <div class="extra">
-            <p>Forgot password ?</p>
+            <div class="count-stats">
+              <div class="count-stat">
+                <div class="number">12.4k</div>
+                <div class="subtext">Active Cleaners</div>
+              </div>
+              <div class="count-stat">
+                <div class="number">45t</div>
+                <div class="subtext">Litter Cleaned</div>
+              </div>
+            </div>
+          </div>
+          <div class="login-form-section">
+            <div class="login-form-title-cont">
+              <h1 class="login-form-title">Welcome Back</h1>
+              <p class="login-form-subtitle">
+                Log in to continue your environmental mission.
+              </p>
+            </div>
+            <div class="login-form-cont">
+              <form class="login-form">
+                <div class="input-group">
+                  <label for="email">Email Address</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="email" name="email" id="email" required />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="password">Password</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      requierd
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn">
+                  Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </button>
+              </form>
+            </div>
+            <div class="demo-section-cont">
+              <div class="text-divider">Demo Auto-Login</div>
+              <div class="demo-auto-login-btn-cont">
+                <button class="demo-auto-login-btn primary">
+                  Auto-Login as Admin
+                </button>
+                <button class="demo-auto-login-btn secondary">
+                  Auto-Login as User
+                </button>
+              </div>
+            </div>
+            <div class="no-account-section">
+              Dont have an account?
+              <span>
+                <a href="#" class="internal-link"> Join the community</a>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="extra">
-            <a href="register.html">Don't have an account? Register</a>
-        </div>
+      </div>
     </div>
-</div>
-
-</body>
-
+  </body>
 </html>
