@@ -1,6 +1,4 @@
-/* LOGIN PAGE STYLING */
-
-.main-login-container {
+.main-auth-container {
   background-color: #ececec;
   height: 100%;
   width: 100%;
@@ -11,7 +9,7 @@
   padding: 3rem 10rem;
 }
 
-.login-wrapper {
+.auth-wrapper {
   background-color: white;
   border-radius: 1rem;
   width: 100%;
@@ -22,12 +20,12 @@
   overflow: hidden;
 }
 
-.login-img-section,
-.login-form-section {
+.auth-img-section,
+.auth-form-section {
   flex-basis: 50%;
 }
 
-.login-img-section {
+.auth-img-section {
   padding: 3rem 2rem;
   background-image:
     linear-gradient(
@@ -45,18 +43,19 @@
   justify-content: space-between;
 }
 
-.login-form-section {
+.auth-form-section {
   padding: 3rem 5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
 }
 
 .small-logo-img-wrapper {
   width: 8rem;
 }
 
-.logo-login-img {
+.logo-auth-img {
   width: 100%;
 }
 
@@ -113,9 +112,7 @@
   font-family: "Be Vietnam Pro", "sans-serif";
 }
 
-/* RIGHT SIDE LOGIN FORM */
-
-.login-form-title {
+.auth-form-title {
   color: var(--primary-color);
   font-weight: 900;
 }
@@ -125,29 +122,26 @@
   flex-direction: column;
   padding: 1rem 0;
   gap: 0.25rem;
-  /* background-color: red; */
 }
 
-.login-form-cont {
-  /* background-color: red; */
+.auth-form-cont {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-.login-form-cont .input-group {
+.auth-form-cont .input-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.login-form {
+.auth-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  /* background-color: yellow; */
+  gap: 1rem;
 }
 
-.login-form-cont .input-group label {
+.auth-form-cont .input-group label {
   text-transform: uppercase;
   font-family: "Be Vietnam Pro", "sans-serif";
   color: var(--primary-color);
@@ -155,8 +149,7 @@
   font-size: 0.8em;
 }
 
-.login-form-cont .input-group .input-wrapper input[type="email"],
-.login-form-cont .input-group .input-wrapper input[type="password"] {
+.auth-form-cont .input-group .input-wrapper input {
   /* background-color: red; */
   border-radius: 1rem;
   outline: none;
@@ -177,19 +170,18 @@
   cursor: pointer;
 }
 
-/* rem vs em vs vh and vw */
-
-.no-account-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 0.9em;
+.input-wrapper {
+  position: relative;
 }
 
-.no-account-section .internal-link {
-  color: var(--link-color);
-  font-weight: 600;
-  text-decoration: underline;
+.input-wrapper .icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--neutral-color);
+  left: 1rem;
+  font-size: 1.25rem;
+  z-index: 10;
 }
 
 .text-divider {
@@ -211,14 +203,26 @@
   background-color: var(--lighter-neutral-color);
 }
 
-.demo-auto-login-btn-cont {
+.account-section {
   display: flex;
-  padding: 1rem 1rem;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 0.9em;
+}
+
+.account-section .internal-link {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.demo-auto-auth-btn-cont {
+  display: flex;
+  padding: 1rem 0;
   gap: 1rem;
 }
 
-.demo-auto-login-btn {
-  flex-basis: 50%;
+.demo-auto-auth-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -229,25 +233,18 @@
   cursor: pointer;
 }
 
-.demo-auto-login-btn.primary {
+.demo-auto-auth-btn.login {
+  flex-basis: 50%;
+}
+.demo-auto-auth-btn.register {
+  width: 100%;
+}
+
+.demo-auto-auth-btn.primary {
   background-color: var(--link-color);
   color: white;
 }
 
-.demo-auto-login-btn.secondary {
+.demo-auto-auth-btn.secondary {
   color: var(--link-color);
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.input-wrapper .icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--neutral-color);
-  left: 1rem;
-  font-size: 1.25rem;
-  z-index: 10;
 }

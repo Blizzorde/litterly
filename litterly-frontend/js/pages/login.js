@@ -17,7 +17,8 @@ function setLoading(loading) {
     passwordInput.disabled = true;
   } else {
     loginBtn.disabled = false;
-    loginBtn.innerHTML = "Login";
+    loginBtn.innerHTML =
+      '  Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>';
     emailInput.disabled = false;
     passwordInput.disabled = false;
   }
