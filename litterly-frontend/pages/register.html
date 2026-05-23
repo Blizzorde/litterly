@@ -1,48 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Litterly | Register</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/user-missions.css" />
-  </head>
-  <body>
-    <div class="page-shell">
-      <header class="page-header">
-        <div class="brand-name">Litterly</div>
-        <nav class="page-nav">
-          <a href="login.html">Login</a>
-          <a href="../index.html">Missions</a>
-        </nav>
-      </header>
-      <main class="page-main">
-        <section class="page-hero">
-          <p class="eyebrow">Create account</p>
-          <h1>Join Litterly</h1>
-          <p class="page-description">Register to join available cleanup missions and earn rewards.</p>
-        </section>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register Page</title>
+    <link rel="stylesheet" href="../css/register.css"/>
 
-        <section class="detail-card">
-          <form id="register-form" class="auth-form">
-            <div class="form-group">
-              <label for="register-email">Email</label>
-              <input id="register-email" type="email" placeholder="you@example.com" required />
+   
+</head>
+<body>
+
+    <div class="register-box">
+        <div id="border">
+            <img src="../assets/Foto Litterly.jpeg" alt="foto" class="foto" height="50">
+        </div>
+        <h4> </h4>
+
+        <form>
+            <div class="input-box">
+                <input type="text" placeholder="Full Name" required>
             </div>
-            <div class="form-group">
-              <label for="register-password">Password</label>
-              <input id="register-password" type="password" placeholder="••••••••" required />
+
+            <div class="input-box">
+                <input type="email" placeholder="Email" required>
             </div>
-            <div class="card-actions">
-              <button type="submit" class="btn-primary">Register</button>
-              <a href="login.html" class="btn-outline">Already have an account</a>
+
+            <div class="input-box">
+                <input type="password" placeholder="Password" required>
             </div>
-          </form>
-        </section>
-      </main>
+
+            <div class="input-box">
+                <input type="password" placeholder="Confirm Password" required>
+            </div>
+
+            <button type="submit" class="register-btn">
+                Register
+            </button>
+
+            <div class="login-link">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </div>
+        </form>
     </div>
 
-    <div id="toast-container"></div>
-    <script type="module" src="../js/pages/register.js"></script>
-  </body>
+</body>
 </html>
