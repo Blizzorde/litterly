@@ -37,7 +37,7 @@ loginForm.addEventListener("submit", async (e) => {
     showNotif("fa-circle-check", "Success", "Logged in!", "success");
     setTimeout(() => {
       setLoading(false);
-      window.location.href = "/";
+      window.location.href = "/pages/mission-list.html";
     }, 1500);
   } catch (err) {
     setLoading(false);
