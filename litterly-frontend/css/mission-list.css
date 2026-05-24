@@ -120,32 +120,46 @@
     flex: 1;
 }
 
-/*=============================================================MAIN CONTENT HEADER */
+/*8=============================================================D MAIN CONTENT HEADER */
 
 .content-header{
-    background-color: greenyellow;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 2rem 1.5rem;
 }
 
 .header-text{
     display: flex;
-    font-size: 5rem;
+    font-family: "Be Vietnam Pro", "sans-serif";
+    text-transform: uppercase;
+    font-size: 4rem;
+}
+
+.header-filter{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    align-items: end;
+    /* background-color: green; */
 }
 
 .filterbar-wrapper{
-    background-color: green;
+    background-color: #eff4ff;
+    /* background-color: #0051ff; */
     display: flex;
+    justify-content: space-evenly;
+    border-radius: 1rem;
+    overflow: hidden;
 }
 
 .filter-text{
-    background-color: orange;
     display: flex;
+    padding: 0.5rem 2rem;
 }
 
 .filter-text.active{
-    background-color: red;
+    border-bottom: 2px solid var(--lighter-neutral-color); 
 }
 
 
