@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Board - Litterly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/mission-list.css" />
+    <!-- REQUIRED GLOBAL SCRIPTS -->
+    <script
+      src="https://kit.fontawesome.com/5f8a667392.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- REQUIRED GLOBAL SCRIPTS -->
+  </head>
+
+  <body>
+    <div class="page-container">
+      <div class="content-container">
+        <aside class="sidebar">
+          <div class="logo-section">
+            <img
+              src="../assets/logo-litterly-dark-transparent.png"
+              class="logo"
+            />
+          </div>
+          <nav class="wrapper-sidebar-content" aria-label="Main navigation">
+            <div class="profile">
+              <div class="profile-photo-wrapper">
+                <img src="../assets/sample.png" alt="" class="profile-photo" />
+              </div>
+              <div class="profile-details">
+                <section class="full-name" id="username">Daijvane Archer</section>
+                <section class="user-points">
+                  <i class="fa-solid fa-leaf"></i>
+                  <span id="points">2,450</span>
+                </section>
+              </div>
+            </div>
+            <section class="wrapper-sidebar-items-and-logout">
+              <div class="wrapper-sidebar-item">
+                <a href="./mission-list.html" class="sidebar-item active">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                  </div>
+                  <div class="sidebar-item-text">Missions</div>
+                </a>
+
+                <a href="./shop.html" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-shop"></i>
+                  </div>
+                  <div class="sidebar-item-text">Shop</div>
+                </a>
+              </div>
+
+              <section class="logout-section">
+                <a href="#" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  </div>
+                  <div class="sidebar-item-text">Logout</div>
+                </a>
+              </section>
+            </section>
+          </nav>
+      </aside>
+
+      <main class="main-content-wrapper">
+        <div class="content-header">
+          <h1 class="header-text">
+            missions 
+          </h1>
+          <div class="header-filter">
+            <div class="filterbar-wrapper">
+              <div class="filter-text active">
+                All missions
+              </div>
+              <div class="filter-text">
+                Active
+              </div>
+              <div class="filter-text">
+                Ongoing
+              </div>
+              <div class="filter-text">
+                Completed
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="cards-wrapper">
+
+          <a href="#" class="card-wrapper">
+            <div class="card-thumbnail"></div>
+            <div class="card-text-content-wrapper">
+              <h1 class="mission-title">
+                mission title clean up
+              </h1>
+              <p class="mission-description">
+                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
+              </p>
+            </div>
+          </a>
+          <a href="#" class="card-wrapper">
+            <div class="card-thumbnail"></div>
+            <div class="card-text-content-wrapper">
+              <h1 class="mission-title">
+                mission title clean up
+              </h1>
+              <p class="mission-description">
+                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
+              </p>
+            </div>
+          </a>
+          <a href="#" class="card-wrapper">
+            <div class="card-thumbnail"></div>
+            <div class="card-text-content-wrapper">
+              <h1 class="mission-title">
+                mission title clean up
+              </h1>
+              <p class="mission-description">
+                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
+              </p>
+            </div>
+          </a>
+          
+        </section>
+      </main>
+    </div>
+    <script src="../js/utils/notify.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api/authApi.js"></script>
+    <script src="../js/main.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,62 @@
+.shop-filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.shop-filter {
+  padding: 0.5rem 1rem;
+  background-color: var(--lighter-accent-light-color);
+  border-radius: 5rem;
+}
+
+.shop-filter.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.shop-products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.shop-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.378);
+}
+
+.shop-card-img {
+  background: url(../assets/baca.jpg);
+  background-size: cover;
+  padding: 6rem 2rem;
+}
+
+.shop-card-details {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shop-card-details .shop-card-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.shop-card-details .shop-card-cta {
+  background-color: var(--primary-color);
+  width: 100%;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  display: flex;
+}
