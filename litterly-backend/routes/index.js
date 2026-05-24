@@ -8,11 +8,11 @@ const apiRouter = Router();
 
 // API root
 apiRouter.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        app: "Litterly",
-        message: "API is running"
-    });
+  res.status(200).json({
+    success: true,
+    app: "Litterly",
+    message: "API is running",
+  });
 });
 
 // Routes
@@ -22,10 +22,10 @@ apiRouter.use("/missions", authMiddleware, missionRoutes);
 
 // API 404
 apiRouter.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "API route not found"
-    });
+  res.status(404).json({
+    success: false,
+    message: "API route not found",
+  });
 });
 
 export default apiRouter;
