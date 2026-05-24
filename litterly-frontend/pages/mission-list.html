@@ -42,7 +42,9 @@
                 <img src="../assets/sample.png" alt="" class="profile-photo" />
               </div>
               <div class="profile-details">
-                <section class="full-name" id="username">Daijvane Archer</section>
+                <section class="full-name" id="username">
+                  Daijvane Archer
+                </section>
                 <section class="user-points">
                   <i class="fa-solid fa-leaf"></i>
                   <span id="points">2,450</span>
@@ -76,35 +78,41 @@
               </section>
             </section>
           </nav>
-      </aside>
+        </aside>
 
-      <main class="main-content-wrapper">
-        <div class="content-header">
-          <h1 class="header-text">
-            missions 
-          </h1>
-          <div class="header-filter">
-            <div class="filterbar-wrapper">
-              <div class="filter-text active">
-                All missions
-              </div>
-              <div class="filter-text">
-                Active
-              </div>
-              <div class="filter-text">
-                Ongoing
-              </div>
-              <div class="filter-text">
-                Completed
+        <main class="main-content-wrapper">
+          <div class="content-header">
+            <h1 class="header-text">missions</h1>
+            <div class="header-filter">
+              <div class="filterbar-wrapper">
+                <a href="./mission-list.html" class="filter-text" data-type=""
+                  >All missions</a
+                >
+                <a
+                  href="./mission-list.html?type=open"
+                  class="filter-text"
+                  data-type="open"
+                  >Open</a
+                >
+                <a
+                  href="./mission-list.html?type=ongoing"
+                  class="filter-text"
+                  data-type="ongoing"
+                  >Ongoing</a
+                >
+                <a
+                  href="./mission-list.html?type=completed"
+                  class="filter-text"
+                  data-type="completed"
+                  >Completed</a
+                >
               </div>
             </div>
           </div>
-        </div>
 
-        <section class="cards-wrapper">
-        
-        </section>
-      </main>
+          <section class="cards-wrapper"></section>
+        </main>
+      </div>
     </div>
     <script src="../js/utils/notify.js"></script>
     <script src="../js/config.js"></script>
@@ -113,6 +121,5 @@
     <script src="../js/main.js"></script>
 
     <script src="../js/pages/missions.js"></script>
-
   </body>
 </html>

@@ -1,7 +1,9 @@
-async function getMissions() {
+async function getMissions(type = null) {
   try {
+    const params = type ? { type } : {};
     const res = await axios.get(`${CONFIG.API_BASE_URL}/missions`, {
       withCredentials: true,
+      params,
     });
     return res.data;
   } catch (err) {

@@ -24,7 +24,7 @@
 }
 
 .filter-text.active {
-  border-bottom: 2px solid var(--lighter-neutral-color);
+  border-bottom: 3px solid var(--accent-color);
 }
 
 /*===========================================================================CARDS */
@@ -55,4 +55,14 @@
   flex-direction: column;
   gap: 0.3rem;
   padding: 0.5rem 0.5rem 2rem 0.5rem;
+}
+
+.cards-loading {
+  /* background-color: red; */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-color);
+  font-size: 4em;
 }

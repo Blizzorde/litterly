@@ -1,9 +1,10 @@
 const cardsWrapper = document.querySelector(".cards-wrapper");
 
 function renderLoading() {
+  cardsWrapper.style.display = "flex";
   cardsWrapper.innerHTML = `
     <div class="cards-loading">
-      <i class="fa-solid fa-spinner fa-spin"></i>
+      <i class="fa-solid fa-circle-notch fa-spin"></i>
     </div>
   `;
 }
@@ -15,6 +16,7 @@ function renderMissions(missions) {
   }
 
   console.log(missions);
+  cardsWrapper.style.display = "grid";
 
   cardsWrapper.innerHTML = missions
     .map(
@@ -31,14 +33,31 @@ function renderMissions(missions) {
     .join("");
 }
 
+function getTypeFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get("type");
+  const allowed = ["open", "ongoing", "completed"];
+  return allowed.includes(type) ? type : null;
+}
+
+function setActiveFilter(type) {
+  document.querySelectorAll(".filter-text").forEach((el) => {
+    el.classList.remove("active");
+    const elType = el.dataset.type;
+    if ((!type && !elType) || elType === type) el.classList.add("active");
+  });
+}
+
 async function loadMissions() {
+  const type = getTypeFromUrl();
+  setActiveFilter(type);
   renderLoading();
+
   try {
-    const missions = await getMissions();
+    const missions = await getMissions(type);
     renderMissions(missions);
   } catch (err) {
     cardsWrapper.innerHTML = "";
-    console.error(err);
     showNotif("fa-circle-xmark", "Error", "Failed to load missions", "danger");
   }
 }

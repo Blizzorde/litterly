@@ -5,10 +5,25 @@ import requireRole from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
-// PUBLIC - get missions
+const ALLOWED_PUBLIC_STATUSES = ["open", "ongoing", "completed"];
+
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM missions");
+    const { type } = req.query;
+
+    if (type && !ALLOWED_PUBLIC_STATUSES.includes(type)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid filter type" });
+    }
+
+    const query = type
+      ? "SELECT * FROM missions WHERE status = ?"
+      : `SELECT * FROM missions WHERE status IN ('open', 'ongoing', 'completed')`;
+
+    const params = type ? [type] : [];
+
+    const [rows] = await pool.query(query, params);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ message: "Error fetching missions" });
