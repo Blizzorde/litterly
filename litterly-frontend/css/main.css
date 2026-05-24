@@ -13,6 +13,8 @@
   --sidebar-active: #065f46;
   --sidebar-active-text: #8bd6b7;
   --sidebar-divider: #1a5847;
+  --main-bg-color: #f8f9ff;
+  --link-color: #006c4b;
 }
 
 *,
@@ -77,6 +79,9 @@ a {
 
 .main-content-wrapper {
   flex: 1;
+  padding: 1rem;
+  background-color: var(--main-bg-color);
+  overflow-y: auto;
 }
 
 .sidebar {
@@ -199,4 +204,19 @@ a {
 .logout-section {
   display: flex;
   border-top: 1px solid var(--side);
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1.5rem;
+}
+
+.header-text {
+  display: flex;
+  font-family: "Be Vietnam Pro", "sans-serif";
+  text-transform: uppercase;
+  font-size: 3rem;
+  color: var(--primary-color);
 }
