@@ -9,11 +9,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-if (!process.env.SESSION_SECRET) {
-  console.error("FATAL ERROR: SESSION_SECRET is not defined in .env file.");
-  process.exit(1);
-}
-
 // Parsing
 app.use(express.json());
 app.use(cookieParser());
