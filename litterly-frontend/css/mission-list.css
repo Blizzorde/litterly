@@ -24,7 +24,6 @@
 }
 
 .content-container{
-    background-color: firebrick;
     display: flex;
     width: 100%;
 }
@@ -118,7 +117,34 @@
 }
 
 .main-content-wrapper{
-    background-color: #0150fa;
     flex: 1;
+}
+
+.content-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filterbar-wrapper{
+    background-color: green;
+    display: flex;
+}
+
+.filter-text{
+    background-color: orange;
+    display: flex;
+}
+
+.filter-text.active{
+    background-color: red;
+}
+
+.card-wrapper{
+    display: flex;
+}
+
+.card-content-container{
+    background-color: purple;
 }
 
