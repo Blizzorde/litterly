@@ -10,65 +10,140 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/mission-detail.css" />
+  <link rel="stylesheet" href="../css/mission-list.css">
+    <script
+    src="https://kit.fontawesome.com/5f8a667392.js"
+    crossorigin="anonymous"
+  ></script>
 </head>
 
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <h2 class="logo">Litterly <span class="badge">User</span></h2>
-        <p class="brand-tagline">Cleanups made simple.</p>
-      </div>
+  <div class="page-container">
+        <aside class="sidebar">
+          <div class="logo-section">
+            <img
+              src="../assets/logo-litterly-dark-transparent.png"
+              class="logo"
+            />
+          </div>
+          <nav class="wrapper-sidebar-content" aria-label="Main navigation">
+            <div class="profile">
+              <div class="profile-photo-wrapper">
+                <img src="../assets/sample.png" alt="" class="profile-photo" />
+              </div>
+              <div class="profile-details">
+                <section class="full-name">Daijvane Archer</section>
+                <section class="user-points">
+                  <i class="fa-solid fa-leaf"></i>
+                  2,450
+                </section>
+              </div>
+            </div>
+            <section class="wrapper-sidebar-items-and-logout">
+              <div class="wrapper-sidebar-item">
+                <a href="./mission-list.html" class="sidebar-item active">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                  </div>
+                  <div class="sidebar-item-text">Missions</div>
+                </a>
 
-      <nav aria-label="Main navigation">
-        <ul>
-          <li class="active"><a href="../index.html">Missions</a></li>
-          <li><a href="attendance.html">My Joined Missions</a></li>
-          <li><a href="#">Rewards</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </nav>
+                <a href="./shop.html" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-shop"></i>
+                  </div>
+                  <div class="sidebar-item-text">Shop</div>
+                </a>
+              </div>
 
-      <div class="user-profile">
-        <div class="avatar">M</div>
-        <div>
-          <p class="name">Mission Member</p>
-          <p class="role">Ready to help</p>
-        </div>
-      </div>
-    </aside>
+              <section class="logout-section">
+                <a href="#" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  </div>
+                  <div class="sidebar-item-text">Logout</div>
+                </a>
+              </section>
+            </section>
+          </nav>
+      </aside>
 
-    <main class="main-content">
-      <a class="back-link" href="../index.html">Back to missions</a>
+      <main class="main-content-wrapper">
 
-      <section id="mission-detail" class="detail-layout" aria-live="polite">
-        <div class="detail-card">
-          <p class="eyebrow">Mission details</p>
-          <h1>Loading mission...</h1>
-          <p class="hero-copy">Please wait while the mission information loads.</p>
-        </div>
-      </section>
-    </main>
+            <div class="content-header">
+              <h1 class="header-text">
+                Mission Details 
+              </h1>
+            </div>
+
+          <section class="mission-details-cards-wrapper">
+            <section class="mission-detail-cards-left-container">
+              <div class="card-thumbnail-wrapper">
+                <div class="card-thumbnail-overlay">
+
+                  <div class="overlay-header">
+                    <div class="overlay-header-wrapper">
+                      <i class="fa-solid fa-star"></i>
+                      10 points
+                    </div>
+                  </div>
+
+                  <div class="overlay-footer">
+                    <div class="overlay-footer-wrapper">
+                      <div class="overlay-status">
+                        status of mission
+                      </div>
+                      <h1 class="overlay-title">
+                        mission title
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-description-wrapper">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet officiis laudantium harum alias? Officiis vero nesciunt cumque veniam beatae, sapiente voluptas laboriosam unde modi dolor adipisci enim ipsum sunt illum.
+              </div>
+            </section>
+
+            <section class="mission-detail-cards-right-container">
+              <div class="card-extra-details-wrapper">
+                <div class="extra-details-wrapper">
+                  <div class= "extra-details-text-wrapper">
+                    <div class="extra-details-tiny-text">
+                      <p class="mission-description">
+                        location
+                      </p>
+                      <div class="extra-details-tiny-text-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                      </div>
+                    </div>
+                    <h1 class="mission-title">
+                      Suriname
+                    </h1>
+                  </div>
+                  <div class= "extra-details-text-wrapper">
+                    <div class="extra-details-tiny-text">
+                      <p class="mission-description">
+                        location
+                      </p>
+                      <div class="extra-details-tiny-text-icon-wrapper">
+                        <i class="fa-solid fa-location-dot"></i>
+                      </div>
+                    </div>
+                    <h1 class="mission-title">
+                      Suriname
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </section>
+          
+      </main>
   </div>
 
-  <div id="join-modal" class="modal-overlay hidden">
-    <div class="modal-card modal-card-sm" role="dialog" aria-modal="true" aria-labelledby="join-modal-title">
-      <div class="modal-header">
-        <h2 id="join-modal-title">Join Mission</h2>
-        <button id="join-close-btn" class="icon-button" type="button" aria-label="Close">x</button>
-      </div>
-      <div class="modal-body">
-        <p class="join-message">Join <strong id="join-mission-name"></strong> and add it to your missions?</p>
-        <p class="modal-note">You can return to the mission board after joining.</p>
-      </div>
-      <div class="modal-footer">
-        <button id="join-cancel-btn" class="btn-outline" type="button">Cancel</button>
-        <button id="join-confirm-btn" class="btn-primary" type="button">Join Mission</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast-container" aria-live="polite"></div>
 
   <script src="../js/pages/mission-detail.js"></script>
 </body>
