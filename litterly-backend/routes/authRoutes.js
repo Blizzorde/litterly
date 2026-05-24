@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "../config/db.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -10,15 +11,13 @@ router.post("/register", async (req, res) => {
   //TODO: add guardclause for when user already exists
   try {
     const hashed = await bcrypt.hash(password, 10);
-
     await pool.query(
       "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
       [username, email, hashed],
     );
-
-    res.json({ message: "User created" });
+    res.json({ success: true, message: "User created" });
   } catch (err) {
-    res.status(500).json({ message: "Error creating user" });
+    res.status(500).json({ success: false, message: "Error creating user" });
   }
 });
 
@@ -26,7 +25,6 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, username, password } = req.body;
 
-  // Need at least one identifier and a password
   if ((!email && !username) || !password) {
     return res.status(400).json({
       success: false,
@@ -35,7 +33,6 @@ router.post("/login", async (req, res) => {
   }
 
   try {
-    // Use email if provided, otherwise username
     const field = email ? "email" : "username";
     const value = email ?? username;
 
@@ -44,30 +41,45 @@ router.post("/login", async (req, res) => {
     ]);
 
     if (rows.length === 0) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials",
-      });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     const user = rows[0];
-
     const match = await bcrypt.compare(password, user.password_hash);
 
     if (!match) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials",
-      });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
-    // Set session
-    req.session.user = {
+    // Sign token
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        role: user.role_id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN },
+    );
+    console.log({
       id: user.id,
       email: user.email,
       username: user.username,
-      role: user.role,
-    };
+      role: user.role_id,
+    });
+
+    // Send as httpOnly cookie
+    res.cookie("ltr_token", token, {
+      httpOnly: true,
+      secure: false, // set true in production with HTTPS
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
+    });
 
     res.status(200).json({
       success: true,
@@ -80,19 +92,16 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Login error",
-      error: err.message,
-    });
+    res
+      .status(500)
+      .json({ success: false, message: "Login error", error: err.message });
   }
 });
 
 // LOGOUT
 router.post("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.json({ message: "Logged out" });
-  });
+  res.clearCookie("ltr_token");
+  res.json({ success: true, message: "Logged out" });
 });
 
 export default router;
