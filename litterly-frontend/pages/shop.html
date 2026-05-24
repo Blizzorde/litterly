@@ -1,134 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Board - Litterly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/mission-list.css" />
+    <script
+      src="https://kit.fontawesome.com/5f8a667392.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Litterly Shop</title>
-  <link rel="stylesheet" href="../css/shop.css" />
-</head>
-
-<body>
-  <div class="container">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <img src="../assets/log-litterly.png" alt="Litterly Logo" class="sidebar-logo" />
-
-      <div class="brand">
-        <div class="logo">
-          Shop
-          <span class="admin-badge">user </span>
-        </div>
-      </div>
-
-      <nav>
-        <ul>
-          <li class="active">Dashboard</li>
-          <li>⚙️Settings</li>
-        </ul>
-      </nav>
-
-      <div class="user-profile">
-        <div class="avatar">L</div>
-
-        <div>
-          <div class="name">Luis</div>
-          <div class="role">Administrator</div>
-        </div>
-      </div>
-
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- POINTS HEADER -->
-      <div class="top-header">
-
-        <h1>Shop Dashboard</h1>
-
-        <div style="width: 300px;">
-          <div style="display:flex; align-items:center; justify-content:space-between;">
-            <span>⭐ Points</span>
-            <span>150 / 200</span>
+  <body>
+    <div class="page-container">
+      <div class="content-container">
+        <aside class="sidebar">
+          <div class="logo-section">
+            <img
+              src="../assets/logo-litterly-dark-transparent.png"
+              class="logo"
+            />
           </div>
-
-          <div style="width:100%; height:10px; background:#e5e7eb; border-radius:10px; margin-top:6px;">
-            <div style="width:75%; height:10px; background:#257055; border-radius:10px;"></div>
-          </div>
-        </div>
-
-        <button class="btn-primary">
-          Add Product
-        </button>
-
-      </div>
-
-      <!-- PRODUCTS -->
-      <section class="products">
-
-        <!-- DIGICEL CARD -->
-        <div class="modal-card">
-
-          <div class="modal-header">
-            <h2>Digicel Plans</h2>
-          </div>
-
-          <div class="modal-body">
-            <p>Choose your beltegoed package:</p>
-
-            <div>
-              <h3>💚 50GB Plan - 50 Points</h3>
-              <p>Unlimited WhatsApp + Calls</p>
+          <nav class="wrapper-sidebar-content" aria-label="Main navigation">
+            <div class="profile">
+              <div class="profile-photo-wrapper">
+                <img src="../assets/sample.png" alt="" class="profile-photo" />
+              </div>
+              <div class="profile-details">
+                <section class="full-name">Daijvane Archer</section>
+                <section class="user-points">
+                  <i class="fa-solid fa-leaf"></i>
+                  2,450
+                </section>
+              </div>
             </div>
+            <section class="wrapper-sidebar-items-and-logout">
+              <div class="wrapper-sidebar-item">
+                <a href="#" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-list-check"></i>
+                  </div>
+                  <div class="sidebar-item-text">Missions</div>
+                </a>
 
-            <div>
-              <h3>💚 30GB Plan - 30 Points</h3>
-              <p>Standard Internet + WhatsApp</p>
-            </div>
+                <a href="#" class="sidebar-item active">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-shop"></i>
+                  </div>
+                  <div class="sidebar-item-text">Shop</div>
+                </a>
+              </div>
 
-            <div>
-              <h3>💚 20GB Plan - 20 Points</h3>
-              <p>Basic Internet Package</p>
-            </div>
+              <section class="logout-section">
+                <a href="#" class="sidebar-item">
+                  <div class="sidebar-item-icon">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  </div>
+                  <div class="sidebar-item-text">Logout</div>
+                </a>
+              </section>
+            </section>
+          </nav>
+        </aside>
 
-          </div>
+        <main class="main-content-wrapper">missioncard</main>
+      </div>
+    </div>
 
-          <div class="modal-footer">
-            <button class="btn-outline">Details</button>
-            <button class="btn-primary">Activate</button>
-          </div>
-
-        </div>
-
-        <!-- TELSUR CARD -->
-        <div class="modal-card">
-
-          <div class="modal-header">
-            <h2>Telsur Unlimited Plan</h2>
-          </div>
-
-          <div class="modal-body">
-            <p>
-              Unlimited Calls + 50GB Internet Package
-            </p>
-
-            <h3>40 Points</h3>
-          </div>
-
-          <div class="modal-footer">
-            <button class="btn-outline">Details</button>
-            <button class="btn-primary">Activate</button>
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-</body>
-
+    <script src="js/main.js"></script>
+  </body>
 </html>
