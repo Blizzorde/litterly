@@ -5,21 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Litterly | Login</title>
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
     <script
       src="https://kit.fontawesome.com/5f8a667392.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </head>
   <body>
     <div class="page-container">
-      <div class="main-login-container">
-        <div class="login-wrapper">
-          <div class="login-img-section">
+      <div class="main-auth-container">
+        <div class="auth-wrapper">
+          <div class="auth-img-section">
             <div class="small-logo-cont">
               <div class="small-logo-img-wrapper">
                 <img
-                  class="logo-login-img"
+                  class="logo-auth-img"
                   src="../assets/logo-litterly-dark-transparent.png"
                   alt=""
                 />
@@ -34,24 +40,24 @@
             </div>
             <div class="count-stats">
               <div class="count-stat">
-                <div class="number">12.4k</div>
+                <div class="number">5+</div>
                 <div class="subtext">Active Cleaners</div>
               </div>
               <div class="count-stat">
-                <div class="number">45t</div>
-                <div class="subtext">Litter Cleaned</div>
+                <div class="number">10+</div>
+                <div class="subtext">Locations Cleaned</div>
               </div>
             </div>
           </div>
-          <div class="login-form-section">
-            <div class="login-form-title-cont">
-              <h1 class="login-form-title">Welcome Back</h1>
-              <p class="login-form-subtitle">
+          <div class="auth-form-section">
+            <div class="auth-form-title-cont">
+              <h1 class="auth-form-title">Welcome Back</h1>
+              <p class="auth-form-subtitle">
                 Log in to continue your environmental mission.
               </p>
             </div>
-            <div class="login-form-cont">
-              <form class="login-form">
+            <div class="auth-form-cont">
+              <form class="auth-form" id="login-form">
                 <div class="input-group">
                   <label for="email">Email Address</label>
                   <div class="input-wrapper">
@@ -67,35 +73,47 @@
                       type="password"
                       name="password"
                       id="password"
-                      requierd
+                      required
                     />
                   </div>
                 </div>
-                <button type="submit" class="btn">
+                <button type="submit" class="btn" id="login-btn">
                   Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 </button>
               </form>
             </div>
             <div class="demo-section-cont">
               <div class="text-divider">Demo Auto-Login</div>
-              <div class="demo-auto-login-btn-cont">
-                <button class="demo-auto-login-btn primary">
+              <div class="demo-auto-auth-btn-cont">
+                <button
+                  class="demo-auto-auth-btn primary login"
+                  id="admin-btn-demo"
+                >
                   Auto-Login as Admin
                 </button>
-                <button class="demo-auto-login-btn secondary">
+                <button
+                  class="demo-auto-auth-btn secondary login"
+                  id="user-btn-demo"
+                >
                   Auto-Login as User
                 </button>
               </div>
             </div>
-            <div class="no-account-section">
+            <div class="account-section">
               Dont have an account?
               <span>
-                <a href="#" class="internal-link"> Join the community</a>
+                <a href="./register.html" class="internal-link">
+                  Join the community</a
+                >
               </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script src="../js/utils/notify.js"></script>
+    <script src="../js/pages/login.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api/loginApi.js"></script>
   </body>
 </html>

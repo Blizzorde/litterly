@@ -1,251 +1,81 @@
-/* LOGIN PAGE STYLING */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 
-.main-login-container {
-  background-color: #ececec;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 10rem;
+  background-image: url("https://images.unsplash.com/photo-1773332611522-06b86b48cbf1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+
+    background-size: cover;
+    /* fills screen */
+    background-position: center;
+    /* keeps it centered */
+    background-repeat: no-repeat;
+    /* no repeating */
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.login-wrapper {
-  background-color: white;
-  border-radius: 1rem;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  display: flex;
-  border-radius: 1rem;
-  overflow: hidden;
+.login-box {
+    background: transparent;
+    padding: 40px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(245, 243, 243, 0.3);
 }
 
-.login-img-section,
-.login-form-section {
-  flex-basis: 50%;
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
 }
 
-.login-img-section {
-  padding: 3rem 2rem;
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgba(1, 18, 12, 0.8),
-      rgb(4, 95, 63, 0.6),
-      rgba(1, 18, 12, 0.8)
-    ),
-    url("../assets/litterly-login-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.input-box {
+    margin-bottom: 20px;
 }
 
-.login-form-section {
-  padding: 3rem 5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
 }
 
-.small-logo-img-wrapper {
-  width: 8rem;
-}
-
-.logo-login-img {
-  width: 100%;
-}
-
-.count-stats {
-  display: flex;
-  flex-direction: row;
-}
-
-.count-stat {
-  flex-basis: 50%;
-}
-
-.quote-img-cont .quote {
-  font-family: "Be Vietnam Pro", "sans-serif";
-}
-
-.quote-img-cont .subheadline {
-  color: var(--accent-light-color);
-  text-transform: uppercase;
-  font-weight: 700;
-  position: relative;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  font-size: 0.8em;
-}
-
-.quote-img-cont .subheadline::before {
-  position: relative;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 2rem;
-  height: 4px;
-  border-radius: 1rem;
-  background-color: var(--accent-light-color);
-  display: inline-block;
-}
-
-.quote-img-cont {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.count-stat {
-  border-top: 1px solid var(--accent-light-color);
-  padding-top: 2rem;
-}
-.count-stat .number {
-  font-weight: 900;
-  font-size: 1.3em;
-
-  color: var(--accent-light-color);
-  font-family: "Be Vietnam Pro", "sans-serif";
-}
-
-/* RIGHT SIDE LOGIN FORM */
-
-.login-form-title {
-  color: var(--primary-color);
-  font-weight: 900;
-}
-
-.login-form-title-cont {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 0;
-  gap: 0.25rem;
-  /* background-color: red; */
-}
-
-.login-form-cont {
-  /* background-color: red; */
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-.login-form-cont .input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  /* background-color: yellow; */
-}
-
-.login-form-cont .input-group label {
-  text-transform: uppercase;
-  font-family: "Be Vietnam Pro", "sans-serif";
-  color: var(--primary-color);
-  font-weight: 600;
-  font-size: 0.8em;
-}
-
-.login-form-cont .input-group .input-wrapper input[type="email"],
-.login-form-cont .input-group .input-wrapper input[type="password"] {
-  /* background-color: red; */
-  border-radius: 1rem;
-  outline: none;
-  border: none;
-  background-color: var(--lighter-accent-light-color);
-  padding: 1rem 1rem 1rem 3.25rem;
-  width: 100%;
+.input-box input:focus {
+    border-color: rgb(222, 222, 227);
 }
 
 .btn {
-  background-color: var(--primary-color);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  color: white;
-  outline: 0;
-  text-decoration: none;
-  appearance: none;
-  cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    background: #0a1f44;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.no-account-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 0.9em;
+.extra {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
 }
 
-.no-account-section .internal-link {
-  color: var(--link-color);
-  font-weight: 600;
-  text-decoration: underline;
+.extra a {
+    color: #dde0e6;
+    text-decoration: none;
 }
 
-.text-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  gap: 1rem;
-  color: var(--neutral-color);
-  font-weight: 700;
-  font-size: 0.8rem;
+.extra a:hover {
+    text-decoration: underline;
 }
 
-.text-divider::before,
-.text-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background-color: var(--lighter-neutral-color);
+.extra {
+    color: white;
 }
-
-.demo-auto-login-btn-cont {
-  display: flex;
-  padding: 1rem 1rem;
-  gap: 1rem;
-}
-
-.demo-auto-login-btn {
-  flex-basis: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--link-color);
-  font-size: 0.9em;
-  cursor: pointer;
-}
-
-.demo-auto-login-btn.primary {
-  background-color: var(--link-color);
-  color: white;
-}
-
-.demo-auto-login-btn.secondary {
-  color: var(--link-color);
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.input-wrapper .icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--neutral-color);
-  left: 1rem;
-  font-size: 1.25rem;
-  z-index: 10;
+#border{
+    text-align: center;
 }

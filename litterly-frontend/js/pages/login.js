@@ -1,30 +1,75 @@
-import { login } from "../api/loginApi.js";
+const adminBtn = document.querySelector("#admin-btn-demo");
+const userBtn = document.querySelector("#user-btn-demo");
+const loginBtn = document.querySelector("#login-btn");
 
-const loginForm = document.getElementById("login-form");
-const toastContainer = document.getElementById("toast-container");
+const emailInput = document.querySelector("#email");
+const passwordInput = document.querySelector("#password");
 
-function showToast(message, type = "success") {
-  const toast = document.createElement("div");
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  toastContainer.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
+const loginForm = document.querySelector("#login-form");
+const errMsg = document.querySelector("#err-msg");
+
+function setLoading(loading) {
+  if (loading) {
+    loginBtn.disabled = true;
+    loginBtn.innerHTML =
+      '<i class="fa-solid fa-circle-notch fa-spin"></i> Logging in...';
+    emailInput.disabled = true;
+    passwordInput.disabled = true;
+  } else {
+    loginBtn.disabled = false;
+    loginBtn.innerHTML =
+      '  Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>';
+    emailInput.disabled = false;
+    passwordInput.disabled = false;
+  }
 }
 
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value.trim();
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
   try {
-    await login(email, password);
-    showToast("Logged in successfully. Redirecting to missions...", "success");
+    setLoading(true);
+    await loginUser(email, password);
+
+    showNotif("fa-circle-check", "Success", "Logged in!", "success");
     setTimeout(() => {
-      window.location.href = "missions.html";
-    }, 1000);
+      setLoading(false);
+      window.location.href = "/";
+    }, 1500);
   } catch (err) {
-    showToast(err.message || "Login failed", "error");
+    setLoading(false);
+
+    let msg = "";
+    switch (err.status) {
+      case 0:
+        msg = "Cannot reach server, check your connection";
+        showNotif("fa-circle-xmark", "Login Failed", msg, "danger");
+        break;
+      case 401:
+        msg = "Wrong Email or Password";
+        showNotif("fa-circle-xmark", "Login Failed", msg, "danger");
+        break;
+      case 404:
+        msg = "Account Not Found";
+        showNotif("fa-circle-xmark", "Login Failed", msg, "danger");
+        break;
+      default:
+        msg = "Something went wrong";
+        showNotif("fa-circle-xmark", "Login Failed", msg, "danger");
+        break;
+    }
   }
 });
 
+adminBtn.addEventListener("click", () => {
+  emailInput.value = "admin@litterly.sr";
+  passwordInput.value = "admin-litterly";
+});
+
+userBtn.addEventListener("click", () => {
+  emailInput.value = "user@litterly.sr";
+  passwordInput.value = "user-litterly";
+});
