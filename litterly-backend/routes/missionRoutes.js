@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "../config/db.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import requireRole from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router.get("/:id", async (req, res) => {
 // PRIVATE - join mission
 router.post("/join", async (req, res) => {
   const { missionId } = req.body;
-  const userId = req.session.user.id;
+  const userId = req.user.id;
 
   try {
     await pool.query(
@@ -50,7 +51,7 @@ router.post("/join", async (req, res) => {
   }
 });
 
-router.post("/:id/distribute-points", async (req, res) => {
+router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
   const missionId = req.params.id;
 
   const connection = await pool.getConnection();

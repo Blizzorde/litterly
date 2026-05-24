@@ -1,8 +1,7 @@
 import express from "express";
-import session from "express-session";
 import dotenv from "dotenv";
 import path from "path";
-
+import cookieParser from "cookie-parser";
 import apiRouter from "./litterly-backend/routes/index.js";
 
 dotenv.config();
@@ -17,22 +16,7 @@ if (!process.env.SESSION_SECRET) {
 
 // Parsing
 app.use(express.json());
-
-// Sessions
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    name: "ltr_ses",
-    cookie: {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60,
-    },
-  }),
-);
+app.use(cookieParser());
 
 // Static frontend
 app.use(express.static("litterly-frontend"));
