@@ -120,10 +120,18 @@
     flex: 1;
 }
 
+/*=============================================================MAIN CONTENT HEADER */
+
 .content-header{
+    background-color: greenyellow;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.header-text{
+    display: flex;
+    font-size: 5rem;
 }
 
 .filterbar-wrapper{
@@ -140,8 +148,12 @@
     background-color: red;
 }
 
+
+/*===========================================================================CARDS */
 .card-wrapper{
     display: flex;
+    justify-content: space-between;
+    
 }
 
 .card-content-container{
