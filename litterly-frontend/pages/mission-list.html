@@ -12,10 +12,18 @@
     />
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/mission-list.css" />
+    <!-- REQUIRED GLOBAL SCRIPTS -->
     <script
       src="https://kit.fontawesome.com/5f8a667392.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- REQUIRED GLOBAL SCRIPTS -->
   </head>
 
   <body>
@@ -34,10 +42,10 @@
                 <img src="../assets/sample.png" alt="" class="profile-photo" />
               </div>
               <div class="profile-details">
-                <section class="full-name">Daijvane Archer</section>
+                <section class="full-name" id="username"></section>
                 <section class="user-points">
                   <i class="fa-solid fa-leaf"></i>
-                  2,450
+                  <span id="points">0</span>
                 </section>
               </div>
             </div>
@@ -68,71 +76,48 @@
               </section>
             </section>
           </nav>
-      </aside>
+        </aside>
 
-      <main class="main-content-wrapper">
-        <div class="content-header">
-          <h1 class="header-text">
-            missions 
-          </h1>
-          <div class="header-filter">
-            <div class="filterbar-wrapper">
-              <div class="filter-text active">
-                All missions
-              </div>
-              <div class="filter-text">
-                Active
-              </div>
-              <div class="filter-text">
-                Ongoing
-              </div>
-              <div class="filter-text">
-                Completed
+        <main class="main-content-wrapper">
+          <div class="content-header">
+            <h1 class="header-text">missions</h1>
+            <div class="header-filter">
+              <div class="filterbar-wrapper">
+                <a href="./mission-list.html" class="filter-text" data-type=""
+                  >All missions</a
+                >
+                <a
+                  href="./mission-list.html?type=open"
+                  class="filter-text"
+                  data-type="open"
+                  >Open</a
+                >
+                <a
+                  href="./mission-list.html?type=ongoing"
+                  class="filter-text"
+                  data-type="ongoing"
+                  >Ongoing</a
+                >
+                <a
+                  href="./mission-list.html?type=completed"
+                  class="filter-text"
+                  data-type="completed"
+                  >Completed</a
+                >
               </div>
             </div>
           </div>
-        </div>
 
-        <section class="cards-wrapper">
-
-          <a href="#" class="card-wrapper">
-            <div class="card-thumbnail"></div>
-            <div class="card-text-content-wrapper">
-              <h1 class="mission-title">
-                mission title clean up
-              </h1>
-              <p class="mission-description">
-                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
-              </p>
-            </div>
-          </a>
-          <a href="#" class="card-wrapper">
-            <div class="card-thumbnail"></div>
-            <div class="card-text-content-wrapper">
-              <h1 class="mission-title">
-                mission title clean up
-              </h1>
-              <p class="mission-description">
-                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
-              </p>
-            </div>
-          </a>
-          <a href="#" class="card-wrapper">
-            <div class="card-thumbnail"></div>
-            <div class="card-text-content-wrapper">
-              <h1 class="mission-title">
-                mission title clean up
-              </h1>
-              <p class="mission-description">
-                description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, repellendus 
-              </p>
-            </div>
-          </a>
-          
-        </section>
-      </main>
+          <section class="cards-wrapper"></section>
+        </main>
+      </div>
     </div>
+    <script src="../js/utils/notify.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api/authApi.js"></script>
+    <script src="../js/api/missionsApi.js"></script>
+    <script src="../js/main.js"></script>
 
-    <script src="js/main.js"></script>
+    <script src="../js/pages/missions.js"></script>
   </body>
 </html>
