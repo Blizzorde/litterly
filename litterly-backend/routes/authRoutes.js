@@ -7,6 +7,7 @@ const router = express.Router();
 // REGISTER
 router.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
+  //TODO: add guardclause for when user already exists
   try {
     const hashed = await bcrypt.hash(password, 10);
 

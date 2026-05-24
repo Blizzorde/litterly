@@ -1,12 +1,146 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Litterly | Home</title>
-  </head>
-  <body>
-    <!-- Hier komt een landing page voor Litterly -->
-    <h1>Home Page</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Board - Litterly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <h2 class="logo">Litterly <span class="badge">User</span></h2>
+        <p class="brand-tagline">Cleanups made simple.</p>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li class="active"><a href="index.html">Missions</a></li>
+          <li><a href="pages/attendance.html">My Joined Missions</a></li>
+          <li><a href="#">Rewards</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="user-profile">
+        <div class="avatar">M</div>
+        <div>
+          <p class="name">Mission Member</p>
+          <p class="role">Ready to help</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="hero-panel">
+        <div>
+          <p class="eyebrow">Community mission board</p>
+          <h1>Find or create a cleanup mission</h1>
+          <p class="hero-copy">Join nearby cleanup efforts, track mission points, and suggest new places that need attention.</p>
+        </div>
+        <button id="create-mission-btn" class="btn-primary" type="button">Create Mission</button>
+      </header>
+
+      <section class="toolbar" aria-label="Mission filters">
+        <div class="filters">
+          <button class="active" type="button" data-filter="all">All</button>
+          <button type="button" data-filter="active">Open</button>
+          <button type="button" data-filter="pending">Planned</button>
+          <button type="button" data-filter="completed">Completed</button>
+        </div>
+        <label class="search-box">
+          <span>Search</span>
+          <input id="mission-search" type="search" placeholder="Search by title, location, or details" />
+        </label>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>Available missions</h2>
+          <p id="mission-count">Loading missions...</p>
+        </div>
+        <div id="missions-list" class="missions-grid" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="mission-modal" class="modal-overlay hidden">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h2 id="modal-title">Create a Mission</h2>
+        <button id="modal-close-btn" class="icon-button" type="button" aria-label="Close">x</button>
+      </div>
+
+      <form id="mission-form" class="modal-body">
+        <div class="form-group">
+          <label for="input-title">Mission title</label>
+          <input id="input-title" type="text" placeholder="Waterkant cleanup" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="input-location">Location</label>
+            <input id="input-location" type="text" placeholder="Paramaribo" required />
+          </div>
+          <div class="form-group">
+            <label for="input-date">Date</label>
+            <input id="input-date" type="date" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="input-status">Status</label>
+            <select id="input-status">
+              <option value="Active">Open</option>
+              <option value="Pending">Planned</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="input-points">Points</label>
+            <input id="input-points" type="number" min="0" step="5" value="50" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="input-details">Mission details</label>
+          <textarea id="input-details" rows="4" placeholder="What should volunteers know before joining?"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button id="modal-cancel-btn" class="btn-outline" type="button">Cancel</button>
+          <button class="btn-primary" type="submit">Add Mission</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="join-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-sm" role="dialog" aria-modal="true" aria-labelledby="join-modal-title">
+      <div class="modal-header">
+        <h2 id="join-modal-title">Join Mission</h2>
+        <button id="join-close-btn" class="icon-button" type="button" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+        <p class="join-message">Join <strong id="join-mission-name"></strong> and add it to your missions?</p>
+        <p class="modal-note">You can still view the mission details after joining.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="join-cancel-btn" class="btn-outline" type="button">Cancel</button>
+        <button id="join-confirm-btn" class="btn-primary" type="button">Join Mission</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script src="js/main.js"></script>
+</body>
+
 </html>

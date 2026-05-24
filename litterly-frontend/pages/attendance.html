@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Attendance - Litterly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <h2 class="logo">Litterly <span class="badge">User</span></h2>
+        <p class="brand-tagline">Cleanups made simple.</p>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="../index.html">Missions</a></li>
+          <li class="active"><a href="attendance.html">My Joined Missions</a></li>
+          <li><a href="#">Rewards</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="user-profile">
+        <div class="avatar">M</div>
+        <div>
+          <p class="name">Mission Member</p>
+          <p class="role">Ready to help</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="hero-panel">
+        <div>
+          <p class="eyebrow">Member attendance</p>
+          <h1>Check in for joined missions</h1>
+          <p class="hero-copy">View the missions you joined and mark your own attendance when you arrive.</p>
+        </div>
+        <a class="btn-primary button-link" href="../index.html">Find Missions</a>
+      </header>
+
+      <section class="attendance-summary" aria-label="Attendance summary">
+        <div class="summary-card">
+          <span class="meta-label">Joined</span>
+          <strong id="joined-count">0</strong>
+        </div>
+        <div class="summary-card">
+          <span class="meta-label">Checked in</span>
+          <strong id="checked-in-count">0</strong>
+        </div>
+        <div class="summary-card">
+          <span class="meta-label">Pending</span>
+          <strong id="pending-count">0</strong>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>Attendance list</h2>
+          <p id="attendance-count">Loading joined missions...</p>
+        </div>
+        <div id="attendance-list" class="attendance-list" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="attendance-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-sm" role="dialog" aria-modal="true" aria-labelledby="attendance-modal-title">
+      <div class="modal-header">
+        <h2 id="attendance-modal-title">Confirm Attendance</h2>
+        <button id="attendance-close-btn" class="icon-button" type="button" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+        <p class="join-message">Mark yourself present for <strong id="attendance-mission-name"></strong>?</p>
+        <p class="modal-note">This saves your check-in time on this device.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="attendance-cancel-btn" class="btn-outline" type="button">Cancel</button>
+        <button id="attendance-confirm-btn" class="btn-primary" type="button">Mark Present</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script src="../js/pages/attendance.js"></script>
+</body>
+
+</html>

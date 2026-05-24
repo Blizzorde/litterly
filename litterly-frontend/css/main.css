@@ -1,10 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&display=swap");
+
 :root {
-    --main-color: #000 /* You define a variable up here and reuse it in the CSS later e.g. with var(--main-color) */
+  --primary-color: #004532;
+  --secondary-color: white;
+  --accent-color: #7ba72a;
+  --lighter-green: #004532;
+  --accent-light-color: #64fcbe;
+  --lighter-accent-light-color: #eff4ff;
+  --neutral-color: #64748b;
+  --lighter-neutral-color: #bec9c2;
+  --sidebar-text: #b3c8c2;
+  --sidebar-active: #065f46;
+  --sidebar-active-text: #8bd6b7;
+  --sidebar-divider: #1a5847;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Manrope", sans-serif;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-container {
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 5rem;
+  padding: 0 2rem 0 0;
+}
+
+.toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.toast-title {
+  font-weight: 600;
+}
+
+.toast-subtext {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+/* SIDEBAR */
+
+.page-container,
+.profile,
+.profile-photo-wrapper,
+.profile-details,
+.sidebar-item,
+.sidebar-item-icon,
+.mission-list,
+.sidebar {
+  display: flex;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+}
+
+.main-content-wrapper {
+  flex: 1;
+}
+
+.sidebar {
+  background-color: #004532;
+  flex-basis: 20%;
+  width: 20vw;
+  height: 100%;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  padding: 1rem;
+}
+
+.logo-section {
+  padding: 1rem 2rem 0 2rem;
+}
+
+.logo {
+  width: 100%;
+}
+
+.profile {
+  gap: 1rem;
+  /* background-color: yellow; */
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.profile-photo-wrapper {
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+}
+
+.profile-photo {
+  width: 100%;
+  border-radius: 100%;
+  border: 3px solid var(--accent-light-color);
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.profile-details .full-name {
+  font-size: 1rem;
+  color: var(--sidebar-text);
+  font-weight: 700;
+  font-size: 0.8em;
+}
+.profile-details .user-points {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.wrapper-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.wrapper-sidebar-items-and-logout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  /* background-color: yellow; */
+}
+
+.wrapper-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.sidebar-item {
+  display: flex;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: var(--sidebar-text);
+
+  border-radius: 0.5rem;
+}
+
+.sidebar-item.active {
+  background-color: var(--sidebar-active);
+  color: var(--sidebar-active-text);
+}
+
+.sidebar-item-icon {
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  font-size: 1rem;
+}
+
+.sidebar-item-text {
+  /* background-color: grey; */
+  display: flex;
+  flex-basis: 90%;
+  align-items: center;
+}
+
+.logout-section {
+  display: flex;
+  border-top: 1px solid var(--side);
+}
