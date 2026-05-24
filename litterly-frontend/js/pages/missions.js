@@ -22,10 +22,17 @@ function renderMissions(missions) {
     .map(
       (mission) => `
     <a href="./mission-detail.html?id=${mission.id}" class="card-wrapper">
-      <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}></div>
+      <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}>
+        <div class="card-top-bar">
+          <div class="status-tag ${mission.status}">${mission.status}</div>
+        </div>
+      </div>
       <div class="card-text-content-wrapper">
-        <h1 class="mission-title">${mission.title}</h1>
-        <p class="mission-description">${mission.description}</p>
+        <div class="card-text">
+          <h1 class="mission-title">${mission.title}</h1>
+          <p class="mission-description">${mission.description}</p>
+        </div>
+        <div class="card-action">View Mission</div>
       </div>
     </a>
   `,
