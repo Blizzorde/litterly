@@ -76,4 +76,46 @@ async function loadShopItems() {
   }
 }
 
+shopGrid.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".shop-card-cta");
+  if (!btn || btn.disabled) return;
+
+  const itemId = btn.dataset.id;
+  const price = btn.dataset.price;
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Buying...';
+
+  try {
+    const res = await purchaseItem(itemId);
+
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Purchased';
+    btn.classList.add("purchased");
+
+    // update points in navbar live
+    const pointsEl = document.querySelector("#points");
+    if (pointsEl) pointsEl.textContent = res.remaining_points;
+    if (window.currentUser) window.currentUser.points = res.remaining_points;
+
+    showNotif(
+      "fa-circle-check",
+      "Purchased!",
+      `Item added to your inventory`,
+      "success",
+      {
+        duration: 2000,
+      },
+    );
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = `<i class="fa-solid fa-leaf"></i> ${price} Points`;
+
+    let msg = "Purchase failed, try again";
+    if (err.status === 400) msg = err.message;
+    else if (err.status === 0) msg = "Cannot reach server";
+
+    showNotif("fa-circle-xmark", "Purchase Failed", msg, "danger");
+  }
+});
+
 loadShopItems();
