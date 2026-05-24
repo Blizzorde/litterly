@@ -1,6 +1,7 @@
 .shop-filters {
   display: flex;
   gap: 1rem;
+  padding: 0 2rem;
 }
 
 .shop-filter {
@@ -18,7 +19,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  padding: 2rem 0;
+  padding: 2rem 2rem;
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -29,12 +30,33 @@
   overflow: hidden;
   background-color: white;
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.378);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.shop-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .shop-card-img {
-  background: url(../assets/baca.jpg);
-  background-size: cover;
-  padding: 6rem 2rem;
+  background: url(../assets/icon-only-litterly-light-transparent.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 10rem;
+  padding: 1rem;
+}
+
+.shop-card-img > * {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 100%;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .shop-card-details {
@@ -59,4 +81,36 @@
   align-items: center;
   gap: 0.5rem;
   display: flex;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.378);
+}
+
+.shop-loading {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.shop-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  opacity: 0.5;
+  padding: 4rem;
+}
+
+.shop-card-type {
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  opacity: 0.6;
+  padding: 0.2rem;
+  background-color: #ddd;
+  display: inline;
+  text-align: center;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 1px solid var(--neutral-color);
 }

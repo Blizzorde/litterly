@@ -42,9 +42,7 @@
                 <img src="../assets/sample.png" alt="" class="profile-photo" />
               </div>
               <div class="profile-details">
-                <section class="full-name" id="username">
-                  Daijvane Archer
-                </section>
+                <section class="full-name" id="username"></section>
                 <section class="user-points">
                   <i class="fa-solid fa-leaf"></i>
                   <span id="points"> 0 </span>
@@ -85,103 +83,35 @@
             <h1 class="header-text">SHOP</h1>
           </div>
           <div class="shop-filters">
-            <a href="#" class="shop-filter active">All Rewards</a>
-            <a href="#" class="shop-filter">Titles</a>
-            <a href="#" class="shop-filter">Digital Assets</a>
+            <a href="./shop.html" class="shop-filter" data-type=""
+              >All Rewards</a
+            >
+            <a
+              href="./shop.html?type=title"
+              class="shop-filter"
+              data-type="title"
+              >Titles</a
+            >
+            <a
+              href="./shop.html?type=badge"
+              class="shop-filter"
+              data-type="badge"
+              >Badges</a
+            >
+            <a
+              href="./shop.html?type=avatar"
+              class="shop-filter"
+              data-type="avatar"
+              >Avatars</a
+            >
+            <a
+              href="./shop.html?type=frame"
+              class="shop-filter"
+              data-type="frame"
+              >Frames</a
+            >
           </div>
-          <div class="shop-products">
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-            <div class="shop-card">
-              <div class="shop-card-img"></div>
-              <div class="shop-card-details">
-                <div class="shop-card-title">Eco-Warrior Title</div>
-                <div class="shop-card-description">
-                  Unlock a unique title next to your name
-                </div>
-                <a href="#" class="shop-card-cta">
-                  <i class="fa-solid fa-leaf"></i>
-                  250 Points
-                </a>
-              </div>
-            </div>
-          </div>
+          <div class="shop-products"></div>
         </main>
       </div>
     </div>
@@ -189,6 +119,9 @@
     <script src="../js/utils/notify.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/api/authApi.js"></script>
+    <script src="../js/api/shopApi.js"></script>
     <script src="../js/main.js"></script>
+
+    <script src="../js/pages/shop.js"></script>
   </body>
 </html>

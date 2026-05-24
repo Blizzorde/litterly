@@ -40,7 +40,7 @@ async function getMe() {
 async function logoutUser() {
   try {
     await axios.post(
-      `${CONFIG.API_BASE}/api/auth/logout`,
+      `${CONFIG.API_BASE_URL}/auth/logout`,
       {},
       { withCredentials: true },
     );

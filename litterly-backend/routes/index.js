@@ -3,6 +3,7 @@ import authRoutes from "./authRoutes.js";
 import userRoutes from "./userRoutes.js";
 import missionRoutes from "./missionRoutes.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import shopRoutes from "./shopRoutes.js";
 
 const apiRouter = Router();
 
@@ -19,7 +20,7 @@ apiRouter.get("/", (req, res) => {
 apiRouter.use("/auth", authRoutes);
 apiRouter.use("/users", authMiddleware, userRoutes);
 apiRouter.use("/missions", authMiddleware, missionRoutes);
-
+apiRouter.use("/shop", authMiddleware, shopRoutes);
 
 // API 404
 apiRouter.use((req, res) => {
