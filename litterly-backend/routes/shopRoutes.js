@@ -4,12 +4,31 @@ import pool from "../config/db.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+  const userId = req.user.id;
+
   try {
     const { type } = req.query;
 
-    // fetch valid types from db
     const [types] = await pool.query("SELECT item_type_name FROM item_type");
     const validTypes = types.map((t) => t.item_type_name);
+
+    if (type === "purchased") {
+      // non-stackable items the user owns
+      const [rows] = await pool.query(
+        `SELECT s.*, t.item_type_name, ui.quantity
+         FROM user_inventory ui
+         JOIN shop_items s ON ui.item_id = s.id
+         JOIN item_type t ON s.item_type_id = t.id
+         WHERE ui.user_id = ? AND s.stackable = 0`,
+        [userId],
+      );
+      return res
+        .status(200)
+        .json({
+          success: true,
+          data: rows.map((r) => ({ ...r, owned: true })),
+        });
+    }
 
     if (type && !validTypes.includes(type)) {
       return res
@@ -18,14 +37,21 @@ router.get("/", async (req, res) => {
     }
 
     const query = type
-      ? `SELECT s.*, t.item_type_name FROM shop_items s
+      ? `SELECT s.*, t.item_type_name,
+           CASE WHEN ui.item_id IS NOT NULL THEN 1 ELSE 0 END AS owned
+         FROM shop_items s
          JOIN item_type t ON s.item_type_id = t.id
+         LEFT JOIN user_inventory ui ON ui.item_id = s.id AND ui.user_id = ?
          WHERE s.active = 1 AND t.item_type_name = ?`
-      : `SELECT s.*, t.item_type_name FROM shop_items s
+      : `SELECT s.*, t.item_type_name,
+           CASE WHEN ui.item_id IS NOT NULL THEN 1 ELSE 0 END AS owned
+         FROM shop_items s
          JOIN item_type t ON s.item_type_id = t.id
+         LEFT JOIN user_inventory ui ON ui.item_id = s.id AND ui.user_id = ?
          WHERE s.active = 1`;
 
-    const [rows] = await pool.query(query, type ? [type] : []);
+    const params = type ? [userId, type] : [userId];
+    const [rows] = await pool.query(query, params);
 
     res.status(200).json({ success: true, data: rows });
   } catch (err) {

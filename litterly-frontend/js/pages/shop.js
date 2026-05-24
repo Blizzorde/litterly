@@ -17,36 +17,43 @@ function renderLoading() {
 
 function renderItems(items) {
   if (!items.length) {
-    shopGrid.innerHTML = `<p class="shop-empty">No items available.</p>`;
+    shopGrid.innerHTML = `<p class="shop-empty">No items here yet.</p>`;
     return;
   }
 
   shopGrid.innerHTML = items
-    .map(
-      (item) => `
-    <div class="shop-card">
-      <div class="shop-card-img">
-        <i class="fa-solid ${TYPE_ICONS[item.item_type_name] ?? "fa-box"}"></i>
+    .map((item) => {
+      const isOwned = item.owned && !item.stackable;
+
+      const btn = isOwned
+        ? `<button class="shop-card-cta purchased" disabled>
+           <i class="fa-solid fa-check"></i> Purchased
+         </button>`
+        : `<button class="shop-card-cta" data-id="${item.id}" data-price="${item.price_points}">
+           <i class="fa-solid fa-leaf"></i> ${item.price_points} Points
+         </button>`;
+
+      return `
+      <div class="shop-card">
+        <div class="shop-card-img">
+          <i class="fa-solid ${TYPE_ICONS[item.item_type_name] ?? "fa-box"}"></i>
+        </div>
+        <div class="shop-card-details">
+          <div class="shop-card-type">${item.item_type_name}</div>
+          <div class="shop-card-title">${item.name}</div>
+          <div class="shop-card-description">${item.description ?? ""}</div>
+          ${btn}
+        </div>
       </div>
-      <div class="shop-card-details">
-        <div class="shop-card-type">${item.item_type_name}</div>
-        <div class="shop-card-title">${item.name}</div>
-        <div class="shop-card-description">${item.description ?? ""}</div>
-        <button class="shop-card-cta" data-id="${item.id}" data-price="${item.price_points}">
-          <i class="fa-solid fa-leaf"></i>
-          ${item.price_points} Points
-        </button>
-      </div>
-    </div>
-  `,
-    )
+    `;
+    })
     .join("");
 }
 
 function getTypeFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const type = params.get("type");
-  const allowed = ["badge", "avatar", "title", "frame"];
+  const allowed = ["badge", "avatar", "title", "frame", "purchased"];
   return allowed.includes(type) ? type : null;
 }
 
