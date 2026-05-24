@@ -1,161 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mission Details - Litterly</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/main.css" />
-  <link rel="stylesheet" href="../css/mission-detail.css" />
-  <link rel="stylesheet" href="../css/mission-list.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Details - Litterly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/mission-detail.css" />
+    <!-- REQUIRED GLOBAL SCRIPTS -->
     <script
-    src="https://kit.fontawesome.com/5f8a667392.js"
-    crossorigin="anonymous"
-  ></script>
-</head>
+      src="https://kit.fontawesome.com/5f8a667392.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- REQUIRED GLOBAL SCRIPTS -->
+  </head>
 
-<body>
-  <div class="page-container">
-        <aside class="sidebar">
-          <div class="logo-section">
-            <img
-              src="../assets/logo-litterly-dark-transparent.png"
-              class="logo"
-            />
-          </div>
-          <nav class="wrapper-sidebar-content" aria-label="Main navigation">
-            <div class="profile">
-              <div class="profile-photo-wrapper">
-                <img src="../assets/sample.png" alt="" class="profile-photo" />
-              </div>
-              <div class="profile-details">
-                <section class="full-name">Daijvane Archer</section>
-                <section class="user-points">
-                  <i class="fa-solid fa-leaf"></i>
-                  2,450
-                </section>
-              </div>
+  <body>
+    <div class="page-container">
+      <aside class="sidebar">
+        <div class="logo-section">
+          <img
+            src="../assets/logo-litterly-dark-transparent.png"
+            class="logo"
+          />
+        </div>
+        <nav class="wrapper-sidebar-content" aria-label="Main navigation">
+          <div class="profile">
+            <div class="profile-photo-wrapper">
+              <img src="../assets/sample.png" alt="" class="profile-photo" />
             </div>
-            <section class="wrapper-sidebar-items-and-logout">
-              <div class="wrapper-sidebar-item">
-                <a href="./mission-list.html" class="sidebar-item active">
-                  <div class="sidebar-item-icon">
-                    <i class="fa-solid fa-list-check"></i>
-                  </div>
-                  <div class="sidebar-item-text">Missions</div>
-                </a>
-
-                <a href="./shop.html" class="sidebar-item">
-                  <div class="sidebar-item-icon">
-                    <i class="fa-solid fa-shop"></i>
-                  </div>
-                  <div class="sidebar-item-text">Shop</div>
-                </a>
-              </div>
-
-              <section class="logout-section">
-                <a href="#" class="sidebar-item">
-                  <div class="sidebar-item-icon">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                  </div>
-                  <div class="sidebar-item-text">Logout</div>
-                </a>
+            <div class="profile-details">
+              <section class="full-name" id="username"></section>
+              <section class="user-points">
+                <i class="fa-solid fa-leaf"></i>
+                <span id="points">0</span>
               </section>
+            </div>
+          </div>
+          <section class="wrapper-sidebar-items-and-logout">
+            <div class="wrapper-sidebar-item">
+              <a href="./mission-list.html" class="sidebar-item active">
+                <div class="sidebar-item-icon">
+                  <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div class="sidebar-item-text">Missions</div>
+              </a>
+
+              <a href="./shop.html" class="sidebar-item">
+                <div class="sidebar-item-icon">
+                  <i class="fa-solid fa-shop"></i>
+                </div>
+                <div class="sidebar-item-text">Shop</div>
+              </a>
+            </div>
+
+            <section class="logout-section">
+              <a href="#" class="sidebar-item">
+                <div class="sidebar-item-icon">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </div>
+                <div class="sidebar-item-text">Logout</div>
+              </a>
             </section>
-          </nav>
+          </section>
+        </nav>
       </aside>
 
       <main class="main-content-wrapper">
+        <div class="content-header">
+          <h1 class="header-text">
+            <a href="#" class="back-arrow">
+              <i class="fa-solid fa-circle-left"></i>
+            </a>
 
-            <div class="content-header">
-              <h1 class="header-text">
-                <a href="#" class="back-arrow">
-                  <i class="fa-solid fa-circle-left"></i>
-                </a>
+            Mission Details
+          </h1>
+        </div>
 
-                Mission Details 
-              </h1>
+        <section class="mission-details-cards-wrapper">
+          <section class="mission-detail-cards-left-container">
+            <div class="card-thumbnail-wrapper">
+              <div class="card-thumbnail-overlay">
+                <div class="overlay-header">
+                  <div class="overlay-header-wrapper">
+                    <i class="fa-solid fa-star"></i>
+                    10 points
+                  </div>
+                </div>
+
+                <div class="overlay-footer">
+                  <div class="overlay-footer-wrapper">
+                    <div class="overlay-status">status of mission</div>
+                    <h1 class="overlay-title">mission title</h1>
+                  </div>
+                </div>
+              </div>
             </div>
 
-          <section class="mission-details-cards-wrapper">
-            <section class="mission-detail-cards-left-container">
-              <div class="card-thumbnail-wrapper">
-                <div class="card-thumbnail-overlay">
-
-                  <div class="overlay-header">
-                    <div class="overlay-header-wrapper">
-                      <i class="fa-solid fa-star"></i>
-                      10 points
-                    </div>
-                  </div>
-
-                  <div class="overlay-footer">
-                    <div class="overlay-footer-wrapper">
-                      <div class="overlay-status">
-                        status of mission
-                      </div>
-                      <h1 class="overlay-title">
-                        mission title
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="card-description-wrapper">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet officiis laudantium harum alias? Officiis vero nesciunt cumque veniam beatae, sapiente voluptas laboriosam unde modi dolor adipisci enim ipsum sunt illum.
-              </div>
-            </section>
-
-            <section class="mission-detail-cards-right-container">
-              <div class="card-extra-details-wrapper">
-                <div class="extra-details-wrapper">
-                  <div class= "extra-details-text-wrapper">
-                    <div class="extra-details-tiny-text">
-                      <p class="mission-description">
-                        location
-                      </p>
-                      <div class="extra-details-tiny-text-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                      </div>
-                    </div>
-                    <h1 class="extra-details-big-text-wrapper">
-                      Suriname
-                    </h1>
-                  </div>
-                  <div class= "extra-details-text-wrapper">
-                    <div class="extra-details-tiny-text">
-                      <p class="mission-description">
-                        time
-                      </p>
-                      <div class="extra-details-tiny-text-icon-wrapper">
-                        <i class="fa-solid fa-location-dot"></i>
-                      </div>
-                    </div>
-                    <h1 class="extra-details-big-text-wrapper">
-                      12:00
-                    </h1>
-                  </div>
-
-                </div>
-                <div class="register-button-wrapper">
-                  <a href="#" class="register-button">
-                    register now!
-                  </a>
-                </div>
-              </div>
-            </section>
+            <div class="card-description-wrapper">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet
+              officiis laudantium harum alias? Officiis vero nesciunt cumque
+              veniam beatae, sapiente voluptas laboriosam unde modi dolor
+              adipisci enim ipsum sunt illum.
+            </div>
           </section>
-          
+
+          <section class="mission-detail-cards-right-container">
+            <div class="card-extra-details-wrapper">
+              <div class="extra-details-wrapper">
+                <div class="extra-details-text-wrapper">
+                  <div class="extra-details-tiny-text">
+                    <p class="mission-description">location</p>
+                    <div class="extra-details-tiny-text-icon">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                  </div>
+                  <h1 class="extra-details-big-text-wrapper">Suriname</h1>
+                </div>
+                <div class="extra-details-text-wrapper">
+                  <div class="extra-details-tiny-text">
+                    <p class="mission-description">time</p>
+                    <div class="extra-details-tiny-text-icon-wrapper">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                  </div>
+                  <h1 class="extra-details-big-text-wrapper">12:00</h1>
+                </div>
+              </div>
+              <div class="register-button-wrapper">
+                <a href="#" class="register-button"> register now! </a>
+              </div>
+            </div>
+          </section>
+        </section>
       </main>
-  </div>
+    </div>
+    <script src="../js/utils/notify.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api/authApi.js"></script>
+    <script src="../js/main.js"></script>
 
-
-  <script src="../js/pages/mission-detail.js"></script>
-</body>
-
+    <script src="../js/pages/mission-detail.js"></script>
+  </body>
 </html>
