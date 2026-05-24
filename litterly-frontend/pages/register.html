@@ -3,9 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Litterly | Register</title>
+    <title>Litterly | Login</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
+    <script
+      src="https://kit.fontawesome.com/5f8a667392.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </head>
   <body>
-    <!-- Hier komt basis login form voor Litterly -->
+    <div class="page-container">
+      <div class="main-auth-container">
+        <div class="auth-wrapper">
+          <div class="auth-img-section">
+            <div class="small-logo-cont">
+              <div class="small-logo-img-wrapper">
+                <img
+                  class="logo-auth-img"
+                  src="../assets/logo-litterly-dark-transparent.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="quote-img-cont">
+              <h1 class="quote">
+                "Small acts, when multiplied by millions of people, can
+                transform the world."
+              </h1>
+              <div class="subheadline">Join the movement</div>
+            </div>
+            <div class="count-stats">
+              <div class="count-stat">
+                <div class="number">5+</div>
+                <div class="subtext">Active Cleaners</div>
+              </div>
+              <div class="count-stat">
+                <div class="number">10+</div>
+                <div class="subtext">Locations Cleaned</div>
+              </div>
+            </div>
+          </div>
+          <div class="auth-form-section">
+            <div class="auth-form-title-cont">
+              <h1 class="auth-form-title">Create Account</h1>
+              <p class="auth-form-subtitle">
+                Enter your details to start your first mission
+              </p>
+            </div>
+            <div class="auth-form-cont">
+              <form class="auth-form" id="register-form">
+                <div class="input-group">
+                  <label for="username">Username</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" name="username" id="username" required />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="email">Email Address</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="email" name="email" id="email" required />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="password">Password</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      required
+                    />
+                  </div>
+                <div class="input-group">
+                  <label for="conf-password">Confirm Password</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input
+                      type="password"
+                      name="conf-password"
+                      id="conf-password"
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn" id="register-btn">
+                  Register<i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </button>
+              </form>
+            </div>
+            <div class="demo-section-cont">
+              <div class="text-divider">Demo Auto-Register</div>
+              <div class="demo-auto-auth-btn-cont">
+                <button
+                  class="demo-auto-auth-btn primary register"
+                  id="user-btn-demo"
+                >
+                  Autofill Fake User
+                </button>
+              </div>
+            </div>
+            <div class="account-section">
+              Already have an account?
+              <span>
+                <a href="./login.html" class="internal-link"> Sign in</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../js/utils/notify.js"></script>
+    <script src="../js/pages/register.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api/registerApi.js"></script>
   </body>
 </html>
