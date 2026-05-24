@@ -220,3 +220,7 @@ a {
   font-size: 3rem;
   color: var(--primary-color);
 }
+
+.conditional-btn {
+  display: none;
+}
