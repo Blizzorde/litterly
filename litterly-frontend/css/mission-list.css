@@ -34,6 +34,12 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   justify-items: center;
+.cards-wrapper {
+  padding: 2rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  justify-items: center;
 }
 
 .card-wrapper {
