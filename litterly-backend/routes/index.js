@@ -20,6 +20,7 @@ apiRouter.use("/auth", authRoutes);
 apiRouter.use("/users", authMiddleware, userRoutes);
 apiRouter.use("/missions", authMiddleware, missionRoutes);
 
+
 // API 404
 apiRouter.use((req, res) => {
   res.status(404).json({

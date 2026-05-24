@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import pool from "./litterly-backend/config/db.js";
 import path from "path";
 import cookieParser from "cookie-parser";
 import apiRouter from "./litterly-backend/routes/index.js";
