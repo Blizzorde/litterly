@@ -307,7 +307,7 @@ router.post("/:id/cancel", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
+router.post("/:id/distribute-points", async (req, res) => {
   const missionId = req.params.id;
 
   const connection = await pool.getConnection();
@@ -324,11 +324,15 @@ router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
     const mission = missions[0];
 
     if (!mission) {
-      return res.status(404).json({ error: "Mission not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Mission not found" });
     }
 
     if (mission.status !== "awaiting_rewards") {
-      return res.status(400).json({ error: "Mission not ready" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Mission not ready" });
     }
 
     // 2. Get attended registrations
@@ -343,9 +347,8 @@ router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
     // 3. Distribute points
     for (const registrant of attended_registrants) {
       await connection.query(
-        `INSERT INTO point_transactions
-                (user_id, mission_id, points, reason)
-                VALUES (?, ?, ?, ?)`,
+        `INSERT INTO point_transactions (user_id, mission_id, type, points, reason) 
+         VALUES (?, ?, 'earned', ?, ?)`,
         [
           registrant.user_id,
           missionId,
@@ -360,6 +363,11 @@ router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
                  WHERE id = ?`,
         [registrant.reward_points, registrant.user_id],
       );
+
+      await connection.query(
+        `UPDATE mission_registrations SET status = 'rewarded' WHERE id = ?`,
+        [registrant.id],
+      );
     }
 
     // 4. Mark mission completed
@@ -372,16 +380,11 @@ router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
 
     await connection.commit();
 
-    res.json({
-      success: true,
-      message: "Points distributed successfully",
-    });
+    res.json({ success: true, message: "Points distributed successfully" });
   } catch (err) {
     await connection.rollback();
 
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ success: false, message: err.message });
   } finally {
     connection.release();
   }
@@ -636,7 +639,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 //Deleting mission, need to change to flag system
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, requireRole(1), async (req, res) => {
   const missionId = req.params.id;
 
   const conn = await pool.getConnection();
@@ -655,25 +658,37 @@ router.delete("/:id", async (req, res) => {
     // 2. Delete area assignments (depends on areas)
     if (areaIds.length > 0) {
       await conn.query(
-        `DELETE FROM mission_area_assignments WHERE area_id IN (?)`,
+        "DELETE FROM mission_area_assignments WHERE area_id IN (?)",
         [areaIds],
       );
     }
 
-    // 3. Delete mission registrations (directly tied to mission)
+    // 3. Delete point transactions tied to this mission
+    await conn.query("DELETE FROM point_transactions WHERE mission_id = ?", [
+      missionId,
+    ]);
+
+    // 4. Delete mission registrations
     await conn.query("DELETE FROM mission_registrations WHERE mission_id = ?", [
       missionId,
     ]);
 
-    // 4. Delete areas themselves
+    // 5. Delete areas
     await conn.query("DELETE FROM mission_areas WHERE mission_id = ?", [
       missionId,
     ]);
 
-    // 5. Finally delete mission
+    // 6. Finally delete mission
     const [result] = await conn.query("DELETE FROM missions WHERE id = ?", [
       missionId,
     ]);
+
+    if (result.affectedRows === 0) {
+      await conn.rollback();
+      return res
+        .status(404)
+        .json({ success: false, message: "Mission not found" });
+    }
 
     await conn.commit();
 
@@ -683,15 +698,30 @@ router.delete("/:id", async (req, res) => {
     });
   } catch (err) {
     await conn.rollback();
-
-    console.error(err);
     return res.status(500).json({
       success: false,
       message: "Error deleting mission",
-      err: err.message,
+      error: err.message,
     });
   } finally {
     conn.release();
+  }
+});
+
+router.get("/admin/all", authMiddleware, requireRole(1), async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT m.*, u.username AS created_by_username,
+        (SELECT COUNT(*) FROM mission_registrations mr WHERE mr.mission_id = m.id AND mr.status NOT IN ('cancelled')) AS participant_count
+       FROM missions m
+       JOIN users u ON m.created_by = u.id
+       ORDER BY m.created_at DESC`,
+    );
+    res.status(200).json({ success: true, data: rows });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching missions" });
   }
 });
 

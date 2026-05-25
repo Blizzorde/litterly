@@ -115,3 +115,52 @@ async function deleteMission(id) {
     };
   }
 }
+
+async function updateMissionStatus(missionId, status) {
+  try {
+    const res = await axios.patch(
+      `${CONFIG.API_BASE_URL}/missions/${missionId}`,
+      { status },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}
+
+async function distributePoints(missionId) {
+  try {
+    const res = await axios.post(
+      `${CONFIG.API_BASE_URL}/missions/${missionId}/distribute-points`,
+      {},
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}
+
+async function getAllMissionsAdmin() {
+  try {
+    const res = await axios.get(`${CONFIG.API_BASE_URL}/missions/admin/all`, {
+      withCredentials: true,
+    });
+    return res.data.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}
