@@ -102,7 +102,9 @@ const Modal = {
       document.getElementById("mission-max-participants").value = "";
       document.getElementById("create-areas-list").innerHTML = "";
 
-      loadMissions();
+      // refresh whichever list is on this page
+      if (typeof loadMissions === "function") loadMissions();
+      if (typeof loadManagerList === "function") loadManagerList();
     } catch (err) {
       showNotif(
         "fa-circle-xmark",
