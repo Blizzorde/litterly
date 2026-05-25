@@ -205,18 +205,54 @@ const Modal = {
     Modal.open("edit-modal-overlay");
   },
 
-  submitEdit(modalId) {
+  async submitEdit(modalId) {
     const modal = document.getElementById(modalId);
     const id = modal?.dataset.missionId;
 
     const title = document.getElementById("edit-mission-title")?.value.trim();
-    const desc = document.getElementById("edit-mission-desc")?.value.trim();
 
+    const description = document
+      .getElementById("edit-mission-desc")
+      ?.value.trim();
+
+    if (!id) return alert("Missing mission ID");
     if (!title) return alert("Please enter a mission title.");
 
-    const payload = { id, title, description: desc };
-    console.log("Updating mission:", payload);
-    // API call goes here later
-    Modal.close("edit-modal-overlay");
+    const payload = {
+      title,
+      description: description || null,
+    };
+
+    try {
+      const res = await editMission(id, payload);
+
+      if (!res?.success) {
+        return showNotif(
+          "fa-circle-xmark",
+          "Error",
+          res?.message || "Update failed",
+          "danger",
+        );
+      }
+
+      showNotif(
+        "fa-circle-check",
+        "Success",
+        "Mission updated successfully",
+        "success",
+      );
+
+      Modal.close("edit-modal-overlay");
+
+      // optional refresh
+      loadMissions();
+    } catch (err) {
+      showNotif(
+        "fa-circle-xmark",
+        "Error",
+        err.message ?? "Failed to update mission",
+        "danger",
+      );
+    }
   },
 };

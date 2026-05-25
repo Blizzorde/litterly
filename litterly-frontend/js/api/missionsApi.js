@@ -79,3 +79,22 @@ async function createMission(payload) {
     };
   }
 }
+
+async function editMission(id, payload) {
+  try {
+    const res = await axios.patch(
+      `${CONFIG.API_BASE_URL}/missions/${id}`,
+      payload,
+      { withCredentials: true },
+    );
+
+    return res.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}

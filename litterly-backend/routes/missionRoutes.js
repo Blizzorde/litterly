@@ -528,6 +528,112 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  const missionId = req.params.id;
+
+  // 1. Allowed fields ONLY (security whitelist)
+  const allowedFields = [
+    "title",
+    "description",
+    "location",
+    "start_datetime",
+    "end_datetime",
+    "status",
+    "max_participants",
+    "photo_url",
+  ];
+
+  // 2. Filter incoming body
+  const updates = {};
+  for (const key of allowedFields) {
+    if (req.body[key] !== undefined) {
+      updates[key] = req.body[key];
+    }
+  }
+
+  // 3. Reject empty update
+  if (Object.keys(updates).length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "No valid fields provided for update",
+    });
+  }
+
+  // 4. Validate max_participants
+  if (updates.max_participants !== undefined) {
+    const val = updates.max_participants;
+
+    // allow null (meaning unlimited)
+    if (val === null) {
+      updates.max_participants = null;
+    } else {
+      const num = Number(val);
+
+      if (Number.isNaN(num) || num < 1) {
+        return res.status(400).json({
+          success: false,
+          message: "max_participants must be a number greater than 0 or null",
+        });
+      }
+
+      updates.max_participants = num;
+    }
+  }
+
+  // 5. Validate status enum
+  const allowedStatus = [
+    "open",
+    "ongoing",
+    "awaiting_rewards",
+    "completed",
+    "cancelled",
+  ];
+
+  if (updates.status && !allowedStatus.includes(updates.status)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid status value",
+    });
+  }
+
+  try {
+    // 6. Build safe dynamic SQL
+    const keys = Object.keys(updates);
+    const values = Object.values(updates);
+
+    const setClause = keys.map((key) => `${key}=?`).join(", ");
+
+    const sql = `
+      UPDATE missions
+      SET ${setClause}
+      WHERE id=?
+    `;
+
+    const [result] = await pool.query(sql, [...values, missionId]);
+
+    // 7. Optional: check if row actually updated
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Mission not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Mission updated successfully",
+      updatedFields: keys,
+    });
+  } catch (err) {
+    console.error("PATCH mission error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Error updating mission",
+    });
+  }
+});
+
 //Deleting mission, need to change to flag system
 router.delete("/:id", async (req, res) => {
   const missionId = req.params.id;
