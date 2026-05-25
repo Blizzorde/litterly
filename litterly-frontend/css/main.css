@@ -226,6 +226,32 @@ a {
   gap: 1rem;
 }
 
-.conditional-btn {
+.conditional-btn, .conditional-section {
   display: none;
+}
+
+.modal-overlay {
+  display: none;
+  background-color: white;
+  position: fixed;
+  inset: 0;           
+  background: rgba(0, 0, 0, 0.5);  
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.is-open {
+  display: flex;
+}
+
+.creating-mission {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto; 
 }

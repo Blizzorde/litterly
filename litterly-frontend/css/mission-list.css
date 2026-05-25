@@ -4,8 +4,19 @@
   display: flex;
   width: 100%;
   justify-content: end;
-  align-items: end;
+  align-items: center;
+  flex-direction: row-reverse;
   /* background-color: green; */
+  gap: 1rem;
+}
+
+.admin-action.create-mission{
+  display: flex;
+  align-items: center;
+  flex-basis: 0%;
+  border-radius: 50%;
+  font-size: 2.8rem;
+  color: #004532
 }
 
 .filterbar-wrapper {
@@ -28,12 +39,6 @@
 }
 
 /*===========================================================================CARDS */
-.cards-wrapper {
-  padding: 2rem 2rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  justify-items: center;
 .cards-wrapper {
   padding: 2rem 2rem;
   display: grid;
@@ -154,4 +159,502 @@
   font-size: 1.5rem;
   text-transform: capitalize;
   color: var(--card-text);
+}
+
+.admin-actions-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-action {
+  display: flex;
+  flex-basis: 50%;
+}
+
+.admin-action.edit{
+  background-color: grey;
+}
+
+.admin-action.delete{
+  background-color: rgba(255, 0, 0, 0.897);
+}
+
+/* --- Overlay backdrop --- */
+.modal-overlay#create-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay#create-modal-overlay.is-open {
+  display: flex;
+}
+
+/* --- Modal card --- */
+.modal-overlay#create-modal-overlay .creating-mission#create-mission-modal {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 69, 50, 0.18), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* --- Close button --- */
+.modal-overlay#create-modal-overlay .creating-mission .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--neutral-color);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .modal-close:hover {
+  background: #f1f5f9;
+  color: var(--primary-color);
+}
+
+/* --- Title --- */
+.modal-overlay#create-modal-overlay .creating-mission .modal-title {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  padding-right: 2rem; /* don't overlap close btn */
+}
+
+/* --- Field group (label + input stacked) --- */
+.modal-overlay#create-modal-overlay .creating-mission .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  /* card-text-content-wrapper values applied here */
+  background-color: white;
+}
+
+/* --- Field row (two side-by-side groups) --- */
+.modal-overlay#create-modal-overlay .creating-mission .field-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .field-row .field-group {
+  flex: 1;
+}
+
+/* --- Labels --- */
+.modal-overlay#create-modal-overlay .creating-mission label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--neutral-color);
+}
+
+/* --- Inputs & Textarea --- */
+.modal-overlay#create-modal-overlay .creating-mission input[type="text"],
+.modal-overlay#create-modal-overlay .creating-mission input[type="number"],
+.modal-overlay#create-modal-overlay .creating-mission input[type="datetime-local"],
+.modal-overlay#create-modal-overlay .creating-mission textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  color: var(--card-text);
+  background: #f8faf9;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission input[type="text"]:focus,
+.modal-overlay#create-modal-overlay .creating-mission input[type="number"]:focus,
+.modal-overlay#create-modal-overlay .creating-mission input[type="datetime-local"]:focus,
+.modal-overlay#create-modal-overlay .creating-mission textarea:focus {
+  border-color: var(--accent-light-color);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(100, 252, 190, 0.18);
+}
+
+.modal-overlay#create-modal-overlay .creating-mission textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* --- Footer buttons --- */
+.modal-overlay#create-modal-overlay .creating-mission .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e8efec;
+  margin-top: 0.5rem;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .btn-cancel {
+  padding: 0.55rem 1.2rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  background: white;
+  color: var(--neutral-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #b0bdb9;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .btn-submit {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 7px;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .btn-submit:hover {
+  background: var(--sidebar-active);
+}
+
+.modal-overlay#create-modal-overlay .creating-mission .btn-submit:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   DELETE CONFIRMATION MODAL
+   ============================================================ */
+
+.modal-overlay#delete-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay#delete-modal-overlay.is-open {
+  display: flex;
+}
+
+/* --- Card --- */
+.modal-overlay#delete-modal-overlay .confirm-delete-modal#delete-mission-modal {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 69, 50, 0.18), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* --- Close button --- */
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--neutral-color);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .modal-close:hover {
+  background: #f1f5f9;
+  color: var(--primary-color);
+}
+
+/* --- Warning icon circle --- */
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .confirm-delete-icon-wrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: #fff4f4;
+  border: 1.5px solid #fcd0d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #d04040;
+  margin-top: 0.5rem;
+}
+
+/* --- Text block --- */
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .confirm-delete-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: white; /* from card-text-content-wrapper */
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .modal-title {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .confirm-delete-subtitle {
+  font-size: 0.88rem;
+  color: var(--neutral-color);
+  line-height: 1.55;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .confirm-delete-subtitle strong {
+  color: var(--card-text);
+  font-weight: 600;
+}
+
+/* --- Footer --- */
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e8efec;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .btn-cancel {
+  padding: 0.55rem 1.2rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  background: white;
+  color: var(--neutral-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #b0bdb9;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .btn-delete {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 7px;
+  background: #c53030;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .btn-delete:hover {
+  background: #9b2121;
+}
+
+.modal-overlay#delete-modal-overlay .confirm-delete-modal .btn-delete:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   EDIT MISSION MODAL
+   ============================================================ */
+
+.modal-overlay#edit-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay#edit-modal-overlay.is-open {
+  display: flex;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission#edit-mission-modal {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 69, 50, 0.18), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--neutral-color);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .modal-close:hover {
+  background: #f1f5f9;
+  color: var(--primary-color);
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .modal-title {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  padding-right: 2rem;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background-color: white;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .field-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .field-row .field-group {
+  flex: 1;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--neutral-color);
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission input[type="text"],
+.modal-overlay#edit-modal-overlay .creating-mission input[type="number"],
+.modal-overlay#edit-modal-overlay .creating-mission input[type="datetime-local"],
+.modal-overlay#edit-modal-overlay .creating-mission textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  color: var(--card-text);
+  background: #f8faf9;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission input[type="text"]:focus,
+.modal-overlay#edit-modal-overlay .creating-mission input[type="number"]:focus,
+.modal-overlay#edit-modal-overlay .creating-mission input[type="datetime-local"]:focus,
+.modal-overlay#edit-modal-overlay .creating-mission textarea:focus {
+  border-color: var(--accent-light-color);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(100, 252, 190, 0.18);
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e8efec;
+  margin-top: 0.5rem;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .btn-cancel {
+  padding: 0.55rem 1.2rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  background: white;
+  color: var(--neutral-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #b0bdb9;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .btn-submit {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 7px;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .btn-submit:hover {
+  background: var(--sidebar-active);
+}
+
+.modal-overlay#edit-modal-overlay .creating-mission .btn-submit:active {
+  transform: scale(0.97);
 }

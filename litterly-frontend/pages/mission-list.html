@@ -117,19 +117,162 @@
                   >Cancelled</a
                 >
               </div>
+              <div
+                class="create-mission-btn-wrapper conditional-section"
+                data-role="1"
+              >
+                <a
+                  href="#"
+                  class="admin-action create-mission conditional-btn"
+                  data-role="1"
+                  onclick="
+                    Modal.open('create-modal-overlay');
+                    return false;
+                  "
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                </a>
+              </div>
             </div>
           </div>
-
           <section class="cards-wrapper"></section>
         </main>
       </div>
     </div>
+
+    <!-- CREATE MODAL -->
+    <div class="modal-overlay" id="create-modal-overlay">
+      <div class="creating-mission" id="create-mission-modal">
+        <button
+          class="modal-close"
+          onclick="Modal.close('create-modal-overlay')"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+        <h2 class="modal-title" id="modal-title-create-mission">
+          Create mission
+        </h2>
+
+        <div class="field-group">
+          <label for="mission-title">Title</label>
+          <input type="text" id="mission-title" placeholder="Mission title" />
+        </div>
+        <div class="field-group">
+          <label for="mission-desc">Description</label>
+          <textarea
+            id="mission-desc"
+            placeholder="What is this mission about?"
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('create-modal-overlay')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-submit"
+            onclick="Modal.submit('create-mission-modal')"
+          >
+            Create mission
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="delete-modal-overlay">
+      <div class="confirm-delete-modal" id="delete-mission-modal">
+        <button
+          class="modal-close"
+          onclick="Modal.close('delete-modal-overlay')"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+
+        <div class="confirm-delete-icon-wrapper">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div class="confirm-delete-text">
+          <h2 class="modal-title">Delete mission?</h2>
+          <p class="confirm-delete-subtitle">
+            You're about to delete
+            <strong id="delete-mission-name">"Mission Title"</strong>. This
+            action cannot be undone.
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('delete-modal-overlay')"
+          >
+            Cancel
+          </button>
+          <button class="btn-delete" id="btn-confirm-delete">
+            Delete mission
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div class="modal-overlay" id="edit-modal-overlay">
+      <div class="creating-mission" id="edit-mission-modal">
+        <button
+          class="modal-close"
+          onclick="Modal.close('edit-modal-overlay')"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+        <h2 class="modal-title">Edit mission</h2>
+
+        <div class="field-group">
+          <label for="edit-mission-title">Title</label>
+          <input
+            type="text"
+            id="edit-mission-title"
+            placeholder="Mission title"
+          />
+        </div>
+        <div class="field-group">
+          <label for="edit-mission-desc">Description</label>
+          <textarea
+            id="edit-mission-desc"
+            placeholder="What is this mission about?"
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('edit-modal-overlay')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-submit"
+            onclick="Modal.submitEdit('edit-mission-modal')"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="../js/utils/notify.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/api/authApi.js"></script>
     <script src="../js/api/missionsApi.js"></script>
     <script src="../js/main.js"></script>
 
+    <script src="../js/utils/modal.js"></script>
     <script src="../js/pages/missions.js"></script>
   </body>
 </html>
