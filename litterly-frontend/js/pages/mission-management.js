@@ -431,6 +431,211 @@ document
     }
   });
 
+// helper to format datetime for input
+function toDatetimeLocal(datetimeStr) {
+  const d = new Date(datetimeStr);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+// Delete
+document.querySelector(".mgmt-btn-delete").addEventListener("click", () => {
+  document.querySelector("#delete-mission-name").textContent =
+    `"${currentMission.title}"`;
+
+  const confirmBtn = document.getElementById("btn-confirm-delete");
+  const freshBtn = confirmBtn.cloneNode(true);
+  freshBtn.addEventListener("click", async () => {
+    freshBtn.disabled = true;
+    freshBtn.textContent = "Deleting...";
+    try {
+      await deleteMission(currentMission.id);
+      showNotif("fa-circle-check", "Deleted", "Mission deleted successfully", {
+        duration: 1500,
+      });
+      setTimeout(
+        () => (window.location.href = "./mission-manager-list.html"),
+        1500,
+      );
+    } catch (err) {
+      freshBtn.disabled = false;
+      freshBtn.textContent = "Delete mission";
+      let msg = "Failed to delete mission";
+      if (err.status === 400) msg = err.message;
+      showNotif("fa-circle-xmark", "Error", msg);
+    }
+  });
+  confirmBtn.parentNode.replaceChild(freshBtn, confirmBtn);
+  Modal.open("delete-modal-overlay");
+});
+
+// Edit — open drawer prefilled
+document.querySelector(".mgmt-btn-edit").addEventListener("click", () => {
+  const start = new Date(currentMission.start_datetime);
+  const end = new Date(currentMission.end_datetime);
+  const pad = (n) => String(n).padStart(2, "0");
+
+  document.getElementById("edit-mission-title").value =
+    currentMission.title ?? "";
+  document.getElementById("edit-mission-desc").value =
+    currentMission.description ?? "";
+  document.getElementById("edit-mission-location").value =
+    currentMission.location ?? "";
+  document.getElementById("edit-mission-date").value =
+    `${start.getFullYear()}-${pad(start.getMonth() + 1)}-${pad(start.getDate())}`;
+  document.getElementById("edit-mission-start-time").value =
+    `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+  document.getElementById("edit-mission-end-time").value =
+    `${pad(end.getHours())}:${pad(end.getMinutes())}`;
+  document.getElementById("edit-mission-max").value =
+    currentMission.max_participants ?? "";
+
+  // populate existing areas
+  const areasList = document.getElementById("edit-areas-list");
+  areasList.innerHTML = "";
+  currentMission.areas.forEach((area, i) => Modal.addEditArea(area, i));
+
+  Modal.open("edit-drawer-overlay");
+});
+
+// Edit — save
+document
+  .getElementById("btn-confirm-edit")
+  .addEventListener("click", async () => {
+    const title = document.getElementById("edit-mission-title").value.trim();
+    const description = document
+      .getElementById("edit-mission-desc")
+      .value.trim();
+    const location = document
+      .getElementById("edit-mission-location")
+      .value.trim();
+    const date = document.getElementById("edit-mission-date").value;
+    const startTime = document.getElementById("edit-mission-start-time").value;
+    const endTime = document.getElementById("edit-mission-end-time").value;
+    const maxVal = document.getElementById("edit-mission-max").value;
+
+    if (!title)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter a title",
+      );
+    if (!description)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter a description",
+      );
+    if (!location)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter a location",
+      );
+    if (!date)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter a date",
+      );
+    if (!startTime)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter a start time",
+      );
+    if (!endTime)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "Please enter an end time",
+      );
+
+    const start_datetime = `${date}T${startTime}:00`;
+    const end_datetime = `${date}T${endTime}:00`;
+
+    if (new Date(end_datetime) <= new Date(start_datetime)) {
+      return showNotif(
+        "fa-circle-exclamation",
+        "Invalid",
+        "End time must be after start time",
+      );
+    }
+
+    // collect areas
+    const areaRows = document.querySelectorAll("#edit-areas-list .area-row");
+    if (!areaRows.length)
+      return showNotif(
+        "fa-circle-exclamation",
+        "Required",
+        "At least one area is required",
+      );
+
+    const areas = [];
+    for (const row of areaRows) {
+      const areaName = row.querySelector(".area-name")?.value.trim();
+      const areaDesc = row.querySelector(".area-desc")?.value.trim();
+      const areaPoints = row.querySelector(".area-points")?.value;
+      const areaMax = row.querySelector(".area-max")?.value;
+      if (!areaName)
+        return showNotif(
+          "fa-circle-exclamation",
+          "Required",
+          "Please fill in all area names",
+        );
+      if (!areaPoints)
+        return showNotif(
+          "fa-circle-exclamation",
+          "Required",
+          "Please fill in points for all areas",
+        );
+      areas.push({
+        id: row.dataset.areaId ?? null,
+        area_name: areaName,
+        area_description: areaDesc || null,
+        reward_points: parseInt(areaPoints),
+        max_users: areaMax ? parseInt(areaMax) : null,
+      });
+    }
+
+    const btn = document.getElementById("btn-confirm-edit");
+    btn.disabled = true;
+    btn.textContent = "Saving...";
+
+    const payload = {
+      title,
+      description,
+      location,
+      start_datetime,
+      end_datetime,
+      max_participants: maxVal ? parseInt(maxVal) : null,
+      areas,
+    };
+
+    try {
+      await editMission(currentMission.id, payload);
+      Object.assign(currentMission, payload);
+
+      document.querySelector("#mgmt-mission-name").textContent = title;
+      document.title = `${title} - Mission Manager`;
+
+      if (document.getElementById("panel-details").style.display !== "none") {
+        populateDetails(currentMission);
+      }
+
+      Modal.close("edit-drawer-overlay");
+      showNotif("fa-circle-check", "Saved", "Mission updated successfully", {
+        duration: 2000,
+      });
+    } catch (err) {
+      let msg = "Failed to update mission";
+      if (err.status === 400) msg = err.message;
+      showNotif("fa-circle-xmark", "Error", msg);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Save changes";
+    }
+  });
 // Tab listeners
 document
   .getElementById("tab-status")

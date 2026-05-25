@@ -309,10 +309,157 @@
       </div>
     </div>
 
+    <!-- DELETE MODAL -->
+    <div class="modal-overlay" id="delete-modal-overlay">
+      <div class="confirm-delete-modal" id="delete-mission-modal">
+        <button
+          class="modal-close"
+          onclick="Modal.close('delete-modal-overlay')"
+        >
+          &times;
+        </button>
+        <div class="confirm-delete-icon-wrapper">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="confirm-delete-text">
+          <h2 class="modal-title">Delete mission?</h2>
+          <p class="confirm-delete-subtitle">
+            You're about to delete
+            <strong id="delete-mission-name">"Mission Title"</strong>. This
+            action cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('delete-modal-overlay')"
+          >
+            Cancel
+          </button>
+          <button class="btn-delete" id="btn-confirm-delete">
+            Delete mission
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT DRAWER -->
+    <div class="drawer-overlay" id="edit-drawer-overlay">
+      <div class="drawer" id="edit-mission-drawer">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Edit Mission</h2>
+          <button
+            class="modal-close"
+            onclick="Modal.close('edit-drawer-overlay')"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="drawer-body">
+          <div class="field-group">
+            <label>Mission Photo</label>
+            <div class="photo-upload-placeholder">
+              <i class="fa-solid fa-image"></i>
+              <span>Photo upload coming soon</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="edit-mission-title"
+              >Title <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="edit-mission-title"
+              placeholder="Mission title"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="edit-mission-desc"
+              >Description <span class="required">*</span></label
+            >
+            <textarea
+              id="edit-mission-desc"
+              placeholder="What is this mission about?"
+            ></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="edit-mission-location"
+              >Location <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="edit-mission-location"
+              placeholder="e.g. Waterkant 2, Paramaribo"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="edit-mission-date"
+              >Mission Date <span class="required">*</span></label
+            >
+            <input type="date" id="edit-mission-date" />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="edit-mission-start-time"
+                >Start Time <span class="required">*</span></label
+              >
+              <input type="time" id="edit-mission-start-time" />
+            </div>
+            <div class="field-group">
+              <label for="edit-mission-end-time"
+                >End Time <span class="required">*</span></label
+              >
+              <input type="time" id="edit-mission-end-time" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="edit-mission-max"
+              >Max Participants
+              <span class="field-hint">(leave empty for unlimited)</span>
+            </label>
+            <input
+              type="number"
+              id="edit-mission-max"
+              placeholder="Unlimited"
+              min="1"
+            />
+          </div>
+
+          <!-- Areas section -->
+          <div class="areas-section">
+            <div class="areas-section-header">
+              <label>Mission Areas <span class="required">*</span></label>
+              <button class="btn-add-area" onclick="Modal.addEditArea()">
+                <i class="fa-solid fa-plus"></i> Add Area
+              </button>
+            </div>
+            <div class="areas-list" id="edit-areas-list"></div>
+            <p class="area-hint">At least one area is required.</p>
+          </div>
+        </div>
+        <div class="drawer-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('edit-drawer-overlay')"
+          >
+            Cancel
+          </button>
+          <button class="btn-submit" id="btn-confirm-edit">Save changes</button>
+        </div>
+      </div>
+    </div>
+
     <script src="../js/utils/notify.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/api/authApi.js"></script>
     <script src="../js/api/missionsApi.js"></script>
+    <script src="../js/utils/modal.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/pages/mission-management.js"></script>
   </body>

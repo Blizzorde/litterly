@@ -86,9 +86,138 @@
         <main class="main-content-wrapper">
           <div class="content-header">
             <h1 class="header-text">Mission Manager</h1>
+            <a
+              href="#"
+              class="admin-action create-mission"
+              onclick="
+                Modal.open('create-drawer-overlay');
+                return false;
+              "
+            >
+              <i class="fa-solid fa-circle-plus"></i>
+            </a>
           </div>
           <div class="mgmt-list" id="mgmt-list"></div>
         </main>
+      </div>
+    </div>
+
+    <!-- CREATE DRAWER -->
+    <div class="drawer-overlay" id="create-drawer-overlay">
+      <div class="drawer" id="create-mission-drawer">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Create Mission</h2>
+          <button
+            class="modal-close"
+            onclick="Modal.close('create-drawer-overlay')"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="drawer-body">
+          <!-- Photo placeholder -->
+          <div class="field-group">
+            <label>Mission Photo</label>
+            <div class="photo-upload-placeholder">
+              <i class="fa-solid fa-image"></i>
+              <span>Photo upload coming soon</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-title"
+              >Title <span class="required">*</span></label
+            >
+            <input type="text" id="mission-title" placeholder="Mission title" />
+          </div>
+
+          <div class="field-group">
+            <label for="mission-desc"
+              >Description <span class="required">*</span></label
+            >
+            <textarea
+              id="mission-desc"
+              placeholder="What is this mission about?"
+            ></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-location"
+              >Location <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="mission-location"
+              placeholder="e.g. Waterkant 2, Paramaribo"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="mission-date">
+              Mission Date <span class="required">*</span>
+            </label>
+            <input type="date" id="mission-date" />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="mission-start-time">
+                Start Time <span class="required">*</span>
+              </label>
+              <input type="time" id="mission-start-time" />
+            </div>
+
+            <div class="field-group">
+              <label for="mission-end-time">
+                End Time <span class="required">*</span>
+              </label>
+              <input type="time" id="mission-end-time" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-max-participants"
+              >Max Participants
+              <span class="field-hint">(leave empty for unlimited)</span></label
+            >
+            <input
+              type="number"
+              id="mission-max-participants"
+              placeholder="Unlimited"
+              min="1"
+            />
+          </div>
+
+          <!-- Areas section -->
+          <div class="areas-section">
+            <div class="areas-section-header">
+              <label>Mission Areas <span class="required">*</span></label>
+              <button class="btn-add-area" onclick="Modal.addArea()">
+                <i class="fa-solid fa-plus"></i> Add Area
+              </button>
+            </div>
+            <div class="areas-list" id="create-areas-list">
+              <!-- areas added dynamically -->
+            </div>
+            <p class="area-hint">At least one area is required.</p>
+          </div>
+        </div>
+
+        <div class="drawer-footer">
+          <button
+            class="btn-cancel"
+            onclick="Modal.close('create-drawer-overlay')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-submit"
+            onclick="Modal.submit('create-mission-drawer')"
+          >
+            Create Mission
+          </button>
+        </div>
       </div>
     </div>
 
@@ -96,6 +225,7 @@
     <script src="../js/config.js"></script>
     <script src="../js/api/authApi.js"></script>
     <script src="../js/api/missionsApi.js"></script>
+    <script src="../js/utils/modal.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/pages/mission-manager-list.js"></script>
   </body>

@@ -292,4 +292,50 @@ const Modal = {
       );
     }
   },
+  addEditArea(existing = null, index = null) {
+    const list = document.getElementById("edit-areas-list");
+    const i = index ?? list.children.length;
+
+    const row = document.createElement("div");
+    row.className = "area-row";
+    if (existing?.id) row.dataset.areaId = existing.id;
+
+    row.innerHTML = `
+    <div class="area-row-header">
+      <span class="area-row-label">Area ${i + 1}</span>
+      <button class="btn-remove-area" onclick="Modal.removeEditArea(this)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="field-group">
+      <label>Area Name <span class="required">*</span></label>
+      <input type="text" class="area-name" placeholder="e.g. Left Side A1" value="${existing?.area_name ?? ""}" />
+    </div>
+    <div class="field-group">
+      <label>Description</label>
+      <input type="text" class="area-desc" placeholder="Optional description" value="${existing?.area_description ?? ""}" />
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Points <span class="required">*</span></label>
+        <input type="number" class="area-points" placeholder="e.g. 50" min="1" value="${existing?.reward_points ?? ""}" />
+      </div>
+      <div class="field-group">
+        <label>Max Users <span class="field-hint">(empty = unlimited)</span></label>
+        <input type="number" class="area-max" placeholder="Unlimited" min="1" value="${existing?.max_users ?? ""}" />
+      </div>
+    </div>
+  `;
+
+    list.appendChild(row);
+  },
+
+  removeEditArea(btn) {
+    btn.closest(".area-row").remove();
+    document
+      .querySelectorAll("#edit-areas-list .area-row")
+      .forEach((row, i) => {
+        row.querySelector(".area-row-label").textContent = `Area ${i + 1}`;
+      });
+  },
 };

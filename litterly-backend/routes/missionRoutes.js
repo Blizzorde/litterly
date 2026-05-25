@@ -623,6 +623,39 @@ router.patch("/:id", async (req, res) => {
       });
     }
 
+    if (req.body.areas && req.body.areas.length) {
+      for (const area of req.body.areas) {
+        if (!area.area_name || !area.reward_points) continue;
+
+        if (area.id) {
+          // update existing area
+          await pool.query(
+            `UPDATE mission_areas SET area_name=?, area_description=?, reward_points=?, max_users=? WHERE id=? AND mission_id=?`,
+            [
+              area.area_name,
+              area.area_description ?? null,
+              area.reward_points,
+              area.max_users ?? null,
+              area.id,
+              missionId,
+            ],
+          );
+        } else {
+          // insert new area
+          await pool.query(
+            `INSERT INTO mission_areas (mission_id, area_name, area_description, reward_points, max_users) VALUES (?, ?, ?, ?, ?)`,
+            [
+              missionId,
+              area.area_name,
+              area.area_description ?? null,
+              area.reward_points,
+              area.max_users ?? null,
+            ],
+          );
+        }
+      }
+    }
+
     return res.json({
       success: true,
       message: "Mission updated successfully",
