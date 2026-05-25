@@ -254,6 +254,8 @@ function setTab(tab) {
     tab === "status" ? "" : "none";
   document.getElementById("panel-attendance").style.display =
     tab === "attendance" ? "" : "none";
+  document.getElementById("panel-details").style.display =
+    tab === "details" ? "" : "none";
 
   document
     .getElementById("tab-status")
@@ -261,8 +263,12 @@ function setTab(tab) {
   document
     .getElementById("tab-attendance")
     .classList.toggle("active", tab === "attendance");
+  document
+    .getElementById("tab-details")
+    .classList.toggle("active", tab === "details");
 
   if (tab === "attendance") loadAttendance();
+  if (tab === "details") populateDetails(currentMission);
 }
 
 function renderAttendanceLoading() {
@@ -328,6 +334,73 @@ async function loadAttendance() {
   }
 }
 
+function formatDate(datetime) {
+  return new Date(datetime).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function formatTime(datetime) {
+  return new Date(datetime).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function populateDetails(mission) {
+  document.querySelector("#detail-created-by").textContent =
+    `Created by ${mission.created_by_username} · ${formatDate(mission.created_at)}`;
+
+  if (mission.photo_url) {
+    document.querySelector("#detail-thumbnail").style.cssText =
+      `background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('${mission.photo_url}');
+       background-size: cover; background-position: center;`;
+  } else {
+    document.querySelector("#detail-thumbnail").style.display = "none";
+  }
+
+  document.querySelector("#detail-location").textContent = mission.location;
+  document.querySelector("#detail-start").textContent =
+    `${formatDate(mission.start_datetime)} at ${formatTime(mission.start_datetime)}`;
+  document.querySelector("#detail-end").textContent =
+    `${formatDate(mission.end_datetime)} at ${formatTime(mission.end_datetime)}`;
+  document.querySelector("#detail-participants").textContent =
+    `${mission.participant_count} registered`;
+  document.querySelector("#detail-max-participants").textContent =
+    mission.max_participants ?? "Unlimited";
+  document.querySelector("#detail-created-at").textContent =
+    `${formatDate(mission.created_at)}`;
+  document.querySelector("#detail-description").textContent =
+    mission.description;
+
+  const areasEl = document.querySelector("#detail-areas");
+  areasEl.innerHTML = mission.areas
+    .map((area) => {
+      const spotsLeft =
+        area.max_users === null
+          ? "Unlimited spots"
+          : `${area.current_count}/${area.max_users} spots taken`;
+
+      return `
+      <div class="area-item">
+        <div class="area-item-left">
+          <div class="area-item-name">${area.area_name}</div>
+          <div class="area-item-desc">${area.area_description ?? ""}</div>
+        </div>
+        <div class="area-item-right">
+          <div class="area-item-points"><i class="fa-solid fa-star"></i> ${area.reward_points} pts</div>
+          <div class="area-item-spots ${area.max_users !== null && area.current_count >= area.max_users ? "full" : ""}">
+            ${spotsLeft}
+          </div>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+}
+
 // Attendance button clicks
 document
   .getElementById("attendance-list")
@@ -365,5 +438,7 @@ document
 document
   .getElementById("tab-attendance")
   .addEventListener("click", () => setTab("attendance"));
-
+document
+  .getElementById("tab-details")
+  .addEventListener("click", () => setTab("details"));
 loadMissionManagement();

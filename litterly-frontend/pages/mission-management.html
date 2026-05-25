@@ -119,6 +119,9 @@
             <a class="mgmt-tab" id="tab-attendance" href="javascript:void(0)">
               <i class="fa-solid fa-clipboard-user"></i> Attendance
             </a>
+            <a class="mgmt-tab" id="tab-details" href="javascript:void(0)">
+              <i class="fa-solid fa-circle-info"></i> Mission Details
+            </a>
           </div>
           <div id="panel-status">
             <!-- STATUS CONTROL CONSOLE -->
@@ -234,6 +237,72 @@
                 >
               </div>
               <div id="attendance-list"></div>
+            </section>
+          </div>
+
+          <div id="panel-details" style="display: none">
+            <section class="mgmt-section">
+              <div class="mgmt-section-header">
+                <h3 class="mgmt-section-title">Mission Details</h3>
+                <span
+                  class="mgmt-section-subtitle"
+                  id="detail-created-by"
+                ></span>
+              </div>
+
+              <div class="detail-thumbnail" id="detail-thumbnail"></div>
+
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-location-dot"></i> Location
+                  </div>
+                  <div class="detail-item-value" id="detail-location"></div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-calendar"></i> Start
+                  </div>
+                  <div class="detail-item-value" id="detail-start"></div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-calendar-check"></i> End
+                  </div>
+                  <div class="detail-item-value" id="detail-end"></div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-users"></i> Participants
+                  </div>
+                  <div class="detail-item-value" id="detail-participants"></div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-user-lock"></i> Max Participants
+                  </div>
+                  <div
+                    class="detail-item-value"
+                    id="detail-max-participants"
+                  ></div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-item-label">
+                    <i class="fa-solid fa-clock"></i> Created At
+                  </div>
+                  <div class="detail-item-value" id="detail-created-at"></div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <h4 class="detail-section-title">Description</h4>
+                <p class="detail-description" id="detail-description"></p>
+              </div>
+
+              <div class="detail-section">
+                <h4 class="detail-section-title">Areas</h4>
+                <div id="detail-areas"></div>
+              </div>
             </section>
           </div>
         </main>
