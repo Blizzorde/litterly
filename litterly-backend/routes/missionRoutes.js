@@ -31,14 +31,14 @@ router.get("/", async (req, res) => {
 });
 
 // PUBLIC - get mission detail
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   const missionId = req.params.id;
 
   try {
     const [rows] = await pool.query(
       `SELECT m.*, 
         u.username AS created_by_username,
-        (SELECT COUNT(*) FROM mission_registrations mr WHERE mr.mission_id = m.id AND mr.status != 'cancelled') AS participant_count
+        (SELECT COUNT(*) FROM mission_registrations mr WHERE mr.mission_id = m.id AND mr.status NOT IN ('cancelled')) AS participant_count
        FROM missions m
        JOIN users u ON m.created_by = u.id
        WHERE m.id = ?`,
@@ -51,15 +51,28 @@ router.get("/:id", async (req, res) => {
         .json({ success: false, message: "Mission not found" });
     }
 
-    // get areas for this mission
     const [areas] = await pool.query(
-      "SELECT * FROM mission_areas WHERE mission_id = ?",
+      `SELECT ma.*,
+        (
+          SELECT COUNT(*) 
+          FROM mission_area_assignments maa
+          JOIN mission_registrations mr ON maa.registration_id = mr.id
+          WHERE maa.area_id = ma.id 
+            AND mr.status NOT IN ('cancelled')
+        ) AS current_count
+       FROM mission_areas ma
+       WHERE ma.mission_id = ?`,
       [missionId],
+    );
+
+    const [registration] = await pool.query(
+      "SELECT id, status FROM mission_registrations WHERE mission_id = ? AND user_id = ?",
+      [missionId, req.user.id],
     );
 
     res.status(200).json({
       success: true,
-      data: { ...rows[0], areas },
+      data: { ...rows[0], areas, user_registration: registration[0] ?? null },
     });
   } catch (err) {
     res.status(500).json({
@@ -71,21 +84,222 @@ router.get("/:id", async (req, res) => {
 });
 
 // PRIVATE - join mission
-router.post("/join", async (req, res) => {
-  const { missionId } = req.body;
+router.post("/:id/register", authMiddleware, async (req, res) => {
+  const missionId = req.params.id;
   const userId = req.user.id;
+  const { area_id } = req.body;
+
+  const connection = await pool.getConnection();
 
   try {
-    await pool.query(
-      "INSERT INTO mission_participants (user_id, mission_id) VALUES (?, ?)",
-      [userId, missionId],
+    await connection.beginTransaction();
+
+    const [missions] = await connection.query(
+      "SELECT * FROM missions WHERE id = ?",
+      [missionId],
     );
 
-    res.json({ message: "Joined mission" });
+    if (!missions.length) {
+      await connection.rollback();
+      return res
+        .status(404)
+        .json({ success: false, message: "Mission not found" });
+    }
+
+    if (missions[0].status !== "open") {
+      await connection.rollback();
+      return res.status(400).json({
+        success: false,
+        message: "Mission is not open for registration",
+      });
+    }
+
+    const [existing] = await connection.query(
+      "SELECT * FROM mission_registrations WHERE mission_id = ? AND user_id = ?",
+      [missionId, userId],
+    );
+
+    if (existing.length && existing[0].status !== "cancelled") {
+      await connection.rollback();
+      return res.status(400).json({
+        success: false,
+        message: "You are already registered for this mission",
+      });
+    }
+
+    const isRejoin = existing.length && existing[0].status === "cancelled";
+
+    const [areas] = await connection.query(
+      "SELECT * FROM mission_areas WHERE id = ? AND mission_id = ?",
+      [area_id, missionId],
+    );
+
+    if (!areas.length) {
+      await connection.rollback();
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid area for this mission" });
+    }
+
+    const area = areas[0];
+
+    if (area.max_users !== null) {
+      const [taken] = await connection.query(
+        `SELECT COUNT(*) AS count 
+     FROM mission_area_assignments maa
+     JOIN mission_registrations mr ON maa.registration_id = mr.id
+     WHERE maa.area_id = ? 
+       AND mr.status NOT IN ('cancelled')`,
+        [area_id],
+      );
+
+      if (taken[0].count >= area.max_users) {
+        const [updatedAreas] = await connection.query(
+          `SELECT ma.*,
+        (
+          SELECT COUNT(*) 
+          FROM mission_area_assignments maa
+          JOIN mission_registrations mr ON maa.registration_id = mr.id
+          WHERE maa.area_id = ma.id 
+            AND mr.status NOT IN ('cancelled')
+        ) AS current_count
+       FROM mission_areas ma
+       WHERE ma.mission_id = ?`,
+          [missionId],
+        );
+
+        await connection.rollback();
+        return res.status(400).json({
+          success: false,
+          message: "This area is full",
+          areas: updatedAreas,
+        });
+      }
+    }
+
+    let registrationId;
+
+    if (isRejoin) {
+      await connection.query(
+        "UPDATE mission_registrations SET status = 'registered' WHERE id = ?",
+        [existing[0].id],
+      );
+      registrationId = existing[0].id;
+
+      await connection.query(
+        "UPDATE mission_area_assignments SET area_id = ? WHERE registration_id = ?",
+        [area_id, registrationId],
+      );
+    } else {
+      const [reg] = await connection.query(
+        "INSERT INTO mission_registrations (mission_id, user_id) VALUES (?, ?)",
+        [missionId, userId],
+      );
+      registrationId = reg.insertId;
+
+      await connection.query(
+        "INSERT INTO mission_area_assignments (registration_id, area_id) VALUES (?, ?)",
+        [registrationId, area_id],
+      );
+    }
+
+    const [updatedAreas] = await connection.query(
+      `SELECT ma.*,
+    (
+      SELECT COUNT(*) 
+      FROM mission_area_assignments maa
+      JOIN mission_registrations mr ON maa.registration_id = mr.id
+      WHERE maa.area_id = ma.id 
+        AND mr.status NOT IN ('cancelled')
+    ) AS current_count
+   FROM mission_areas ma
+   WHERE ma.mission_id = ?`,
+      [missionId],
+    );
+
+    await connection.commit();
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully registered for mission",
+      areas: updatedAreas,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error joining mission", err: err.message });
+    await connection.rollback();
+    res.status(500).json({
+      success: false,
+      message: "Registration failed",
+      error: err.message,
+    });
+  } finally {
+    connection.release();
+  }
+});
+
+router.post("/:id/cancel", authMiddleware, async (req, res) => {
+  const missionId = req.params.id;
+  const userId = req.user.id;
+
+  const connection = await pool.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    const [registration] = await connection.query(
+      "SELECT * FROM mission_registrations WHERE mission_id = ? AND user_id = ?",
+      [missionId, userId],
+    );
+
+    if (!registration.length) {
+      await connection.rollback();
+      return res.status(400).json({
+        success: false,
+        message: "You are not registered for this mission",
+      });
+    }
+
+    if (registration[0].status === "cancelled") {
+      await connection.rollback();
+      return res
+        .status(400)
+        .json({ success: false, message: "Already cancelled" });
+    }
+
+    await connection.query(
+      "UPDATE mission_registrations SET status = 'cancelled' WHERE id = ?",
+      [registration[0].id],
+    );
+
+    const [updatedAreas] = await connection.query(
+      `SELECT ma.*,
+    (
+      SELECT COUNT(*) 
+      FROM mission_area_assignments maa
+      JOIN mission_registrations mr ON maa.registration_id = mr.id
+      WHERE maa.area_id = ma.id 
+        AND mr.status NOT IN ('cancelled')
+    ) AS current_count
+   FROM mission_areas ma
+   WHERE ma.mission_id = ?`,
+      [missionId],
+    );
+
+    await connection.commit();
+
+    res.status(200).json({
+      success: true,
+      message: "Registration cancelled",
+      areas: updatedAreas,
+    });
+  } catch (err) {
+    await connection.rollback();
+    res.status(500).json({
+      success: false,
+      message: "Cancellation failed",
+      error: err.message,
+    });
+  } finally {
+    connection.release();
   }
 });
 
