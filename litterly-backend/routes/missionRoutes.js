@@ -725,4 +725,67 @@ router.get("/admin/all", authMiddleware, requireRole(1), async (req, res) => {
   }
 });
 
+router.get(
+  "/:id/registrations",
+  authMiddleware,
+  requireRole(1),
+  async (req, res) => {
+    const missionId = req.params.id;
+    try {
+      const [rows] = await pool.query(
+        `SELECT mr.*, u.username, u.email,
+        ma.area_name, ma.reward_points
+       FROM mission_registrations mr
+       JOIN users u ON mr.user_id = u.id
+       LEFT JOIN mission_area_assignments maa ON maa.registration_id = mr.id
+       LEFT JOIN mission_areas ma ON maa.area_id = ma.id
+       WHERE mr.mission_id = ?
+       ORDER BY mr.registered_at ASC`,
+        [missionId],
+      );
+      res.status(200).json({ success: true, data: rows });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ success: false, message: "Error fetching registrations" });
+    }
+  },
+);
+
+router.patch(
+  "/:id/registrations/:registrationId",
+  authMiddleware,
+  requireRole(1),
+  async (req, res) => {
+    const { registrationId } = req.params;
+    const { status } = req.body;
+
+    const allowed = ["registered", "attended", "absent", "cancelled"];
+    if (!allowed.includes(status)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid status" });
+    }
+
+    try {
+      const [result] = await pool.query(
+        "UPDATE mission_registrations SET status = ? WHERE id = ?",
+        [status, registrationId],
+      );
+
+      if (result.affectedRows === 0) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Registration not found" });
+      }
+
+      res.status(200).json({ success: true, message: "Status updated" });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ success: false, message: "Error updating status" });
+    }
+  },
+);
+
 export default router;

@@ -344,3 +344,167 @@
 .status-step-connector.cancelled-connector {
   background: #ffa39e;
 }
+
+.mgmt-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--color-border, #eee);
+  margin-bottom: 1.5rem;
+}
+
+.mgmt-tab {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.45;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition:
+    opacity 0.15s,
+    border-color 0.15s;
+  cursor: pointer;
+}
+
+.mgmt-tab:hover {
+  opacity: 0.7;
+}
+.mgmt-tab.active {
+  opacity: 1;
+  border-bottom-color: var(--primary-color, #1a7a4a);
+  color: var(--primary-color, #1a7a4a);
+}
+
+/* Attendance */
+.att-loading,
+.att-empty {
+  text-align: center;
+  padding: 3rem;
+  opacity: 0.4;
+  font-size: 1.2rem;
+}
+
+.att-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--color-border, #eee);
+  gap: 1rem;
+}
+
+.att-row:last-child {
+  border-bottom: none;
+}
+
+.att-username {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 0.2rem;
+}
+
+.att-meta {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.att-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.att-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0.5;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+}
+
+.att-btn:hover {
+  opacity: 1;
+}
+.att-btn.active {
+  opacity: 1;
+}
+.att-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.att-btn-present {
+  background: #f6ffed;
+  color: #389e0d;
+  border-color: #b7eb8f;
+}
+.att-btn-present.active {
+  background: #389e0d;
+  color: #fff;
+  border-color: #389e0d;
+}
+
+.att-btn-absent {
+  background: #fff7e6;
+  color: #d46b08;
+  border-color: #ffd591;
+}
+.att-btn-absent.active {
+  background: #d46b08;
+  color: #fff;
+  border-color: #d46b08;
+}
+
+.att-btn-cancel {
+  background: #fff1f0;
+  color: #cf1322;
+  border-color: #ffa39e;
+}
+.att-btn-cancel.active {
+  background: #cf1322;
+  color: #fff;
+  border-color: #cf1322;
+}
+
+.att-readonly-status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.reg-status-registered {
+  background: #e6f4ff;
+  color: #0958d9;
+}
+.reg-status-attended {
+  background: #f6ffed;
+  color: #389e0d;
+}
+.reg-status-absent {
+  background: #fff7e6;
+  color: #d46b08;
+}
+.reg-status-cancelled {
+  background: #fff1f0;
+  color: #cf1322;
+}
+.reg-status-rewarded {
+  background: #f9f0ff;
+  color: #531dab;
+}

@@ -112,108 +112,130 @@
             </div>
           </div>
 
-          <!-- STATUS CONTROL CONSOLE -->
-          <section class="mgmt-section">
-            <div class="mgmt-section-header">
-              <h3 class="mgmt-section-title">Status control console</h3>
-              <span class="mgmt-section-subtitle"
-                >Current pipeline position</span
-              >
-            </div>
+          <div class="mgmt-tabs">
+            <a class="mgmt-tab" id="tab-status" href="javascript:void(0)">
+              <i class="fa-solid fa-gauge"></i> Status Control
+            </a>
+            <a class="mgmt-tab" id="tab-attendance" href="javascript:void(0)">
+              <i class="fa-solid fa-clipboard-user"></i> Attendance
+            </a>
+          </div>
+          <div id="panel-status">
+            <!-- STATUS CONTROL CONSOLE -->
+            <section class="mgmt-section">
+              <div class="mgmt-section-header">
+                <h3 class="mgmt-section-title">Status control console</h3>
+                <span class="mgmt-section-subtitle"
+                  >Current pipeline position</span
+                >
+              </div>
 
-            <div class="status-pipeline">
-              <div class="status-step">
-                <div class="status-step-icon">
-                  <i class="fa-solid fa-file-pen"></i>
+              <div class="status-pipeline">
+                <div class="status-step">
+                  <div class="status-step-icon">
+                    <i class="fa-solid fa-file-pen"></i>
+                  </div>
+                  <div class="status-step-label">Draft</div>
                 </div>
-                <div class="status-step-label">Draft</div>
-              </div>
 
-              <div class="status-step-connector"></div>
+                <div class="status-step-connector"></div>
 
-              <div class="status-step">
-                <div class="status-step-icon">
-                  <i class="fa-solid fa-door-open"></i>
+                <div class="status-step">
+                  <div class="status-step-icon">
+                    <i class="fa-solid fa-door-open"></i>
+                  </div>
+                  <div class="status-step-label">Open</div>
                 </div>
-                <div class="status-step-label">Open</div>
-              </div>
 
-              <div class="status-step-connector active"></div>
+                <div class="status-step-connector active"></div>
 
-              <div class="status-step">
-                <div class="status-step-icon">
-                  <i class="fa-solid fa-person-running"></i>
+                <div class="status-step">
+                  <div class="status-step-icon">
+                    <i class="fa-solid fa-person-running"></i>
+                  </div>
+                  <div class="status-step-label">Ongoing</div>
                 </div>
-                <div class="status-step-label">Ongoing</div>
-              </div>
 
-              <div class="status-step-connector"></div>
+                <div class="status-step-connector"></div>
 
-              <div class="status-step">
-                <div class="status-step-icon">
-                  <i class="fa-solid fa-gift"></i>
+                <div class="status-step">
+                  <div class="status-step-icon">
+                    <i class="fa-solid fa-gift"></i>
+                  </div>
+                  <div class="status-step-label">Awaiting rewards</div>
                 </div>
-                <div class="status-step-label">Awaiting rewards</div>
-              </div>
 
-              <div class="status-step-connector"></div>
+                <div class="status-step-connector"></div>
 
-              <div class="status-step">
-                <div class="status-step-icon">
-                  <i class="fa-solid fa-circle-check"></i>
+                <div class="status-step">
+                  <div class="status-step-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                  </div>
+                  <div class="status-step-label">Completed</div>
                 </div>
-                <div class="status-step-label">Completed</div>
               </div>
-            </div>
 
-            <!-- Cancelled is shown separately since it's off the main pipeline -->
-            <div class="status-cancelled-row">
-              <div class="status-cancelled-badge">
-                <i class="fa-solid fa-ban"></i>
-                <span>Cancelled</span>
+              <!-- Cancelled is shown separately since it's off the main pipeline -->
+              <div class="status-cancelled-row">
+                <div class="status-cancelled-badge">
+                  <i class="fa-solid fa-ban"></i>
+                  <span>Cancelled</span>
+                </div>
+                <span class="status-cancelled-hint"
+                  >Off pipeline — use manual override below to set</span
+                >
               </div>
-              <span class="status-cancelled-hint"
-                >Off pipeline — use manual override below to set</span
-              >
-            </div>
 
-            <!-- Next stage button -->
-            <div class="next-stage-wrapper">
-              <button class="btn-next-stage">
-                <i class="fa-solid fa-forward-step"></i>
-                Progress — move to next stage
-              </button>
-            </div>
-          </section>
-
-          <!-- MANUAL OVERRIDE -->
-          <section class="mgmt-section">
-            <div class="mgmt-section-header">
-              <h3 class="mgmt-section-title">Manual system override</h3>
-              <span class="mgmt-section-subtitle"
-                >Skip stages or force a specific status</span
-              >
-            </div>
-
-            <div class="override-body">
-              <div class="field-group">
-                <label for="override-status">Select status</label>
-                <select id="override-status" class="override-select">
-                  <option value="">— choose a status —</option>
-                  <option value="draft">Draft</option>
-                  <option value="open">Open</option>
-                  <option value="ongoing">Ongoing</option>
-                  <option value="awaiting_rewards">Awaiting rewards</option>
-                  <option value="completed">Completed</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
+              <!-- Next stage button -->
+              <div class="next-stage-wrapper">
+                <button class="btn-next-stage">
+                  <i class="fa-solid fa-forward-step"></i>
+                  Progress — move to next stage
+                </button>
               </div>
-              <button class="btn-override">
-                <i class="fa-solid fa-bolt"></i>
-                Apply status override
-              </button>
-            </div>
-          </section>
+            </section>
+
+            <!-- MANUAL OVERRIDE -->
+            <section class="mgmt-section">
+              <div class="mgmt-section-header">
+                <h3 class="mgmt-section-title">Manual system override</h3>
+                <span class="mgmt-section-subtitle"
+                  >Skip stages or force a specific status</span
+                >
+              </div>
+
+              <div class="override-body">
+                <div class="field-group">
+                  <label for="override-status">Select status</label>
+                  <select id="override-status" class="override-select">
+                    <option value="">— choose a status —</option>
+                    <option value="draft">Draft</option>
+                    <option value="open">Open</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="awaiting_rewards">Awaiting rewards</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <button class="btn-override">
+                  <i class="fa-solid fa-bolt"></i>
+                  Apply status override
+                </button>
+              </div>
+            </section>
+          </div>
+
+          <div id="panel-attendance" style="display: none">
+            <section class="mgmt-section">
+              <div class="mgmt-section-header">
+                <h3 class="mgmt-section-title">Attendance</h3>
+                <span class="mgmt-section-subtitle"
+                  >Manage participant statuses</span
+                >
+              </div>
+              <div id="attendance-list"></div>
+            </section>
+          </div>
         </main>
       </div>
     </div>

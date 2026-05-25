@@ -164,3 +164,38 @@ async function getAllMissionsAdmin() {
     };
   }
 }
+
+async function getMissionRegistrations(missionId) {
+  try {
+    const res = await axios.get(
+      `${CONFIG.API_BASE_URL}/missions/${missionId}/registrations`,
+      {
+        withCredentials: true,
+      },
+    );
+    return res.data.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}
+
+async function updateRegistrationStatus(missionId, registrationId, status) {
+  try {
+    const res = await axios.patch(
+      `${CONFIG.API_BASE_URL}/missions/${missionId}/registrations/${registrationId}`,
+      { status },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (err) {
+    if (!err.response) throw { status: 0, message: "Cannot reach server" };
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message,
+    };
+  }
+}

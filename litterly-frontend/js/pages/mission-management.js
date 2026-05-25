@@ -78,6 +78,7 @@ async function loadMissionManagement() {
     const mission = await getMissionById(id);
     currentMission = mission;
     populatePage(mission);
+    setTab(getTabFromUrl());
   } catch (err) {
     if (err.status === 404) {
       showNotif(
@@ -230,5 +231,139 @@ document
       showNotif("fa-circle-xmark", "Error", msg, "danger");
     }
   });
+
+const REGISTRATION_STATUS_COLORS = {
+  registered: "reg-status-registered",
+  attended: "reg-status-attended",
+  absent: "reg-status-absent",
+  cancelled: "reg-status-cancelled",
+  rewarded: "reg-status-rewarded",
+};
+
+function getTabFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("tab") ?? "status";
+}
+
+function setTab(tab) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("tab", tab);
+  window.history.replaceState({}, "", url);
+
+  document.getElementById("panel-status").style.display =
+    tab === "status" ? "" : "none";
+  document.getElementById("panel-attendance").style.display =
+    tab === "attendance" ? "" : "none";
+
+  document
+    .getElementById("tab-status")
+    .classList.toggle("active", tab === "status");
+  document
+    .getElementById("tab-attendance")
+    .classList.toggle("active", tab === "attendance");
+
+  if (tab === "attendance") loadAttendance();
+}
+
+function renderAttendanceLoading() {
+  document.getElementById("attendance-list").innerHTML = `
+    <div class="att-loading"><i class="fa-solid fa-spinner fa-spin"></i></div>
+  `;
+}
+
+function renderAttendance(registrations, missionStatus) {
+  const canEdit = missionStatus === "ongoing";
+  const list = document.getElementById("attendance-list");
+
+  if (!registrations.length) {
+    list.innerHTML = `<p class="att-empty">No registrations yet.</p>`;
+    return;
+  }
+
+  list.innerHTML = registrations
+    .map((reg) => {
+      const actions = canEdit
+        ? `
+      <div class="att-actions">
+        <button class="att-btn att-btn-present ${reg.status === "attended" ? "active" : ""}"
+          data-id="${reg.id}" data-status="attended">
+          <i class="fa-solid fa-check"></i> Present
+        </button>
+        <button class="att-btn att-btn-absent ${reg.status === "absent" ? "active" : ""}"
+          data-id="${reg.id}" data-status="absent">
+          <i class="fa-solid fa-xmark"></i> Absent
+        </button>
+        <button class="att-btn att-btn-cancel ${reg.status === "cancelled" ? "active" : ""}"
+          data-id="${reg.id}" data-status="cancelled">
+          <i class="fa-solid fa-ban"></i> Cancelled
+        </button>
+      </div>
+    `
+        : `<span class="att-readonly-status ${REGISTRATION_STATUS_COLORS[reg.status]}">${reg.status}</span>`;
+
+      return `
+      <div class="att-row" data-reg-id="${reg.id}">
+        <div class="att-user-info">
+          <div class="att-username">${reg.username}</div>
+          <div class="att-meta">
+            ${reg.area_name ? `<span>${reg.area_name}</span><span class="mgmt-list-dot">·</span>` : ""}
+            <span>${reg.reward_points ?? 0} pts</span>
+          </div>
+        </div>
+        ${actions}
+      </div>
+    `;
+    })
+    .join("");
+}
+
+async function loadAttendance() {
+  renderAttendanceLoading();
+  try {
+    const registrations = await getMissionRegistrations(currentMission.id);
+    renderAttendance(registrations, currentMission.status);
+  } catch (err) {
+    document.getElementById("attendance-list").innerHTML = "";
+    showNotif("fa-circle-xmark", "Error", "Failed to load attendance");
+  }
+}
+
+// Attendance button clicks
+document
+  .getElementById("attendance-list")
+  .addEventListener("click", async (e) => {
+    const btn = e.target.closest(".att-btn");
+    if (!btn || btn.disabled) return;
+
+    const regId = btn.dataset.id;
+    const newStatus = btn.dataset.status;
+    const row = btn.closest(".att-row");
+
+    // disable all buttons in this row
+    row.querySelectorAll(".att-btn").forEach((b) => (b.disabled = true));
+
+    try {
+      await updateRegistrationStatus(currentMission.id, regId, newStatus);
+
+      // update active state on buttons
+      row.querySelectorAll(".att-btn").forEach((b) => {
+        b.disabled = false;
+        b.classList.toggle("active", b.dataset.status === newStatus);
+      });
+    } catch (err) {
+      row.querySelectorAll(".att-btn").forEach((b) => (b.disabled = false));
+      let msg = "Failed to update status";
+      if (err.status === 400) msg = err.message;
+      showNotif("fa-circle-xmark", "Error", msg);
+    }
+  });
+
+// Tab listeners
+document
+  .getElementById("tab-status")
+  .addEventListener("click", () => setTab("status"));
+document
+  .getElementById("tab-attendance")
+  .addEventListener("click", () => setTab("attendance"));
 
 loadMissionManagement();
