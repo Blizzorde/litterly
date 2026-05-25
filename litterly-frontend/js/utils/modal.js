@@ -25,8 +25,9 @@ const Modal = {
     const title = document.getElementById("mission-title")?.value.trim();
     const desc = document.getElementById("mission-desc")?.value.trim();
     const location = document.getElementById("mission-location")?.value.trim();
-    const start = document.getElementById("mission-start")?.value;
-    const end = document.getElementById("mission-end")?.value;
+    const date = document.getElementById("mission-date")?.value;
+    const startTime = document.getElementById("mission-start-time")?.value;
+    const endTime = document.getElementById("mission-end-time")?.value;
     const maxParticipants = document.getElementById(
       "mission-max-participants",
     )?.value;
@@ -35,10 +36,19 @@ const Modal = {
     if (!title) return alert("Please enter a mission title.");
     if (!desc) return alert("Please enter a description.");
     if (!location) return alert("Please enter a location.");
-    if (!start) return alert("Please select a start date and time.");
-    if (!end) return alert("Please select an end date and time.");
+    if (!date) return alert("Please select a mission date.");
+    if (!startTime) return alert("Please select a start time.");
+    if (!endTime) return alert("Please select an end time.");
+
+    const start = `${date}T${startTime}`;
+    const end = `${date}T${endTime}`;
+
     if (new Date(end) <= new Date(start))
-      return alert("End date must be after start date.");
+      return alert("End time must be after start time.");
+
+    if (start.split("T")[0] !== end.split("T")[0]) {
+      throw new Error("Mission must be on the same day");
+    }
 
     // Validate areas
     const areaRows = document.querySelectorAll(".area-row");
@@ -86,8 +96,9 @@ const Modal = {
       document.getElementById("mission-title").value = "";
       document.getElementById("mission-desc").value = "";
       document.getElementById("mission-location").value = "";
-      document.getElementById("mission-start").value = "";
-      document.getElementById("mission-end").value = "";
+      document.getElementById("mission-date").value = "";
+      document.getElementById("mission-start-time").value = "";
+      document.getElementById("mission-end-time").value = "";
       document.getElementById("mission-max-participants").value = "";
       document.getElementById("create-areas-list").innerHTML = "";
 
