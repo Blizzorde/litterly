@@ -25,14 +25,14 @@
 /* all things thumbnail */
 .card-thumbnail-wrapper {
   display: flex;
-  background-image:
+  /* background-image:
     linear-gradient(
       to bottom,
       transparent,
       rgba(9, 66, 46, 0),
       rgba(1, 18, 12, 0.767)
     ),
-    url(../assets/baca.jpg);
+    url(../assets/logo-litterly-light-filled.png); */
   background-size: cover;
   background-position: center;
   height: 25rem;
