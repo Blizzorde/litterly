@@ -54,17 +54,40 @@ router.get("/:id", async (req, res) => {
   const missionId = req.params.id;
 
   try {
-    const [rows] = await pool.query("SELECT * FROM missions WHERE id = ?", [
-      missionId,
-    ]);
+    const [rows] = await pool.query(
+      `SELECT m.*, 
+        u.username AS created_by_username,
+        (SELECT COUNT(*) FROM mission_registrations mr WHERE mr.mission_id = m.id AND mr.status != 'cancelled') AS participant_count
+       FROM missions m
+       JOIN users u ON m.created_by = u.id
+       WHERE m.id = ?`,
+      [missionId],
+    );
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: "Mission not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Mission not found" });
     }
 
-    res.json(rows[0]);
+    // get areas for this mission
+    const [areas] = await pool.query(
+      "SELECT * FROM mission_areas WHERE mission_id = ?",
+      [missionId],
+    );
+
+    res.status(200).json({
+      success: true,
+      data: { ...rows[0], areas },
+    });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching mission detail" });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error fetching mission",
+        error: err.message,
+      });
   }
 });
 

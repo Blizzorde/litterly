@@ -1,175 +1,205 @@
-.mission-details-cards-wrapper{
-    display: flex;
-    padding: 0 3rem 3rem 0;
-    overflow: hidden;
+.mission-details-cards-wrapper {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
 }
 
 /* header */
 /* back arrow */
-.back-arrow{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.back-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75em;
 }
 
 /* ==========================================================left container */
-.mission-detail-cards-left-container{
-    display: flex;
-    flex-direction: column;
-    flex-basis: 70%;
-    gap: 2rem;
-    padding: 1rem 1.5rem;
+.mission-detail-cards-left-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 70%;
+  gap: 2rem;
+  padding: 1rem 1.5rem;
 }
 
 /* all things thumbnail */
-.card-thumbnail-wrapper{
-    display: flex;
-    background-image:     
+.card-thumbnail-wrapper {
+  display: flex;
+  background-image:
     linear-gradient(
       to bottom,
       transparent,
       rgba(9, 66, 46, 0),
       rgba(1, 18, 12, 0.767)
-    ), url(../assets/baca.jpg);
-    background-size: cover;
-    background-position: center;
-    height: 25rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
+    ),
+    url(../assets/baca.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 25rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
 }
 
-.card-thumbnail-wrapper .card-thumbnail-overlay{
-    display: flex;
-    flex-direction: column;
-    height: 25rem;
-    flex: 1;
-    justify-content: space-between;
-    padding: 1.3rem 2rem;
+.card-thumbnail-wrapper .card-thumbnail-overlay {
+  display: flex;
+  flex-direction: column;
+  height: 25rem;
+  flex: 1;
+  justify-content: space-between;
+  padding: 1.3rem 2rem;
 }
 
 .card-thumbnail-overlay .overlay-header {
-    display: flex;
-    justify-content: end;
-
+  display: flex;
+  justify-content: end;
 }
 
-.card-thumbnail-overlay .overlay-header .overlay-header-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.2rem;
-    background-color: white;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
+.card-thumbnail-overlay .overlay-header .overlay-header-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  color: rgba(0, 0, 0, 0.823);
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
 }
 
-.card-thumbnail-overlay .overlay-footer .overlay-footer-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+.card-thumbnail-overlay .overlay-footer .overlay-footer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
-
-.overlay-status{
-    background-color: green;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
-    font-family: "Be Vietnam Pro", "sans-serif";
-    text-transform: uppercase;
-    color: white;
+.overlay-status {
+  background-color: green;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
+  font-family: "Be Vietnam Pro", "sans-serif";
+  text-transform: uppercase;
+  color: white;
+  font-size: 0.8em;
+  font-weight: 700;
 }
 
-.overlay-title{
-    padding: 0.5rem 0 0 0;
-    border-radius: 1rem;
-    font-size: 4rem;
-    font-family: "Be Vietnam Pro", "sans-serif";
-    text-transform: capitalize;
-    color: white;
+.overlay-title {
+  padding: 0.5rem 0 0 0;
+  border-radius: 1rem;
+  font-size: 2.5rem;
+  font-family: "Be Vietnam Pro", "sans-serif";
+  text-transform: capitalize;
+  color: white;
 }
 /* end of all things thumbnail and overlay */
 
-
-.card-description-wrapper{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
+.card-description-wrapper {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
+  line-height: 1.25rem;
 }
 
+.card-description-wrapper .description-title {
+  color: var(--primary-color);
+  font-family: "Be Vietnam Pro", "sans-serif";
+  font-weight: 700;
+}
+z
 
 /* ==========================================================everything in right container */
 
-.mission-detail-cards-right-container{
-    display: flex;
-    flex-basis: 30%;
-    padding: 0.8rem 0 0 0;
-    color: white;
+.mission-detail-cards-right-container {
+  display: flex;
+  flex-basis: 30%;
+  padding: 0.8rem 0 0 0;
+  color: var(--card-text);
 }
 
-.card-extra-details-wrapper{
-    display: flex;
-    background-color: #065f46;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1;
-    border-radius: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
+.card-extra-details-wrapper {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
 }
 
-.extra-details-wrapper{
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    padding: 1.5rem 2rem;
+.extra-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
 }
 
-/* it's per test duo, tiny+big */
-.extra-details-text-wrapper{
-    display: flex;
-    flex-direction: column;
+.extra-detail-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.extra-details-tiny-text{
-    display: flex;
-    justify-content: start;
-    flex-direction: row-reverse;
+.extra-detail-item {
+  display: flex;
+  gap: 0.5rem;
 }
 
-.extra-details-big-text-wrapper{
-    display: flex;
-    padding: 0 2rem;
+.extra-detail-item .icon {
+  padding: 0.8rem;
+  background-color: var(--icon-bg);
+  border-radius: 1rem;
+  color: var(--lighter-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.extra-detail-item.reward {
+  padding: 1rem 0;
+}
+.extra-detail-item.reward .icon {
+  padding: 0.8rem;
+  background-color: var(--secondary-icon-bg);
+  border-radius: 1rem;
+  color: var(--secondary-icon-color);
+}
+
+.extra-detail-item.reward .value {
+  color: var(--lighter-green);
+  font-size: 1.5em;
+  font-weight: 600;
+  font-family: "Be Vietnam Pro", "sans-serif";
 }
 
 /* ===============================button part */
 
-.register-button-wrapper{
-    display: flex;
-    justify-content: center;
-    padding: 1rem 2rem 5rem 2rem;
-
+.register-button-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem 5rem 2rem;
 }
 
-.register-button{
-    background-color: green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 2rem;
-    padding: 1rem 1rem;
-    flex: 1;
-    text-transform: uppercase;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-    overflow: hidden;
+.register-button-wrapper .register-button {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  padding: 1rem 1rem;
+  flex: 1;
+  text-transform: capitalize;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
+  overflow: hidden;
 }
-
-

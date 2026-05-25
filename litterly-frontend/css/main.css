@@ -16,6 +16,9 @@
   --main-bg-color: #f8f9ff;
   --link-color: #006c4b;
   --card-text: #0b1c30;
+  --icon-bg: #dce9ff;
+  --secondary-icon-bg: #ffdf9f;
+  --secondary-icon-color: #261a00;
 }
 
 *,
@@ -217,7 +220,7 @@ a {
 .header-text {
   display: flex;
   font-family: "Be Vietnam Pro", "sans-serif";
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size: 3rem;
   color: var(--primary-color);
   gap: 1rem;
