@@ -36,7 +36,10 @@ function renderMissions(missions) {
           <a href="./mission-detail.html?id=${mission.id}" class="card-action">View Mission</a>
           <div class="admin-actions-wrapper conditional-section" data-role="1">
             <a href="#" class="card-action admin-action edit conditional-btn" data-role="1">Edit</a>
-            <a href="#" class="card-action admin-action delete conditional-btn" data-role="1">Delete</a>
+            <a href="#" class="card-action admin-action delete conditional-btn" data-role="1"
+              data-id="${mission.id}"
+              data-title="${mission.title}"
+              onclick="Modal.openDelete(this); return false;">Delete</a>
           </div>
         </div>
       </div>
