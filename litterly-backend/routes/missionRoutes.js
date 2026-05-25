@@ -5,7 +5,13 @@ import requireRole from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
-const ALLOWED_PUBLIC_STATUSES = ["open", "ongoing", "completed"];
+const ALLOWED_PUBLIC_STATUSES = [
+  "open",
+  "ongoing",
+  "awaiting_rewards",
+  "completed",
+  "cancelled",
+];
 
 router.get("/", async (req, res) => {
   try {
@@ -19,11 +25,9 @@ router.get("/", async (req, res) => {
 
     const query = type
       ? "SELECT * FROM missions WHERE status = ?"
-      : `SELECT * FROM missions WHERE status IN ('open', 'ongoing', 'completed')`;
+      : `SELECT * FROM missions WHERE status IN ('open', 'ongoing', 'awaiting_rewards', 'completed', 'cancelled')`;
 
-    const params = type ? [type] : [];
-
-    const [rows] = await pool.query(query, params);
+    const [rows] = await pool.query(query, type ? [type] : []);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ message: "Error fetching missions" });

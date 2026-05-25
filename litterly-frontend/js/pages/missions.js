@@ -24,7 +24,7 @@ function renderMissions(missions) {
     <a href="./mission-detail.html?id=${mission.id}" class="card-wrapper">
       <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}>
         <div class="card-top-bar">
-          <div class="status-tag ${mission.status}">${mission.status}</div>
+          <div class="status-tag ${mission.status}">${mission.status.split("_").join(" ")}</div>
         </div>
       </div>
       <div class="card-text-content-wrapper">
@@ -43,7 +43,13 @@ function renderMissions(missions) {
 function getTypeFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const type = params.get("type");
-  const allowed = ["open", "ongoing", "completed"];
+  const allowed = [
+    "open",
+    "ongoing",
+    "awaiting_rewards",
+    "completed",
+    "cancelled",
+  ];
   return allowed.includes(type) ? type : null;
 }
 

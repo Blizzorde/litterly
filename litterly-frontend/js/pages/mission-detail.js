@@ -66,6 +66,7 @@ async function handleRegister(areaId) {
     closeAreaModal();
 
     currentMission.areas = res.areas; // update global
+    refreshAreas();
 
     showNotif(
       "fa-circle-check",
@@ -82,6 +83,7 @@ async function handleRegister(areaId) {
 
     if (err.areas) {
       currentMission.areas = err.areas;
+      refreshAreas();
     }
 
     let msg = "Registration failed, try again";
@@ -89,6 +91,10 @@ async function handleRegister(areaId) {
     else if (err.status === 0) msg = "Cannot reach server";
 
     showNotif("fa-circle-xmark", "Failed", msg, "danger");
+
+    if (err.message === "Mission is not open for registration") {
+      setTimeout(() => window.location.reload(), 1500);
+    }
   }
 }
 
@@ -128,6 +134,7 @@ async function onCancelClick(e) {
     const res = await cancelMissionRegistration(currentMission.id);
 
     currentMission.areas = res.areas; // update global
+    refreshAreas();
 
     showNotif(
       "fa-circle-check",
@@ -151,6 +158,16 @@ async function onCancelClick(e) {
 function setJoinButton(registration) {
   const wrapper = document.querySelector(".register-button-wrapper");
 
+  // mission no longer open — gray out regardless of registration
+  if (currentMission.status == "completed") {
+    wrapper.innerHTML = `<span>Mission has concluded!</span>`;
+    return;
+  }
+  if (currentMission.status !== "open") {
+    wrapper.innerHTML = `<a href="#" class="register-button status-closed">${currentMission.status.split("_").join(" ")}</a>`;
+    return;
+  }
+
   if (!registration || registration.status === "cancelled") {
     wrapper.innerHTML = `<a href="#" class="register-button">Join this Mission</a>`;
     document
@@ -168,7 +185,7 @@ function setJoinButton(registration) {
 function populatePage(mission) {
   document.querySelector(".overlay-title").textContent = mission.title;
   document.querySelector(".overlay-status").innerHTML =
-    `<span class="status-tag ${mission.status}">${mission.status}</span>`;
+    `<span class="status-tag ${mission.status}">${mission.status.split("_").join(" ")}</span>`;
   document.querySelector(".overlay-header-wrapper").innerHTML =
     `<i class="fa-solid fa-star"></i> ${getTotalRewardPoints(mission.areas)}`;
 
@@ -183,6 +200,8 @@ function populatePage(mission) {
     <h2 class="description-title">About This Mission</h2>
     <p>${mission.description}</p>
   `;
+
+  renderAreas(mission.areas);
 
   document.querySelector(".extra-detail-item:nth-child(1) .value").textContent =
     mission.location;
@@ -218,6 +237,48 @@ async function loadMissionDetail() {
       showNotif("fa-circle-xmark", "Error", "Failed to load mission details");
     }
   }
+}
+
+function renderAreas(areas) {
+  const descWrapper = document.querySelector(".card-description-wrapper");
+
+  const areasHtml = areas
+    .map((area) => {
+      const spotsLeft =
+        area.max_users === null
+          ? "Unlimited spots"
+          : `${area.current_count}/${area.max_users} spots taken`;
+
+      return `
+      <div class="area-item">
+        <div class="area-item-left">
+          <div class="area-item-name">${area.area_name}</div>
+          <div class="area-item-desc">${area.area_description ?? ""}</div>
+        </div>
+        <div class="area-item-right">
+          <div class="area-item-points"><i class="fa-solid fa-star"></i> ${area.reward_points} pts</div>
+          <div class="area-item-spots ${area.max_users !== null && area.current_count >= area.max_users ? "full" : ""}">${spotsLeft}</div>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+
+  descWrapper.insertAdjacentHTML(
+    "beforeend",
+    `
+    <div class="areas-wrapper">
+      <h2 class="description-title">Areas</h2>
+      <div class="areas-list">${areasHtml}</div>
+    </div>
+  `,
+  );
+}
+
+function refreshAreas() {
+  const existing = document.querySelector(".areas-wrapper");
+  if (existing) existing.remove();
+  renderAreas(currentMission.areas);
 }
 
 document

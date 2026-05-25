@@ -315,3 +315,65 @@ z
   background: #ff4d4f;
   color: #fff;
 }
+
+.register-button.status-closed {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+
+.areas-wrapper {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.areas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.area-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border, #eee);
+  border-radius: 10px;
+  gap: 1rem;
+}
+
+.area-item-name {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.area-item-desc {
+  font-size: 0.82rem;
+  opacity: 0.6;
+}
+
+.area-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+
+.area-item-points {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.area-item-spots {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.area-item-spots.full {
+  color: #ff4d4f;
+  opacity: 1;
+}
