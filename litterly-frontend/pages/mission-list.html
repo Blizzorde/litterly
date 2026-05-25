@@ -126,7 +126,7 @@
                   class="admin-action create-mission conditional-btn"
                   data-role="1"
                   onclick="
-                    Modal.open('create-modal-overlay');
+                    Modal.open('create-drawer-overlay');
                     return false;
                   "
                 >
@@ -140,44 +140,112 @@
       </div>
     </div>
 
-    <!-- CREATE MODAL -->
-    <div class="modal-overlay" id="create-modal-overlay">
-      <div class="creating-mission" id="create-mission-modal">
-        <button
-          class="modal-close"
-          onclick="Modal.close('create-modal-overlay')"
-          aria-label="Close modal"
-        >
-          &times;
-        </button>
-        <h2 class="modal-title" id="modal-title-create-mission">
-          Create mission
-        </h2>
-
-        <div class="field-group">
-          <label for="mission-title">Title</label>
-          <input type="text" id="mission-title" placeholder="Mission title" />
-        </div>
-        <div class="field-group">
-          <label for="mission-desc">Description</label>
-          <textarea
-            id="mission-desc"
-            placeholder="What is this mission about?"
-          ></textarea>
+    <!-- CREATE DRAWER -->
+    <div class="drawer-overlay" id="create-drawer-overlay">
+      <div class="drawer" id="create-mission-drawer">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Create Mission</h2>
+          <button
+            class="modal-close"
+            onclick="Modal.close('create-drawer-overlay')"
+          >
+            &times;
+          </button>
         </div>
 
-        <div class="modal-footer">
+        <div class="drawer-body">
+          <!-- Photo placeholder -->
+          <div class="field-group">
+            <label>Mission Photo</label>
+            <div class="photo-upload-placeholder">
+              <i class="fa-solid fa-image"></i>
+              <span>Photo upload coming soon</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-title"
+              >Title <span class="required">*</span></label
+            >
+            <input type="text" id="mission-title" placeholder="Mission title" />
+          </div>
+
+          <div class="field-group">
+            <label for="mission-desc"
+              >Description <span class="required">*</span></label
+            >
+            <textarea
+              id="mission-desc"
+              placeholder="What is this mission about?"
+            ></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-location"
+              >Location <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="mission-location"
+              placeholder="e.g. Waterkant 2, Paramaribo"
+            />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="mission-start"
+                >Start Date & Time <span class="required">*</span></label
+              >
+              <input type="datetime-local" id="mission-start" />
+            </div>
+            <div class="field-group">
+              <label for="mission-end"
+                >End Date & Time <span class="required">*</span></label
+              >
+              <input type="datetime-local" id="mission-end" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="mission-max-participants"
+              >Max Participants
+              <span class="field-hint">(leave empty for unlimited)</span></label
+            >
+            <input
+              type="number"
+              id="mission-max-participants"
+              placeholder="Unlimited"
+              min="1"
+            />
+          </div>
+
+          <!-- Areas section -->
+          <div class="areas-section">
+            <div class="areas-section-header">
+              <label>Mission Areas <span class="required">*</span></label>
+              <button class="btn-add-area" onclick="Modal.addArea()">
+                <i class="fa-solid fa-plus"></i> Add Area
+              </button>
+            </div>
+            <div class="areas-list" id="create-areas-list">
+              <!-- areas added dynamically -->
+            </div>
+            <p class="area-hint">At least one area is required.</p>
+          </div>
+        </div>
+
+        <div class="drawer-footer">
           <button
             class="btn-cancel"
-            onclick="Modal.close('create-modal-overlay')"
+            onclick="Modal.close('create-drawer-overlay')"
           >
             Cancel
           </button>
           <button
             class="btn-submit"
-            onclick="Modal.submit('create-mission-modal')"
+            onclick="Modal.submit('create-mission-drawer')"
           >
-            Create mission
+            Create Mission
           </button>
         </div>
       </div>

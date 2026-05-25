@@ -7,48 +7,150 @@ const Modal = {
     overlay.addEventListener("click", Modal._backdropHandler);
   },
 
-  // Accepts either the overlay ID or any child element's ID
   close(id) {
     let el = document.getElementById(id);
     if (!el) return;
-    // Walk up to the overlay if a child ID was passed
-    const overlay = el.classList.contains("modal-overlay")
-      ? el
-      : el.closest(".modal-overlay");
+    const overlay =
+      el.classList.contains("modal-overlay") ||
+      el.classList.contains("drawer-overlay")
+        ? el
+        : el.closest(".modal-overlay, .drawer-overlay");
     if (!overlay) return;
     overlay.classList.remove("is-open");
     document.removeEventListener("keydown", Modal._escHandler);
     overlay.removeEventListener("click", Modal._backdropHandler);
   },
 
-  submit(id) {
-    // 1. Collect values
+  async submit(id) {
     const title = document.getElementById("mission-title")?.value.trim();
     const desc = document.getElementById("mission-desc")?.value.trim();
     const location = document.getElementById("mission-location")?.value.trim();
-    const time = document.getElementById("mission-time")?.value;
-    const points = document.getElementById("mission-points")?.value;
+    const start = document.getElementById("mission-start")?.value;
+    const end = document.getElementById("mission-end")?.value;
+    const maxParticipants = document.getElementById(
+      "mission-max-participants",
+    )?.value;
 
-    // 2. Basic validation
-    if (!title) {
-      alert("Please enter a mission title.");
-      return;
+    // Validate required fields
+    if (!title) return alert("Please enter a mission title.");
+    if (!desc) return alert("Please enter a description.");
+    if (!location) return alert("Please enter a location.");
+    if (!start) return alert("Please select a start date and time.");
+    if (!end) return alert("Please select an end date and time.");
+    if (new Date(end) <= new Date(start))
+      return alert("End date must be after start date.");
+
+    // Validate areas
+    const areaRows = document.querySelectorAll(".area-row");
+    if (!areaRows.length) return alert("Please add at least one mission area.");
+
+    const areas = [];
+    for (const row of areaRows) {
+      const areaName = row.querySelector(".area-name")?.value.trim();
+      const areaDesc = row.querySelector(".area-desc")?.value.trim();
+      const areaPoints = row.querySelector(".area-points")?.value;
+      const areaMax = row.querySelector(".area-max")?.value;
+
+      if (!areaName) return alert("Please fill in all area names.");
+      if (!areaPoints) return alert("Please fill in points for all areas.");
+
+      areas.push({
+        area_name: areaName,
+        area_description: areaDesc || null,
+        reward_points: parseInt(areaPoints),
+        max_users: areaMax ? parseInt(areaMax) : null,
+      });
     }
 
-    const payload = { title, desc, location, time, points };
-    console.log("Submitting mission:", payload);
+    const payload = {
+      title,
+      description: desc,
+      location,
+      start_datetime: start,
+      end_datetime: end,
+      max_participants: maxParticipants ? parseInt(maxParticipants) : null,
+      areas,
+    };
 
-    // 3. Call your API here, e.g.:
-    // missionsApi.create(payload).then(() => Modal.close(id));
+    try {
+      await createMission(payload);
+      Modal.close("create-drawer-overlay");
+      showNotif(
+        "fa-circle-check",
+        "Success",
+        "Mission created successfully",
+        "success",
+      );
 
-    // 4. Close after submission
-    Modal.close(id);
+      // Clear form
+      document.getElementById("mission-title").value = "";
+      document.getElementById("mission-desc").value = "";
+      document.getElementById("mission-location").value = "";
+      document.getElementById("mission-start").value = "";
+      document.getElementById("mission-end").value = "";
+      document.getElementById("mission-max-participants").value = "";
+      document.getElementById("create-areas-list").innerHTML = "";
+
+      loadMissions();
+    } catch (err) {
+      showNotif(
+        "fa-circle-xmark",
+        "Error",
+        err.message ?? "Failed to create mission",
+        "danger",
+      );
+    }
+    Modal.close("create-drawer-overlay");
+  },
+
+  addArea() {
+    const list = document.getElementById("create-areas-list");
+    const index = list.children.length;
+
+    const row = document.createElement("div");
+    row.className = "area-row";
+    row.innerHTML = `
+      <div class="area-row-header">
+        <span class="area-row-label">Area ${index + 1}</span>
+        <button class="btn-remove-area" onclick="Modal.removeArea(this)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="field-group">
+        <label>Area Name <span class="required">*</span></label>
+        <input type="text" class="area-name" placeholder="e.g. Left Side A1" />
+      </div>
+      <div class="field-group">
+        <label>Description</label>
+        <input type="text" class="area-desc" placeholder="Optional description" />
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label>Points <span class="required">*</span></label>
+          <input type="number" class="area-points" placeholder="e.g. 50" min="1" />
+        </div>
+        <div class="field-group">
+          <label>Max Users <span class="field-hint">(empty = unlimited)</span></label>
+          <input type="number" class="area-max" placeholder="Unlimited" min="1" />
+        </div>
+      </div>
+    `;
+
+    list.appendChild(row);
+  },
+
+  removeArea(btn) {
+    btn.closest(".area-row").remove();
+    // Re-label remaining areas
+    document.querySelectorAll(".area-row").forEach((row, i) => {
+      row.querySelector(".area-row-label").textContent = `Area ${i + 1}`;
+    });
   },
 
   _escHandler(e) {
     if (e.key === "Escape") {
       document
-        .querySelectorAll(".modal-overlay.is-open")
+        .querySelectorAll(".modal-overlay.is-open, .drawer-overlay.is-open")
         .forEach((el) => Modal.close(el.id));
     }
   },
@@ -58,39 +160,25 @@ const Modal = {
   },
 
   openDelete(triggerEl) {
-    // 1. Read mission data from the clicked element
     const id = triggerEl.dataset.id;
     const title = triggerEl.dataset.title;
 
-    // 2. Populate the modal with mission info
     const nameEl = document.getElementById("delete-mission-name");
     if (nameEl) nameEl.textContent = `"${title}"`;
 
-    // 3. Wire the confirm button to this specific mission's id
     const confirmBtn = document.getElementById("btn-confirm-delete");
     if (confirmBtn) {
-      // Replace the button to clear any previous onclick listener
       const freshBtn = confirmBtn.cloneNode(true);
       freshBtn.addEventListener("click", () => Modal.confirmDelete(id));
       confirmBtn.parentNode.replaceChild(freshBtn, confirmBtn);
     }
 
-    // 4. Open the overlay
     Modal.open("delete-modal-overlay");
   },
 
   confirmDelete(missionId) {
     console.log("Deleting mission id:", missionId);
-
-    // Call your API here, e.g.:
-    // missionsApi.delete(missionId)
-    //   .then(() => {
-    //     Modal.close('delete-modal-overlay');
-    //     // refresh card list
-    //   })
-    //   .catch(err => console.error(err));
-
-    // For now, just close:
+    // API call goes here later
     Modal.close("delete-modal-overlay");
   },
 
@@ -99,11 +187,8 @@ const Modal = {
     const title = triggerEl.dataset.title;
     const description = triggerEl.dataset.description;
 
-    // Populate fields with existing values
     document.getElementById("edit-mission-title").value = title ?? "";
     document.getElementById("edit-mission-desc").value = description ?? "";
-
-    // Store the mission id on the modal for submitEdit to read
     document.getElementById("edit-mission-modal").dataset.missionId = id;
 
     Modal.open("edit-modal-overlay");
@@ -116,18 +201,11 @@ const Modal = {
     const title = document.getElementById("edit-mission-title")?.value.trim();
     const desc = document.getElementById("edit-mission-desc")?.value.trim();
 
-    if (!title) {
-      alert("Please enter a mission title.");
-      return;
-    }
+    if (!title) return alert("Please enter a mission title.");
 
     const payload = { id, title, description: desc };
     console.log("Updating mission:", payload);
-
-    // Call your API here, e.g.:
-    // missionsApi.update(id, payload)
-    //   .then(() => Modal.close('edit-modal-overlay'));
-
+    // API call goes here later
     Modal.close("edit-modal-overlay");
   },
 };

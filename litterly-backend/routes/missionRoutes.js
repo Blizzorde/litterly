@@ -388,45 +388,93 @@ router.post("/:id/distribute-points", requireRole(1), async (req, res) => {
 });
 
 //creating mission
-router.post("/create", async (req, res) => {
-  //TODO: validate input for correct formats/ other stuff
+// Create mission (admin only)
+router.post("/", requireRole(1), async (req, res) => {
   const {
     title,
     description,
     location,
     start_datetime,
     end_datetime,
-    status,
     max_participants,
-    photo_url,
+    areas,
   } = req.body;
-  // const userId = req.session.user.id;
-  //TODO: ^^^ uncomment this guy, was testing creation
+
+  if (!title || !description || !location || !start_datetime || !end_datetime) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Missing required fields" });
+  }
+
+  if (!areas || !areas.length) {
+    return res
+      .status(400)
+      .json({ success: false, message: "At least one area is required" });
+  }
+
+  if (new Date(end_datetime) <= new Date(start_datetime)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "End date must be after start date" });
+  }
+
+  const connection = await pool.getConnection();
+
   try {
-    await pool.query(
-      "INSERT INTO missions (title, description, location, start_datetime, end_datetime, status, max_participants, created_by, photo_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    await connection.beginTransaction();
+
+    const [result] = await connection.query(
+      "INSERT INTO missions (title, description, location, start_datetime, end_datetime, status, max_participants, created_by) VALUES (?, ?, ?, ?, ?, 'draft', ?, ?)",
       [
         title,
         description,
         location,
         start_datetime,
         end_datetime,
-        status,
-        max_participants,
-        1,
-        photo_url,
+        max_participants ?? null,
+        req.user.id,
       ],
-      //TODO: readd userId along with uncomment guy
     );
 
-    res.json({
-      message: "mission created",
+    const missionId = result.insertId;
+
+    for (const area of areas) {
+      if (!area.area_name || !area.reward_points) {
+        await connection.rollback();
+        return res.status(400).json({
+          success: false,
+          message: "Each area needs a name and points",
+        });
+      }
+
+      await connection.query(
+        "INSERT INTO mission_areas (mission_id, area_name, area_description, reward_points, max_users) VALUES (?, ?, ?, ?, ?)",
+        [
+          missionId,
+          area.area_name,
+          area.area_description ?? null,
+          area.reward_points,
+          area.max_users ?? null,
+        ],
+      );
+    }
+
+    await connection.commit();
+
+    res.status(201).json({
+      success: true,
+      message: "Mission created",
+      mission_id: missionId,
     });
   } catch (err) {
+    await connection.rollback();
     res.status(500).json({
+      success: false,
       message: "Error creating mission",
-      err: err.message,
+      error: err.message,
     });
+  } finally {
+    connection.release();
   }
 });
 

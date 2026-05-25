@@ -33,18 +33,21 @@ function renderMissions(missions) {
             <h1 class="mission-title">${mission.title}</h1>
             <p class="mission-description">${mission.description}</p>
           </div>
-          <a href="./mission-detail.html?id=${mission.id}" class="card-action">View Mission</a>
-          <div class="admin-actions-wrapper conditional-section" data-role="1">
-            <a href="#" class="card-action admin-action edit conditional-btn" data-role="1"
-              data-id="${mission.id}"
-              data-title="${mission.title}"
-              data-description="${mission.description}"
-              onclick="Modal.openEdit(this); return false;">Edit</a>
-            <a href="#" class="card-action admin-action delete conditional-btn" data-role="1"
-              data-id="${mission.id}"
-              data-title="${mission.title}"
-              onclick="Modal.openDelete(this); return false;">Delete</a>
+          <div class="card-actions">
+            <a href="./mission-detail.html?id=${mission.id}" class="card-action">View Mission</a>
+            <div class="admin-actions-wrapper conditional-section" data-role="1">
+              <a href="#" class="card-action admin-action edit conditional-btn" data-role="1"
+                data-id="${mission.id}"
+                data-title="${mission.title}"
+                data-description="${mission.description}"
+                onclick="Modal.openEdit(this); return false;">Edit</a>
+              <a href="#" class="card-action admin-action delete conditional-btn" data-role="1"
+                data-id="${mission.id}"
+                data-title="${mission.title}"
+                onclick="Modal.openDelete(this); return false;">Delete</a>
+            </div>
           </div>
+          
         </div>
       </div>
     `,
@@ -65,11 +68,9 @@ function renderMissions(missions) {
             <h1 class="mission-title">${mission.title}</h1>
             <p class="mission-description">${mission.description}</p>
           </div>
-          <div class="card-action">View Mission</div>
-          <div class="admin-actions-wrapper conditional-section" data-role="1">
-            <div class="card-action admin-action edit conditional-btn" data-role="1">Edit</div>
-            <div class="card-action admin-action delete conditional-btn" data-role="1">Delete</div>
-          </div>
+            <div class="card-action">View Mission</div>
+          
+          
         </div>
       </a>
     `,
