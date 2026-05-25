@@ -18,30 +18,57 @@ function renderMissions(missions) {
   console.log(missions);
   cardsWrapper.style.display = "grid";
 
-  cardsWrapper.innerHTML = missions
-    .map(
-      (mission) => `
-    <a href="./mission-detail.html?id=${mission.id}" class="card-wrapper">
-      <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}>
-        <div class="card-top-bar">
-          <div class="status-tag ${mission.status}">${mission.status}</div>
+  if (window.currentUser.role_id == 1) {
+    cardsWrapper.innerHTML = missions
+      .map(
+        (mission) => `
+      <div class="card-wrapper">
+        <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}>
+          <div class="card-top-bar">
+            <div class="status-tag ${mission.status}">${mission.status}</div>
+          </div>
+        </div>
+        <div class="card-text-content-wrapper">
+          <div class="card-text">
+            <h1 class="mission-title">${mission.title}</h1>
+            <p class="mission-description">${mission.description}</p>
+          </div>
+          <a href="./mission-detail.html?id=${mission.id}" class="card-action">View Mission</a>
+          <div class="admin-actions-wrapper conditional-section" data-role="1">
+            <a href="#" class="card-action admin-action edit conditional-btn" data-role="1">Edit</a>
+            <a href="#" class="card-action admin-action delete conditional-btn" data-role="1">Delete</a>
+          </div>
         </div>
       </div>
-      <div class="card-text-content-wrapper">
-        <div class="card-text">
-          <h1 class="mission-title">${mission.title}</h1>
-          <p class="mission-description">${mission.description}</p>
+    `,
+      )
+      .join("");
+  } else {
+    cardsWrapper.innerHTML = missions
+      .map(
+        (mission) => `
+      <a href="./mission-detail.html?id=${mission.id}" class="card-wrapper">
+        <div class="card-thumbnail" ${mission.thumbnail ? `style="background-image: url('${mission.thumbnail}')"` : ""}>
+          <div class="card-top-bar">
+            <div class="status-tag ${mission.status}">${mission.status}</div>
+          </div>
         </div>
-        <div class="card-action">View Mission</div>
-        <div class="admin-actions-wrapper conditional-section" data-role="1">
-          <div class="card-action admin-action edit conditional-btn" data-role="1">Edit</div>
-          <div class="card-action admin-action delete conditional-btn" data-role="1">Delete</div>
+        <div class="card-text-content-wrapper">
+          <div class="card-text">
+            <h1 class="mission-title">${mission.title}</h1>
+            <p class="mission-description">${mission.description}</p>
+          </div>
+          <div class="card-action">View Mission</div>
+          <div class="admin-actions-wrapper conditional-section" data-role="1">
+            <div class="card-action admin-action edit conditional-btn" data-role="1">Edit</div>
+            <div class="card-action admin-action delete conditional-btn" data-role="1">Delete</div>
+          </div>
         </div>
-      </div>
-    </a>
-  `,
-    )
-    .join("");
+      </a>
+    `,
+      )
+      .join("");
+  }
 
   if (
     typeof applyRoleVisibility === "function" &&
@@ -80,5 +107,4 @@ async function loadMissions() {
     showNotif("fa-circle-xmark", "Error", "Failed to load missions", "danger");
   }
 }
-
 loadMissions();
