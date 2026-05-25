@@ -4,8 +4,19 @@
   display: flex;
   width: 100%;
   justify-content: end;
-  align-items: end;
+  align-items: center;
+  flex-direction: row-reverse;
   /* background-color: green; */
+  gap: 1rem;
+}
+
+.admin-action.create-mission{
+  display: flex;
+  align-items: center;
+  flex-basis: 0%;
+  border-radius: 50%;
+  font-size: 2.8rem;
+  color: #004532
 }
 
 .filterbar-wrapper {
@@ -28,12 +39,6 @@
 }
 
 /*===========================================================================CARDS */
-.cards-wrapper {
-  padding: 2rem 2rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  justify-items: center;
 .cards-wrapper {
   padding: 2rem 2rem;
   display: grid;
@@ -154,4 +159,22 @@
   font-size: 1.5rem;
   text-transform: capitalize;
   color: var(--card-text);
+}
+
+.admin-actions-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-action {
+  display: flex;
+  flex-basis: 50%;
+}
+
+.admin-action.edit{
+  background-color: grey;
+}
+
+.admin-action.delete{
+  background-color: rgba(255, 0, 0, 0.897);
 }

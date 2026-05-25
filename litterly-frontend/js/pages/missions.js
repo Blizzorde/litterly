@@ -33,11 +33,23 @@ function renderMissions(missions) {
           <p class="mission-description">${mission.description}</p>
         </div>
         <div class="card-action">View Mission</div>
+        <div class="admin-actions-wrapper conditional-section" data-role="1">
+          <div class="card-action admin-action edit conditional-btn" data-role="1">Edit</div>
+          <div class="card-action admin-action delete conditional-btn" data-role="1">Delete</div>
+        </div>
       </div>
     </a>
   `,
     )
     .join("");
+
+  if (
+    typeof applyRoleVisibility === "function" &&
+    window.currentUser &&
+    window.currentUser.role_id
+  ) {
+    applyRoleVisibility(window.currentUser);
+  }
 }
 
 function getTypeFromUrl() {

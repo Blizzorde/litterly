@@ -41,14 +41,26 @@ function hasRole(...roles) {
 }
 
 function applyRoleVisibility(user) {
-  if (!user) return;
+  // no user
+  if (!user || !user.role_id) {
+    console.warn("No valid user found for role visibility");
+    return;
+  }
+
   document.querySelectorAll("[data-role]").forEach((el) => {
     const roles = el.dataset.role.split(",");
-    console.log(roles);
-    console.log(user);
-    el.style.display = roles.includes(user.role_id.toString())
-      ? "block"
-      : "none";
+
+    // SHOW
+    if (roles.includes(String(user.role_id))) {
+
+      // remove inline display override
+      el.style.display = "flex";
+
+    } else {
+
+      // HIDE
+      el.style.display = "none";
+    }
   });
 }
 
