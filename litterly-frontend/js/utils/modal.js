@@ -187,10 +187,47 @@ const Modal = {
     Modal.open("delete-modal-overlay");
   },
 
-  confirmDelete(missionId) {
-    console.log("Deleting mission id:", missionId);
-    // API call goes here later
-    Modal.close("delete-modal-overlay");
+  async confirmDelete(missionId) {
+    if (!missionId) {
+      return showNotif(
+        "fa-circle-xmark",
+        "Error",
+        "Missing mission ID",
+        "danger",
+      );
+    }
+
+    try {
+      const res = await deleteMission(missionId);
+
+      if (!res?.success) {
+        return showNotif(
+          "fa-circle-xmark",
+          "Error",
+          res?.message || "Delete failed",
+          "danger",
+        );
+      }
+
+      showNotif(
+        "fa-circle-check",
+        "Deleted",
+        "Mission deleted successfully",
+        "success",
+      );
+
+      Modal.close("delete-modal-overlay");
+
+      // refresh UI
+      loadMissions();
+    } catch (err) {
+      showNotif(
+        "fa-circle-xmark",
+        "Error",
+        err.message ?? "Failed to delete mission",
+        "danger",
+      );
+    }
   },
 
   openEdit(triggerEl) {

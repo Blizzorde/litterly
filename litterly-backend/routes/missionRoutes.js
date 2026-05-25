@@ -582,6 +582,7 @@ router.patch("/:id", async (req, res) => {
 
   // 5. Validate status enum
   const allowedStatus = [
+    "draft",
     "open",
     "ongoing",
     "awaiting_rewards",
@@ -638,17 +639,59 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const missionId = req.params.id;
 
-  try {
-    await pool.query("DELETE FROM missions WHERE id=?", [missionId]);
+  const conn = await pool.getConnection();
 
-    res.json({
-      message: "Mission deleted",
+  try {
+    await conn.beginTransaction();
+
+    // 1. Get all areas for this mission
+    const [areas] = await conn.query(
+      "SELECT id FROM mission_areas WHERE mission_id = ?",
+      [missionId],
+    );
+
+    const areaIds = areas.map((a) => a.id);
+
+    // 2. Delete area assignments (depends on areas)
+    if (areaIds.length > 0) {
+      await conn.query(
+        `DELETE FROM mission_area_assignments WHERE area_id IN (?)`,
+        [areaIds],
+      );
+    }
+
+    // 3. Delete mission registrations (directly tied to mission)
+    await conn.query("DELETE FROM mission_registrations WHERE mission_id = ?", [
+      missionId,
+    ]);
+
+    // 4. Delete areas themselves
+    await conn.query("DELETE FROM mission_areas WHERE mission_id = ?", [
+      missionId,
+    ]);
+
+    // 5. Finally delete mission
+    const [result] = await conn.query("DELETE FROM missions WHERE id = ?", [
+      missionId,
+    ]);
+
+    await conn.commit();
+
+    return res.json({
+      success: true,
+      message: "Mission and all related data deleted successfully",
     });
   } catch (err) {
-    res.status(500).json({
+    await conn.rollback();
+
+    console.error(err);
+    return res.status(500).json({
+      success: false,
       message: "Error deleting mission",
       err: err.message,
     });
+  } finally {
+    conn.release();
   }
 });
 
