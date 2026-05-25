@@ -304,13 +304,14 @@ z
   cursor: not-allowed;
 }
 
-.cancel-button {
-  background: transparent;
+.register-button.cancel-button {
+  background: #ff4d4f;
+
   border: 2px solid #ff4d4f;
-  color: #ff4d4f;
+  color: #fff;
 }
 
-.cancel-button:hover {
+.register-button.cancel-button:hover {
   background: #ff4d4f;
   color: #fff;
 }
