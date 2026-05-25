@@ -93,4 +93,41 @@ const Modal = {
     // For now, just close:
     Modal.close("delete-modal-overlay");
   },
+
+  openEdit(triggerEl) {
+    const id = triggerEl.dataset.id;
+    const title = triggerEl.dataset.title;
+    const description = triggerEl.dataset.description;
+
+    // Populate fields with existing values
+    document.getElementById("edit-mission-title").value = title ?? "";
+    document.getElementById("edit-mission-desc").value = description ?? "";
+
+    // Store the mission id on the modal for submitEdit to read
+    document.getElementById("edit-mission-modal").dataset.missionId = id;
+
+    Modal.open("edit-modal-overlay");
+  },
+
+  submitEdit(modalId) {
+    const modal = document.getElementById(modalId);
+    const id = modal?.dataset.missionId;
+
+    const title = document.getElementById("edit-mission-title")?.value.trim();
+    const desc = document.getElementById("edit-mission-desc")?.value.trim();
+
+    if (!title) {
+      alert("Please enter a mission title.");
+      return;
+    }
+
+    const payload = { id, title, description: desc };
+    console.log("Updating mission:", payload);
+
+    // Call your API here, e.g.:
+    // missionsApi.update(id, payload)
+    //   .then(() => Modal.close('edit-modal-overlay'));
+
+    Modal.close("edit-modal-overlay");
+  },
 };
