@@ -125,3 +125,49 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1024px) {
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 768px) {
+  .shop-products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 2rem;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  .shop-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 2rem;
+  }
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  /* hide desktop links */
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .shop-products {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 2rem;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+}
