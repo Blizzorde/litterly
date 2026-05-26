@@ -1091,4 +1091,13 @@ a {
   .nav-link {
     display: none;
   }
+
+  .content-header {
+    padding: 2rem 0rem;
+    font-size: 0.8em;
+  }
+
+  .header-text {
+    font-size: 2em;
+  }
 }
