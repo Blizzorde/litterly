@@ -933,3 +933,27 @@ a {
   font-size: 2.8rem;
   color: #004532;
 }
+
+.btn-demo {
+  padding: 0.55rem 1rem;
+  border: 1.5px solid #d1d9d6;
+  border-radius: 7px;
+  background: white;
+  color: var(--neutral-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  margin-right: auto;
+}
+
+.btn-demo:hover {
+  background: #f9f0ff;
+  border-color: #d3adf7;
+  color: #531dab;
+}

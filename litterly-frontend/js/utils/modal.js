@@ -340,4 +340,30 @@ const Modal = {
         row.querySelector(".area-row-label").textContent = `Area ${i + 1}`;
       });
   },
+  autofillDemo() {
+    const mission = getRandomDemoMission();
+
+    document.getElementById("mission-title").value = mission.title;
+    document.getElementById("mission-desc").value = mission.description;
+    document.getElementById("mission-location").value = mission.location;
+    document.getElementById("mission-date").value = mission.date;
+    document.getElementById("mission-start-time").value = mission.startTime;
+    document.getElementById("mission-end-time").value = mission.endTime;
+    document.getElementById("mission-max-participants").value =
+      mission.maxParticipants ?? "";
+
+    // clear and fill areas
+    const areasList = document.getElementById("create-areas-list");
+    areasList.innerHTML = "";
+
+    mission.areas.forEach((area, i) => {
+      Modal.addArea();
+      const rows = areasList.querySelectorAll(".area-row");
+      const row = rows[rows.length - 1];
+      row.querySelector(".area-name").value = area.name;
+      row.querySelector(".area-desc").value = area.description;
+      row.querySelector(".area-points").value = area.points;
+      row.querySelector(".area-max").value = area.maxUsers ?? "";
+    });
+  },
 };
