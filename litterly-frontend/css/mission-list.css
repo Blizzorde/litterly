@@ -813,3 +813,42 @@
 .modal-overlay#edit-modal-overlay .creating-mission .btn-submit:active {
   transform: scale(0.97);
 }
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1024px) {
+  .content-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 2rem 1.5rem;
+  }
+
+  .header-filter {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    align-items: end;
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 600px) {
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+}
+
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  /* hide desktop links */
+  .nav-link {
+    display: none;
+  }
+}
