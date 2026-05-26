@@ -2,7 +2,7 @@ import { Router } from "express";
 import authRoutes from "./authRoutes.js";
 import userRoutes from "./userRoutes.js";
 import missionRoutes from "./missionRoutes.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 import shopRoutes from "./shopRoutes.js";
 
 const apiRouter = Router();
