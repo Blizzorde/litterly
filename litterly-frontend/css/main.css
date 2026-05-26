@@ -1019,6 +1019,7 @@ a {
   .profile {
     gap: 1rem;
     /* background-color: yellow; */
+    display: none;
     padding: 1rem;
     justify-content: center;
     align-items: center;
