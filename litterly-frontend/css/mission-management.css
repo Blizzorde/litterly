@@ -568,3 +568,31 @@
   line-height: 1.65;
   opacity: 0.8;
 }
+
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1024px) {
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 768px) {
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  /* hide desktop links */
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .mgmt-list-item-meta {
+    font-size: 0.78rem;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}

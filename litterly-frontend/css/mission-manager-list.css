@@ -127,7 +127,13 @@
     font-size: 0.78rem;
     opacity: 0.5;
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.4rem;
+  }
+
+  .mgmt-list-item-meta {
+    display: flex;
+    gap: 0.01rem;
   }
 }
