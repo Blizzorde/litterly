@@ -190,7 +190,7 @@ function populatePage(mission) {
     `<i class="fa-solid fa-star"></i> ${getTotalRewardPoints(mission.areas)}`;
 
   document.querySelector(".card-thumbnail-wrapper").style.backgroundImage =
-    `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('${mission.photo_url ?? "../assets/placeholder.webp"}')`;
+    `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('${mission.photo_url ?? "../assets/img/placeholder.webp"}')`;
   document.querySelector(".card-thumbnail-wrapper").style.backgroundSize =
     "cover";
   document.querySelector(".card-thumbnail-wrapper").style.backgroundPosition =
