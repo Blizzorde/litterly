@@ -3,32 +3,38 @@
 ## Overview
 
 This is the backend of the **Litterly web application**.  
-It provides a REST API built with **Node.js + Express**, handling authentication, users, missions, database communication, and application logic.
+It provides a REST API built with **Node.js + Express**, handling authentication, users, missions, the shop system, and all application logic.
 
 The backend is structured in a modular way to keep the code clean, maintainable, and scalable for team development.
 
 ---
 
-## Core Responsibilities
+## Tech Stack
 
-- User authentication (login, register, sessions)
-- User management and profile handling
-- Mission creation, approval, participation, and tracking
-- Points and reward logic handling
-- Role-based access control (user, worker, manager, admin)
-- Database communication with MySQL
-- Providing API endpoints for the frontend
+| Technology    | Purpose                              |
+| ------------- | ------------------------------------ |
+| Node.js       | Runtime environment                  |
+| Express.js    | Web framework and routing            |
+| MySQL         | Primary relational database          |
+| mysql2        | MySQL driver with connection pooling |
+| jsonwebtoken  | JWT creation and verification        |
+| bcrypt        | Password hashing                     |
+| cookie-parser | Reading HTTP-only cookies            |
+| dotenv        | Environment variable management      |
+| nodemon       | Development auto-restart             |
 
 ---
 
-## Tech Stack
+## Core Responsibilities
 
-- Node.js
-- Express.js
-- express-session
-- MySQL
-- mysql2 (or Sequelize depending on implementation)
-- dotenv (for environment configuration)
+- User authentication (register, login, logout) via JWT
+- User management and profile handling
+- Mission creation, management, participation, and tracking
+- Attendance tracking per mission area
+- Points distribution and transaction recording
+- Shop system (items, purchases, inventory)
+- Role-based access control (user, admin)
+- Serving the static frontend
 
 ---
 
@@ -38,133 +44,159 @@ The backend is structured in a modular way to keep the code clean, maintainable,
 /litterly-backend
 │
 ├── /config
-│ └── db.js
+│   └── db.js
 │
 ├── /middleware
+│   ├── authMiddleware.js
+│   └── roleMiddleware.js
 │
 ├── /routes
-│ ├── authRoutes.js
-│ ├── userRoutes.js
-│ └── missionRoutes.js
+│   ├── index.js
+│   ├── authRoutes.js
+│   ├── userRoutes.js
+│   ├── missionRoutes.js
+│   └── shopRoutes.js
 │
-├── /utils
+├── /sql
+│   └── litterly.sql
+│
+└── /utils
 ```
 
 ---
 
 ## Structure Explanation
 
-### /config
-
-Contains configuration-related files used across the backend.
-
-Used for:
-
-- Database setup and connection configuration
-- Centralized configuration logic
-
----
-
 ### /config/db.js
 
-Handles the MySQL database connection pool.
-
-Responsible for:
-
-- Connecting to the database using environment variables
-- Creating a reusable connection pool
-- Exporting database access methods for use in routes
+Handles the MySQL connection pool using `mysql2`.  
+Exports a reusable pool instance used across all route files.
 
 ---
 
 ### /middleware
 
-Contains middleware functions that run before requests reach the routes.
+**`authMiddleware.js`** — Verifies the JWT from the HTTP-only cookie on every protected request. Attaches the decoded user to `req.user`.
 
-Used for:
-
-- Authentication checks (session validation)
-- Role-based access control
-- Request validation
-- Protecting private routes
+**`roleMiddleware.js`** — Role-based access control. Accepts role names and blocks requests from users without the required role. Used as `requireRole("admin")`.
 
 ---
 
 ### /routes
 
-Contains all API endpoints grouped by feature/domain.
+All API endpoints grouped by feature:
 
-- authRoutes → login, register, logout
-- userRoutes → profile, user data management
-- missionRoutes → mission CRUD, joining, approval flow
+- `index.js` — Mounts all route modules under `/api`
+- `authRoutes.js` — `/api/auth` — register, login, logout, me
+- `userRoutes.js` — `/api/users` — user profile and data
+- `missionRoutes.js` — `/api/missions` — full mission lifecycle
+- `shopRoutes.js` — `/api/shop` — shop items and purchases
 
-Each route file handles its own related logic.
+---
+
+### /sql
+
+Contains the database schema and seed data.
+
+- `litterly.sql` — Full database dump including structure and initial data
+
+Import with:
+
+```bash
+mysql -u your_user -p your_database < litterly-backend/sql/litterly.sql
+```
 
 ---
 
 ### /utils
 
-Contains helper and reusable functions used across the backend.
-
-Examples:
-
-- Response formatting helpers
-- Validation helpers
-- Utility functions for repeated logic
+Reusable helper functions shared across the backend.
 
 ---
 
-## API Structure
+## API Reference
 
-The backend exposes structured API endpoints such as:
+### Auth — `/api/auth`
 
-- /api/auth
-- /api/users
-- /api/missions
+| Method | Endpoint    | Auth     | Description                  |
+| ------ | ----------- | -------- | ---------------------------- |
+| POST   | `/register` | Public   | Register a new user          |
+| POST   | `/login`    | Public   | Login and receive JWT cookie |
+| POST   | `/logout`   | Public   | Clear JWT cookie             |
+| GET    | `/me`       | Required | Get current logged-in user   |
 
-Each module is responsible for a specific part of the system.
+### Missions — `/api/missions`
+
+| Method | Endpoint                    | Auth     | Description                                    |
+| ------ | --------------------------- | -------- | ---------------------------------------------- |
+| GET    | `/`                         | Required | Get public missions (filterable by status)     |
+| GET    | `/admin/all`                | Admin    | Get all missions including drafts              |
+| GET    | `/:id`                      | Required | Get mission detail with areas and registration |
+| POST   | `/`                         | Admin    | Create a new mission                           |
+| PATCH  | `/:id`                      | Admin    | Update mission fields                          |
+| DELETE | `/:id`                      | Admin    | Delete mission and all related data            |
+| POST   | `/:id/register`             | Required | Register for a mission                         |
+| POST   | `/:id/cancel`               | Required | Cancel own registration                        |
+| GET    | `/:id/registrations`        | Admin    | Get all registrations for a mission            |
+| PATCH  | `/:id/registrations/:regId` | Admin    | Update a registration status                   |
+| POST   | `/:id/distribute-points`    | Admin    | Distribute points to attended participants     |
+
+### Shop — `/api/shop`
+
+| Method | Endpoint    | Auth     | Description                         |
+| ------ | ----------- | -------- | ----------------------------------- |
+| GET    | `/`         | Required | Get shop items (filterable by type) |
+| POST   | `/purchase` | Required | Purchase a shop item                |
 
 ---
 
 ## Authentication Flow
 
-- User logs in through authentication routes
-- Session is created using express-session
-- Session ID is stored in HTTP-only cookies
-- Middleware checks session for protected routes
-- Unauthorized users are blocked from accessing private data
+- User submits credentials via `/api/auth/login`
+- Server validates credentials and signs a JWT
+- JWT is set as an HTTP-only cookie (`ltr_token`)
+- Every protected request reads the cookie via `cookie-parser`
+- `authMiddleware` verifies and decodes the token
+- Decoded user is available as `req.user` in all protected routes
+- Logout clears the cookie via `res.clearCookie()`
 
 ---
 
-## Database Layer
+## Database
 
-- MySQL is used as the main database
-- Connection is handled through `/config/db.js`
-- Queries are executed inside routes or helper functions
+MySQL is the primary database. Tables include:
+
+| Table                      | Purpose                                       |
+| -------------------------- | --------------------------------------------- |
+| `users`                    | User accounts and points                      |
+| `roles`                    | Role definitions                              |
+| `missions`                 | Mission records                               |
+| `mission_areas`            | Sub-areas within a mission                    |
+| `mission_registrations`    | User registrations per mission                |
+| `mission_area_assignments` | Which area each registrant is assigned to     |
+| `shop_items`               | Purchasable items                             |
+| `item_type`                | Item categories (badge, avatar, title, frame) |
+| `shop_orders`              | Purchase transaction records                  |
+| `user_inventory`           | Items owned by users                          |
+| `point_transactions`       | Full points ledger (earned and spent)         |
 
 ---
 
 ## Security Notes
 
-- Passwords must be hashed before storing (bcrypt recommended)
-- Sessions are stored in secure HTTP-only cookies
-- Middleware protects private routes
-- Input validation should be applied before database queries
-
----
-
-## Notes
-
-- Backend is designed to work with a static frontend (vanilla HTML/CSS/JS)
-- Follows REST API principles
-- Modular structure supports teamwork and scalability
-- Each folder has a clear responsibility boundary
+- Passwords are hashed with bcrypt (salt rounds: 10)
+- JWT is stored in an HTTP-only cookie — not accessible via JavaScript
+- `authMiddleware` protects all private routes
+- `requireRole` enforces admin-only endpoints
+- Whitelist-based field filtering on PATCH routes prevents mass assignment
+- All multi-step operations use database transactions with rollback on failure
 
 ---
 
 ## Future Improvements
 
-- Introduce service layer between routes and database
-- Add structured validation system (Joi/Zod)
-- Improve centralized error handling
+- Introduce a service layer between routes and database
+- Add structured request validation (Joi or Zod)
+- Improve centralized error handling middleware
 - Add rate limiting for API protection
+- File upload support for mission and item photos

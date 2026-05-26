@@ -67,7 +67,25 @@ npm install
 
 ---
 
-### 3. Environment setup
+### 3. Database setup
+
+The database schema and seed data are located in:
+
+```
+litterly-backend/sql/
+```
+
+Import the SQL file into your MySQL instance:
+
+```bash
+mysql -u your_user -p your_database < litterly-backend/sql/litterly.sql
+```
+
+Or import it via phpMyAdmin or any MySQL GUI tool.
+
+---
+
+### 4. Environment setup
 
 Create your environment file from the example:
 
@@ -77,14 +95,20 @@ cp .env.sample .env
 
 Then configure the values inside `.env`:
 
-- Database credentials (MySQL host, user, password, database)
-- Session secret
-- Server port
-- Any other required configuration values
+```env
+PORT=3000
+SESSION_SECRET=your_secret_here
+JWT_SECRET=your_jwt_secret_here
+JWT_EXPIRES_IN=1h
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=litterly
+```
 
 ---
 
-### 4. Run the application (development mode)
+### 5. Run the application (development mode)
 
 ```bash
 npm run dev
@@ -92,17 +116,20 @@ npm run dev
 
 This will:
 
-- Start the Express backend server
-- Serve the frontend statically
+- Start the Express backend server via nodemon
+- Serve the frontend statically from `litterly-frontend/`
+- Watch for backend changes and restart automatically
 - Enable API routes under `/api/*`
+
+The app will be available at `http://localhost:3000`
 
 ---
 
 ## Important Notes
 
-- The frontend is served directly from the backend server (no separate hosting required)
+- The frontend is served directly from the backend server — no separate hosting required
 - All API communication is handled via `/api` routes
-- Authentication is handled using session-based authentication
+- Authentication is handled using **JWT** stored in HTTP-only cookies
 - MySQL must be running before starting the application
 - Ensure `.env` is correctly configured before running the project
 
@@ -121,7 +148,7 @@ This project demonstrates:
 
 - Full-stack web application development
 - RESTful API design
-- Session-based authentication
+- JWT-based authentication with HTTP-only cookies
 - Modular backend architecture
 - Clean separation of frontend and backend responsibilities
-- Real-world problem-solving using gamifi
+- Real-world problem-solving using gamification

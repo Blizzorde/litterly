@@ -2,28 +2,39 @@
 
 ## Overview
 
-This is the frontend of the Litterly web application.  
-It provides the user interface for interacting with the platform, including authentication, missions, and the reward system.
+This is the frontend of the **Litterly web application**.  
+It provides the user interface for interacting with the platform, including authentication, missions, attendance, the shop, and the admin mission manager.
 
-The frontend is built using **vanilla HTML, CSS, and JavaScript**, without frameworks, focusing on simplicity and clear structure.
-
----
-
-## Planned Features
-
-- User login & registration
-- View available missions
-- Join missions
-- Dashboard with user data (points, history)
-- Shop interface (redeem rewards)
+The frontend is built using **vanilla HTML, CSS, and JavaScript** — no frameworks — served statically by the Express backend.
 
 ---
 
 ## Tech Stack
 
-- HTML
-- CSS
-- JavaScript (Vanilla ES Modules)
+| Technology           | Purpose                                 |
+| -------------------- | --------------------------------------- |
+| HTML5                | Page structure and markup               |
+| CSS3                 | Styling, layout, animations             |
+| JavaScript (Vanilla) | Page logic, API calls, DOM manipulation |
+| Axios (CDN)          | HTTP requests to the backend API        |
+| Toastify JS (CDN)    | Toast notification system               |
+| Font Awesome (CDN)   | Icons throughout the UI                 |
+| Google Fonts — Inter | Primary font                            |
+
+---
+
+## Pages
+
+| Page                 | File                              | Access |
+| -------------------- | --------------------------------- | ------ |
+| Login                | `pages/login.html`                | Public |
+| Register             | `pages/register.html`             | Public |
+| Mission List         | `pages/mission-list.html`         | Auth   |
+| Mission Detail       | `pages/mission-detail.html`       | Auth   |
+| Shop                 | `pages/shop.html`                 | Auth   |
+| Mission Manager List | `pages/mission-manager-list.html` | Admin  |
+| Mission Management   | `pages/mission-management.html`   | Admin  |
+| Not Found            | `pages/notFound.html`             | Public |
 
 ---
 
@@ -33,27 +44,41 @@ The frontend is built using **vanilla HTML, CSS, and JavaScript**, without frame
 /litterly-frontend
 │
 ├── /assets
+│   └── (images, logos, placeholders)
 │
 ├── /css
 │   ├── main.css
-│   └── (optional additional page-specific CSS files)
+│   ├── mission-list.css
+│   ├── mission-detail.css
+│   ├── mission-management.css
+│   ├── mission-manager-list.css
+│   └── shop.css
 │
 ├── /js
 │   │
 │   ├── /api
-│   │   └── loginApi.js (Example)
+│   │   ├── authApi.js
+│   │   ├── missionsApi.js
+│   │   └── shopApi.js
 │   │
 │   ├── /pages
-│   │   └── login.js
+│   │   ├── login.js
+│   │   ├── missions.js
+│   │   ├── mission-detail.js
+│   │   ├── mission-management.js
+│   │   ├── mission-manager-list.js
+│   │   └── shop.js
 │   │
 │   ├── /utils
+│   │   ├── notify.js
+│   │   ├── modal.js
+│   │   └── demoData.js
 │   │
 │   ├── config.js
 │   └── main.js
 │
 ├── /pages
-│   ├── login.html
-│   └── register.html
+│   └── (all HTML pages)
 │
 └── index.html
 ```
@@ -62,129 +87,142 @@ The frontend is built using **vanilla HTML, CSS, and JavaScript**, without frame
 
 ## Structure Explanation
 
-📁 /assets
+### /assets
 
-_Contains all static files used in the UI:_
-
-- Images (logos, mission pictures)
-- Icons (SVGs)
-- Fonts (if used)
-
-> No logic here, only resources.
+Static resources — logos, images, placeholder images. No logic, only files.
 
 ---
 
-📁 /css
+### /css
 
-> main.css
+**`main.css`** — Global styles, CSS reset, design tokens (`:root` variables), shared components (sidebar, modals, drawer, status tags, toastify overrides).
 
-- Global styling
-- Reset + design system (:root)
-- Layout helpers (container, flex, etc.)
-  Optional extra CSS files
-- Only if needed per page
-- Example: missions.css
+Page-specific CSS files handle only the styles unique to that page.
 
 ---
 
-📁 /js
+### /js/api
 
-> All JavaScript lives here (fully separated by responsibility)
+All communication with the backend API lives here. Each file handles one domain:
 
----
+**`authApi.js`** — `loginUser`, `getMe`, `logoutUser`
 
-📁 /js/api
+**`missionsApi.js`** — `getMissions`, `getMissionById`, `registerForMission`, `cancelMissionRegistration`, `getAllMissionsAdmin`, `getMissionRegistrations`, `updateRegistrationStatus`, `createMission`, `editMission`, `deleteMission`, `updateMissionStatus`, `distributePoints`
 
-_Handles all communication with the backend API._
+**`shopApi.js`** — `getShopItems`, `purchaseItem`
 
-Contains:
-
-- Fetch logic
-- Request handling
-- Response handling
-
-Example responsibilities:
-
-- Sending requests
-- Attaching token
-- Returning JSON data
-
-> This is your frontend “API layer”
+All functions use Axios with `withCredentials: true` to send the JWT cookie automatically.
 
 ---
 
-📁 /js/pages
+### /js/pages
 
-_Contains page-specific logic._
-
-Each file:
-
-- Controls one HTML page
-- Handles UI updates
-- Calls /api functions
-
-> This is your business logic layer
+Page-specific logic. Each file controls one HTML page — handles UI updates, calls API functions, and manages local state.
 
 ---
 
-📁 /js/utils
+### /js/utils
 
-_Reusable helper functions._
+**`notify.js`** — `showNotif(icon, title, subtext, options)` — wrapper around Toastify for consistent toast notifications.
 
-Examples:
+**`modal.js`** — `Modal` object handling open/close/submit for all modals and the create/edit mission drawers.
 
-- Format date
-- Token helpers
-- Small utilities
-
-> Avoid duplicating code
+**`demoData.js`** — `DEMO_MISSIONS` array and `getRandomDemoMission()` — demo autofill data for the create mission form, based on real Suriname locations.
 
 ---
 
-📄 config.js
+### config.js
 
-_Stores global configuration values._
+```js
+const CONFIG = {
+  API_BASE: "", // empty = same origin
+  APP_NAME: "Litterly",
+};
+```
 
-Examples:
-
-- API base URL
-- App name
-- Static constants
-
-> Central place for config
-
----
-
-📄 main.js
-
-_Global JavaScript logic._
-
-Used for:
-
-- Authentication checks
-- Redirect logic
-- Global event listeners (e.g. logout)
-
-> Runs across multiple pages
+Single place to update the API base URL if hosting changes.
 
 ---
 
-📁 /pages
+### main.js
 
-_Contains all HTML pages._
+Runs on every page. Responsibilities:
 
-Each page:
-
-- Has its own JS file in /js/pages
-- Focuses only on structure (no logic)
+- Calls `getMe()` to verify the JWT cookie
+- Redirects unauthenticated users to login
+- Redirects logged-in users away from public pages
+- Stores the current user in `window.currentUser`
+- Populates the sidebar username and points
+- Applies role-based visibility (`data-role` attribute system)
+- Handles logout button
 
 ---
 
-📄 index.html
+## Authentication Flow (Frontend)
 
-> Landing / entry point of the application.
+```
+Page loads
+  → main.js runs authGuard()
+    → GET /api/auth/me (cookie sent automatically)
+      → 200: store user, populate navbar, continue
+      → 401: redirect to /pages/login.html
+```
 
-Used for:
+---
 
-- Homepage
-- Optional redirect (if logged in)
+## Role-Based UI
+
+Elements with `data-role="1"` are hidden for non-admin users automatically by `applyRoleVisibility()` in `main.js`. No extra JS needed per element — just add the attribute.
+
+---
+
+## Script Load Order
+
+Every page must load scripts in this order:
+
+```html
+<!-- CDN libs -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- Globals -->
+<script src="../js/config.js"></script>
+<script src="../js/utils/notify.js"></script>
+<script src="../js/api/authApi.js"></script>
+<script src="../js/main.js"></script>
+
+<!-- Page specific -->
+<script src="../js/api/missionsApi.js"></script>
+<script src="../js/pages/missions.js"></script>
+```
+
+---
+
+## Design System
+
+CSS custom properties defined in `main.css` `:root`:
+
+| Variable               | Purpose                      |
+| ---------------------- | ---------------------------- |
+| `--primary-color`      | Main brand green             |
+| `--accent-color`       | Accent / highlight color     |
+| `--accent-light-color` | Light accent for backgrounds |
+| `--card-bg`            | Card background              |
+| `--card-text`          | Card text color              |
+| `--neutral-color`      | Muted/secondary text         |
+| `--color-border`       | Border color                 |
+| `--sidebar-active`     | Sidebar active state color   |
+
+---
+
+## Future Improvements
+
+- Photo upload for missions and shop items
+- User profile page with equipped items display
+- Equipped title/badge/frame system
+- Leaderboard page
+- Mobile responsive layout
