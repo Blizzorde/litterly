@@ -958,6 +958,10 @@ a {
   color: #531dab;
 }
 
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
 /* Tablets landscape / small desktops */
 @media (max-width: 1029px) {
 }
@@ -1078,17 +1082,5 @@ a {
     width: 1rem;
     height: 1rem;
     font-size: 1.5rem;
-  }
-}
-
-/* Large desktops */
-@media (max-width: 1200px) {
-}
-
-/* Tablets portrait */
-@media (max-width: 768px) {
-  /* hide desktop links */
-  .nav-link {
-    display: none;
   }
 }
