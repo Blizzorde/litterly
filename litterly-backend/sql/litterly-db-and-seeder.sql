@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2026 at 01:30 AM
+-- Generation Time: May 26, 2026 at 04:32 AM
 -- Server version: 8.0.45
 -- PHP Version: 8.2.12
 
@@ -23,6 +23,7 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `litterly` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `litterly`;
 
+
 -- --------------------------------------------------------
 
 --
@@ -33,7 +34,17 @@ CREATE TABLE IF NOT EXISTS `item_type` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `item_type_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `item_type`
+--
+
+INSERT INTO `item_type` (`id`, `item_type_name`) VALUES
+(1, 'badge'),
+(2, 'avatar'),
+(3, 'title'),
+(4, 'frame');
 
 -- --------------------------------------------------------
 
@@ -55,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `missions` (
   `photo_url` text,
   PRIMARY KEY (`id`),
   KEY `missions_created_by_foreign` (`created_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -73,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `mission_areas` (
   `photo_url` text,
   PRIMARY KEY (`id`),
   KEY `mission_areas_mission_id_foreign` (`mission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -89,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `mission_area_assignments` (
   PRIMARY KEY (`id`),
   KEY `mission_area_assignments_area_id_foreign` (`area_id`),
   KEY `mission_area_assignments_registration_id_foreign` (`registration_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -106,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `mission_registrations` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `mission_registrations_mission_id_user_id_unique` (`mission_id`,`user_id`),
   KEY `mission_registrations_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -127,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `point_transactions` (
   KEY `point_transactions_mission_id_index` (`mission_id`),
   KEY `point_transactions_user_id_foreign` (`user_id`),
   KEY `point_transactions_shop_order_id_foreign` (`shop_order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -167,7 +178,26 @@ CREATE TABLE IF NOT EXISTS `shop_items` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `shop_items_item_type_id_foreign` (`item_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `shop_items`
+--
+
+INSERT INTO `shop_items` (`id`, `name`, `description`, `item_type_id`, `price_points`, `stackable`, `active`, `created_at`) VALUES
+(1, 'Early Adopter', 'Awarded to the first wave of Litterly members', 1, 500, 0, 1, '2026-05-24 18:52:01'),
+(2, 'Clean Streak', 'Completed 5 missions in a row', 1, 750, 0, 1, '2026-05-24 18:52:01'),
+(3, 'Ocean Guardian', 'Participated in a beach cleanup mission', 1, 1000, 0, 1, '2026-05-24 18:52:01'),
+(4, 'Tree Hugger', 'Planted 10 or more trees', 1, 1000, 0, 1, '2026-05-24 18:52:01'),
+(5, 'Green Hero', 'A green caped eco warrior avatar', 2, 800, 0, 1, '2026-05-24 18:52:01'),
+(6, 'Nature Spirit', 'A mystical forest spirit avatar', 2, 1200, 0, 1, '2026-05-24 18:52:01'),
+(7, 'Ocean Diver', 'A deep sea diver avatar', 2, 1200, 0, 1, '2026-05-24 18:52:01'),
+(8, 'Eco Warrior', 'Show the world you mean business', 3, 300, 0, 1, '2026-05-24 18:52:01'),
+(9, 'Planet Protector', 'For the truly dedicated', 3, 600, 0, 1, '2026-05-24 18:52:01'),
+(10, 'Litter Legend', 'Reserved for the elite cleaners', 3, 1500, 0, 1, '2026-05-24 18:52:01'),
+(11, 'Leaf Frame', 'A subtle green leaf border', 4, 400, 0, 1, '2026-05-24 18:52:01'),
+(12, 'Ocean Frame', 'A cool blue wave border', 4, 400, 0, 1, '2026-05-24 18:52:01'),
+(13, 'Fire Frame', 'A bold flame border for top contributors', 4, 900, 0, 1, '2026-05-24 18:52:01');
 
 -- --------------------------------------------------------
 
@@ -185,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `shop_orders` (
   PRIMARY KEY (`id`),
   KEY `shop_orders_item_id_foreign` (`item_id`),
   KEY `shop_orders_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -205,7 +235,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_username_unique` (`username`),
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_role_id_foreign` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password_hash`, `role_id`, `points`, `created_at`) VALUES
+(15, 'Admin', 'admin@litterly.sr', '$2b$10$LgKlbC/PxvyaqPVGDZFkROKth.FMvUCoGJuWI.vIvFpB1akq3.dw.', 1, 0, '2026-05-26 02:30:04');
 
 -- --------------------------------------------------------
 
@@ -222,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `user_inventory` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_inventory_user_id_item_id_unique` (`user_id`,`item_id`),
   KEY `user_inventory_item_id_foreign` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Constraints for dumped tables
