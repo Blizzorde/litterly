@@ -48,6 +48,27 @@ Handles the user interface, pages, styling, and client-side logic.
 
 ---
 
+## Technologies
+
+| Technology           | Purpose                                 |
+| -------------------- | --------------------------------------- |
+| Node.js              | Server runtime                          |
+| Express.js           | Web framework and API routing           |
+| MySQL                | Primary relational database             |
+| mysql2               | MySQL driver with connection pooling    |
+| jsonwebtoken         | JWT authentication                      |
+| bcrypt               | Password hashing                        |
+| cookie-parser        | Reading HTTP-only cookies               |
+| nodemon              | Development auto-restart                |
+| HTML5                | Frontend page structure                 |
+| CSS3                 | Styling and layout                      |
+| JavaScript (Vanilla) | Client-side logic and API communication |
+| Axios                | HTTP requests from the frontend         |
+| Toastify JS          | Toast notification system               |
+| Font Awesome         | UI icons                                |
+
+---
+
 ## Getting Started
 
 ### 1. Clone the repository
