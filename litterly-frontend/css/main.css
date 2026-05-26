@@ -958,6 +958,10 @@ a {
   color: #531dab;
 }
 
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
 /* Tablets landscape / small desktops */
 @media (max-width: 1029px) {
 }

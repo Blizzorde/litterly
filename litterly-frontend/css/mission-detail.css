@@ -321,3 +321,30 @@ z
   color: white;
   cursor: not-allowed;
 }
+
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1024px) {
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 768px) {
+  .mission-details-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+  }
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  /* hide desktop links */
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+}
