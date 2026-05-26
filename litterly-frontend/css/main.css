@@ -957,3 +957,137 @@ a {
   border-color: #d3adf7;
   color: #531dab;
 }
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1029px) {
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 768px) {
+  .logo-section {
+    padding: 1rem 0.5rem;
+    width: 10rem;
+    display: none;
+  }
+
+  .sidebar {
+    background-color: #004532;
+    flex-basis: 10%;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    padding: 1rem;
+  }
+
+  .wrapper-sidebar-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    height: 100%;
+    flex: 1;
+  }
+
+  .sidebar-item {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: var(--sidebar-text);
+    border-radius: 0.5rem;
+  }
+
+  .sidebar-item-text {
+    /* background-color: grey; */
+    flex-basis: 90%;
+    align-items: center;
+  }
+
+  .content-container {
+    flex-direction: column-reverse;
+  }
+
+  .wrapper-sidebar-items-and-logout {
+    flex-direction: row;
+  }
+
+  .profile {
+    gap: 1rem;
+    /* background-color: yellow; */
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapper-sidebar-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .wrapper-sidebar-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    flex: 1;
+  }
+
+  .profile {
+    display: none;
+    gap: 1rem;
+    /* background-color: yellow; */
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebar-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    gap: 0.3rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: var(--sidebar-text);
+    border-radius: 0.5rem;
+  }
+
+  .sidebar-item-text {
+    /* background-color: grey; */
+    flex-basis: 10%;
+    align-items: center;
+    display: none;
+  }
+
+  .sidebar-item-icon {
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 1.5rem;
+  }
+}
+
+/* Large desktops */
+@media (max-width: 1200px) {
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  /* hide desktop links */
+  .nav-link {
+    display: none;
+  }
+}

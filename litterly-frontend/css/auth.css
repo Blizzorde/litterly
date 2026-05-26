@@ -248,3 +248,108 @@
 .demo-auto-auth-btn.secondary {
   color: var(--link-color);
 }
+
+/* Large desktops */
+@media (max-width: 1200px) {
+  .main-auth-container {
+    padding: 3rem 7rem;
+  }
+}
+
+/* Tablets landscape / small desktops */
+@media (max-width: 1024px) {
+  .main-auth-container {
+    background-color: #ececec;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 7rem;
+  }
+
+  .auth-form-section {
+    padding: 3rem 1.6rem;
+  }
+}
+
+/* Tablets portrait */
+@media (max-width: 768px) {
+  .page-container {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .auth-wrapper {
+    flex-direction: column;
+  }
+
+  .auth-img-section {
+    padding: 2rem 1rem;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .small-logo-img-wrapper {
+    width: 5rem;
+  }
+
+  .count-stats {
+    display: none;
+  }
+
+  .auth-form-section {
+    flex-basis: 100%;
+    padding: 2rem 2rem;
+  }
+
+  .quote-img-cont .quote {
+    font-family: "Be Vietnam Pro", "sans-serif";
+    font-size: 1rem;
+  }
+}
+
+/* Mid Tablet - Mobile */
+@media (max-width: 600px) {
+  .main-auth-container {
+    background-color: #ececec;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .main-auth-container {
+    background-color: #ececec;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+  }
+
+  .page-container {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1214px) {
+  .account-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

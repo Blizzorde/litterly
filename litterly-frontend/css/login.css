@@ -1,81 +1,81 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
 
   background-image: url("https://images.unsplash.com/photo-1773332611522-06b86b48cbf1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 
-    background-size: cover;
-    /* fills screen */
-    background-position: center;
-    /* keeps it centered */
-    background-repeat: no-repeat;
-    /* no repeating */
-    height: 100vh;
+  background-size: cover;
+  /* fills screen */
+  background-position: center;
+  /* keeps it centered */
+  background-repeat: no-repeat;
+  /* no repeating */
+  height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-box {
-    background: transparent;
-    padding: 40px;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 5px 15px rgba(245, 243, 243, 0.3);
+  background: transparent;
+  padding: 40px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 5px 15px rgba(245, 243, 243, 0.3);
 }
 
 .login-box h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: white;
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
 }
 
 .input-box {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .input-box input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
 }
 
 .input-box input:focus {
-    border-color: rgb(222, 222, 227);
+  border-color: rgb(222, 222, 227);
 }
 
 .btn {
-    width: 100%;
-    padding: 10px;
-    background: #0a1f44;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  background: #0a1f44;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .extra {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
 }
 
 .extra a {
-    color: #dde0e6;
-    text-decoration: none;
+  color: #dde0e6;
+  text-decoration: none;
 }
 
 .extra a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .extra {
-    color: white;
+  color: white;
 }
-#border{
-    text-align: center;
+#border {
+  text-align: center;
 }
