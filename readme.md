@@ -111,7 +111,7 @@ Or import it via phpMyAdmin or any MySQL GUI tool.
 Create your environment file from the example:
 
 ```bash
-cp .env.sample .env
+cp .env.example .env
 ```
 
 Then configure the values inside `.env`:
